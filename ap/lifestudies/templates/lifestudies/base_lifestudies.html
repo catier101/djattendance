@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+    {% if request.user.trainingassistant %}
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li {% block tab1 %}{%endblock%}><a href="{% url 'lifestudies:discipline_list' %}">Home</a></li>
+            <li {% block tab2 %}{%endblock%}><a href="{% url 'lifestudies:discipline_report' %}">Life-Study Report</a></li>
+            <li {% block tab3 %}{%endblock%} class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Assign Life-Study <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{% url 'lifestudies:discipline_create' %}">Assign life-study to single trainee</a></li>
+                    <li><a href="{% url 'lifestudies:discipline_house' %}">Assign life-study to house</a></li>
+                    <li><a href="{% url 'lifestudies:attendance_assign' 1 %}">Assign life-study according to attendance</a></li>
+                    <!--<li class="divider"></li>-->
+                </ul>
+            </li>
+        </ul>
+    {% endif %}
+
+    {% block lifestudies_content %}{% endblock %}
+
+{% endblock %}

@@ -56,7 +56,7 @@ class Author(models.Model):
 class Book(models.Model):
 
     # the ISBN of this book
-    isbn = models.IntegerField(primary_key=True)
+    isbn = models.CharField(max_length=13)
 
     # the title of the book, e.g. Young People's Training
     name = models.CharField(max_length=200)

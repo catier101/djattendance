@@ -1,0 +1,111 @@
+{% extends "lifestudies/base_lifestudies.html" %}
+
+{% load staticfiles %}
+
+{% block tab2 %} class="active" {% endblock %}
+
+{% block title %}Life Study{% endblock %}
+
+{% block lifestudies_content %}
+
+    {% if user.trainee %}
+        <h2> TA Access Only </h2>
+        
+    {% elif user.trainingassistant %}
+
+        <h2> Life Study Report </h2>
+
+
+        {% if disciplines %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Incompleted Life-Study</h3>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Reason</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Still Due</th>
+                        <th>Date Assigned</th>
+                        <th>Due Date</th>
+                        <th>Submission(s)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for discipline in disciplines %}
+                    {% if discipline.is_completed == False %}
+                    <tr>
+                        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+                        <td>{{discipline.infraction}}</td>
+                        <td>{{discipline.offense}}</td>
+                        <td>{{discipline.quantity}}</td>
+                        <td>{{discipline.get_num_summary_due}}</td>
+                        <td>{{discipline.due | date:"m/d/y"}}</td>
+                        <td>{{discipline.date_assigned | date:"m/d/y"}}
+                        <td>
+                            {% for summary in discipline.summary_set.all %}
+                            <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                                <span class="glyphicon glyphicon-file"></span>
+                            </a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Completed Life-Study</h3>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th> Name </th>
+                        <th> Reason </th>
+                        <th> Type </th>
+                        <th> Quantity </th>
+                        <th> Still Due </th>
+                        <th> Date Assigned </th>
+                        <th> Due Date </th>  
+                        <th> Submission(s) </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for discipline in disciplines %}
+                    {% if discipline.is_completed == True %}
+                    <tr>
+                        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+                        <td>{{discipline.infraction}}</td>
+                        <td>{{discipline.offense}}</td>
+                        <td>{{discipline.quantity}}</td>
+                        <td>{{discipline.get_num_summary_due}}</td>
+                        <td>{{discipline.due | date:"m/d/y"}}</td>
+                        <td>{{discipline.date_assigned | date:"m/d/y"}}
+                        <td>
+                            {% for summary in discipline.summary_set.all %}
+                            <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                                <span class="glyphicon glyphicon-file"></span>
+                            </a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "lifestudies/js/tooltip-submit-date.js" %}"></script>    
+{% endblock %}

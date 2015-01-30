@@ -27,12 +27,12 @@ class Portion(models.Model):
     @staticmethod
     def today():
         """ returns random daily portion for each day """
-        portions = list(Portion.objects.filter(approved=True))
-        if portions is not None:
-            """ Return an empty portion if there are no portions. """
-            return Portion()
+        portions = Portion.objects.filter(approved=True).values_list('id', flat=True)
         random.seed(date.today())
-        return random.choice(portions)
+        try:
+            return Portion.objects.get(id=random.choice(portions))
+        except:
+            return Portion()  # if it fails, return an empty Portion
 
     def __unicode__(self):
         return self.title

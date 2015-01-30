@@ -1,15 +1,12 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 
 {% block content %}
 
 <h1>Submit Daily Nourishment</h1>
 
-<form action="" method="post">
-<div class="form-group">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <input type="submit" value="Submit">
-</div>
+<form action="" method="post"> {% csrf_token %}
+    {% bootstrap_form form %}
 </form>
 
 {% endblock %}

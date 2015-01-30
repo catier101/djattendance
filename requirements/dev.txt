@@ -1,11 +1,20 @@
 -r base.txt
 
-django-autofixture==0.6.1
-django-reset==0.1.0
-pudb==2013.3.6
+# developer specific dependencies
+# used for development, testing, and CI
+
+# debugging
+pudb==2014.1
+
+# testing
 coverage==3.6
+mock==1.0.1
+django-autofixture==0.8.0
+python-coveralls
 django-discover-runner==1.0
-django-debug-toolbar==0.9.4
-django-extensions==1.2.5
-dj-database-url
-django-toolbelt
+django-nose==1.2
+
+# developer tools
+django-extensions==1.3.8
+django-debug-toolbar==1.2.1
+django-reset==0.2.0

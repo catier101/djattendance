@@ -1,28 +1,12 @@
 from django import forms
 from django.contrib import admin
+from django.utils.safestring import mark_safe
+from django.core.urlresolvers import reverse
 
+from accounts.models import Trainee
 from houses.models import House, Room, Bunk
 from aputils.models import Address
 
-class HouseAdminForm(forms.ModelForm):
-    address = forms.ModelChoiceField(queryset=Address.objects.order_by('address1'))
-
-    class Meta:
-        model = House
-
-
-class HouseAdmin(admin.ModelAdmin):
-    form = HouseAdminForm
-    list_display = (
-        'name',
-        'address',
-        'gender',
-        'used',
-    )
-    ordering = ('used', 'gender', 'name', 'address',)
-    search_fields = ['name']
-
-
-admin.site.register(House, HouseAdmin)
+admin.site.register(House)
 admin.site.register(Room)
 admin.site.register(Bunk)

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <h2>{{ event.name }} <br>
+    <small>{{ event.description }}</small>
+    </h2>
+
+    <table class="table">
+        <tr><td>Date:</td>
+            <td>{{ event.date }}</td></tr>
+        <tr><td>Start Time:</td>
+            <td>{{ event.start }}</td></tr>
+        <tr>
+            <td>End Time:</td>
+            <td>{{ event.end }}</td></tr>
+    </table>
+
+    <h4>Trainees</h4>
+    {% if event.schedule_set.all %}
+        {% for schedule in event.schedule_set.all %}
+            {{ schedule.trainee.account.get_full_name }}<br>
+        {% endfor %}
+    {% else %}
+        None
+    {% endif %}
+
+{% endblock %}

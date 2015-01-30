@@ -1,0 +1,30 @@
+{% extends "lifestudies/base_lifestudies.html" %}
+
+{% block title %}Life Study{% endblock %}
+
+{% block lifestudies_content %} 
+
+    <div class="container">
+        <div class="col-md-12">
+            <h2>{{summary.book.name}}</h2>
+            <p>{{summary.content}}</p>
+            <div>
+                <span class="badge alert-info">{{summary.date_submitted}}</span>
+                {% if summary.approved %}
+                <span class="badge alert-success">approved</span>
+                {% else %}
+                <span class="badge alert-danger">not approved</span>
+                {% endif %}
+                <div class="pull-right">
+                    {% if summary.approved == False %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                    {% endif %}        
+                </div>        
+            </div>
+        </div>
+    </div>
+ 
+{% endblock %}

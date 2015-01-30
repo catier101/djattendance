@@ -1,6 +1,6 @@
 import random
 
-from accounts.models import User, TrainingAssistant, Trainee
+from .models import User, TrainingAssistant, Trainee
 from autofixture import generators, register, AutoFixture
 
 """ accounts.autofixtures

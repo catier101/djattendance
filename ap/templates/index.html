@@ -1,22 +1,59 @@
 {% extends "base.html" %}
+
 {% load staticfiles %}
+{% load bootstrap3 %}
 
 {% block title %}Home{% endblock %}
+
+{% block messages %}
+    <div id="messages">
+        {% for message in messages %}
+            {% bootstrap_messages message %}                
+        {% endfor %}
+    </div>
+{% endblock %}
 
 {% block content %}
 
     <h2>Welcome, {{ user.get_full_name }}! </h2>
 
-    <h5>Daily Nourishment</h5>
     {% if daily_nourishment.text %}
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h5 class="panel-title">Daily Nourishment</h5>
+      </div>
+    <div class="panel-body">
         <blockquote>
             {{ daily_nourishment.text }}
             <small>{{ daily_nourishment.ref }}</small>
         </blockquote>
+      </div>
+    </div>
+
     {% else %}
-        <i>No nourishment has been submitted.  Click
-        <a href="/dailybread/submit">here</a> to submit a verse or ministry
-        portion that you have enjoyed.</i>
+        <div class="panel-footer">
+            <i>No nourishment has been submitted.  Click
+            <a href="/dailybread/submit">here</a> to submit a verse or ministry
+            portion that you have enjoyed.</i>
+        </div>
+    {% endif %}
+
+    {% if schedule %}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h5 class="panel-title">Today's Schedule</h5>
+      </div>
+      <div class="panel-body">
+        <ul>
+        {% for event in schedule.todays_events %}
+            <li>{{ event.name }} @ {{ event.start }}</li>
+        {% endfor %}
+        </li>
+      </div>
+    </div>        
     {% endif %}
 
 {% endblock %}
+
+
+

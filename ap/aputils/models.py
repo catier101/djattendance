@@ -31,13 +31,72 @@ class Country(models.Model):
         verbose_name_plural = "countries"
 
 
+class State(models.Model):
+
+    STATES = (
+        ('AL', 'Alabama'),
+        ('AK', 'Alaska'),
+        ('AZ', 'Arizona'),
+        ('AR', 'Arkansas'),
+        ('CA', 'California'),
+        ('CO', 'Colorado'),
+        ('CT', 'Connecticut'),
+        ('DE', 'Delaware'),
+        ('DC', 'District of Columbia'),
+        ('FL', 'Florida'),
+        ('GA', 'Georgia'),
+        ('HI', 'Hawaii'),
+        ('ID', 'Idaho'),
+        ('IL', 'Illinois'),
+        ('IN', 'Indiana'),
+        ('IA', 'Iowa'),
+        ('KS', 'Kansas'),
+        ('KY', 'Kentucky'),
+        ('LA', 'Louisiana'),
+        ('ME', 'Maine'),
+        ('MD', 'Maryland'),
+        ('MA', 'Massachusetts'),
+        ('MI', 'Michigan'),
+        ('MN', 'Minnesota'),
+        ('MS', 'Mississippi'),
+        ('MO', 'Missouri'),
+        ('MT', 'Montana'),
+        ('NE', 'Nebraska'),
+        ('NV', 'Nevada'),
+        ('NH', 'New Hampshire'),
+        ('NJ', 'New Jersey'),
+        ('NM', 'New Mexico'),
+        ('NY', 'New York'),
+        ('NC', 'North Carolina'),
+        ('ND', 'North Dakota'),
+        ('OH', 'Ohio'),
+        ('OK', 'Oklahoma'),
+        ('OR', 'Oregon'),
+        ('PA', 'Pennsylvania'),
+        ('RI', 'Rhode Island'),
+        ('SC', 'South Carolina'),
+        ('SD', 'South Dakota'),
+        ('TN', 'Tennessee'),
+        ('TX', 'Texas'),
+        ('UT', 'Utah'),
+        ('VT', 'Vermont'),
+        ('VA', 'Virginia'),
+        ('WA', 'Washington'),
+        ('WV', 'West Virginia'),
+        ('WI', 'Wisconsin'),
+        ('WY', 'Wyoming'),
+    )
+    
+    name = models.CharField(max_length=2, blank=True, choices=STATES)
+
+
 class City(models.Model):
 
     # the name of the city
     name = models.CharField(max_length=50)
 
-    # state or province (depending on which country it is)
-    region = models.CharField(max_length=30)
+    # optional for non-US cities
+    state = models.ForeignKey(State, blank=True, null=True)
 
     # Country foreign key
     country = models.ForeignKey(Country)
@@ -83,7 +142,7 @@ class HomeAddress(Address):
 
 class Vehicle(models.Model):
 
-    color = models.CharField(max_length=10)
+    color = models.CharField(max_length=20)
 
     # e.g. "Honda", "Toyota"
     make = models.CharField(max_length=30)
@@ -91,11 +150,15 @@ class Vehicle(models.Model):
     # e.g. "Accord", "Camry"
     model = models.CharField(max_length=30)
 
+    year = models.PositiveSmallIntegerField()
+
     license_plate = models.CharField(max_length=10)
 
     state = models.CharField(max_length=20)
 
-    trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
+    capacity = models.PositiveSmallIntegerField()
+
+    trainee = models.ForeignKey('accounts.Trainee', blank=True, null=True)
 
     def __unicode__(self):
         return self.color + ' ' + self.make + ' ' + self.model
@@ -110,9 +173,11 @@ class EmergencyInfo(models.Model):
 
     phone = models.CharField(max_length=15)
 
-    phone2 = models.CharField(max_length=15)
+    phone2 = models.CharField(max_length=15, blank=True, null=True)
 
     address = models.ForeignKey(Address)
+    
+    trainee = models.OneToOneField('accounts.Trainee', blank=True, null=True)
 
     def __unicode__(self):
         return self.name + '(' + self.relation + ')'

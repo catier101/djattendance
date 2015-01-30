@@ -35,11 +35,11 @@ class CityAdmin(admin.ModelAdmin):
     form = CityAdminForm
     list_display = (
         'name',
-        'region',
+        'state',
         'country'
     )
-    ordering = ('country', 'region', 'name',)
-    search_fields = ['name', 'region']
+    ordering = ('country', 'state', 'name',)
+    search_fields = ['name', 'state']
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -56,10 +56,12 @@ class VehicleAdmin(admin.ModelAdmin):
         'license_plate',
         'color',
         'make',
-        'model'
+        'model',
+        'year',
+        'capacity',
     )
     ordering = ('make', 'model', 'color', 'license_plate',)
-    search_fields = ['make', 'model', 'color', 'license_plate']
+    search_fields = ['make', 'model', 'color', 'license_plate', 'capacity']
 
 
 class VehicleInline(admin.TabularInline):

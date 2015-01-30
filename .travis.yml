@@ -1,0 +1,29 @@
+language: python
+python:
+- 2.7
+addons:
+  postgresql: '9.3'
+install:
+- pip install -r requirements/dev.txt
+before_script:
+- cp ap/ap/settings/travis.py ap/ap/settings/dev.py
+- psql -c 'create database djattendance;' -U postgres
+- sed -i -e 's/getpass.getuser()/"postgres"/g' ap/ap/settings/dev.py
+- python ap/manage.py syncdb --settings=ap.settings.dev --noinput
+script:
+- coverage run ap/runtests.py
+- coverage report
+notifications:
+  email:
+    recipients:
+    - lifeunion@gmail.com
+after_success:
+- coveralls
+deploy:
+  provider: heroku
+  api_key:
+    secure: Erc8ZoPuwl+QTRuOn1pDRRBaLCnYgDPYBSxWbn1OSDei1jfg3euMdIbO1UwBNfpLMeY+VOP9e7YrXa5qdGxEEJdUnY5gQ0K/uYl+Z7juARduabkNZyUV/8tD4zzDo2Fiucvwtk8GF75HmzkED5W316NEnJ00vpBoxIC5ajNw1Qk=
+  app: djattendance
+  on:
+    repo: attendanceproject/djattendance
+    branch: dev

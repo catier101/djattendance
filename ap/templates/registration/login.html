@@ -3,7 +3,6 @@
 {% block title %}Login{% endblock %}
 
 {% block references %}
-    <link href="{% static "css/align_form.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block navbar-right %}
@@ -21,7 +20,7 @@
 	  <form class="form-horizontal" action="" method="post">
 	  	{% csrf_token %}
 	  	<div class="form-group">
-	  		<label for="username" class="col-xs-3 col-sm-2 col-md-2 control-label">Username:</label>
+	  		<label for="username" class="col-xs-3 col-sm-2 col-md-2 control-label">Email:</label>
 	    	<div class="col-xs-9 col-sm-4 col-md-4">
 	    		<input class="form-control" type="text" name="username" value="" id="username">
 	    	</div>

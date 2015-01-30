@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}Absent Trainee Roster{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/dynamic_formset.js' %}"></script>
+{% endblock %}
+
+{% block references %}
+    <link href="{% static 'absent_trainee_roster/abs_trn_roster.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h3>Absent Trainee Roster</h3>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <b>Date:</b> {% now "l, F d, Y" %}
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <b>House:</b> {{ user.trainee.house }}
+  </div>
+</div>
+<hr>
+
+<form action="" method="post" role="form">
+  {% csrf_token %}
+
+  <div class="row hidden-xs" style ="name">
+    <div class="col-sm-3"><strong>Name</strong></div>
+    <div class="col-sm-3"><strong>Reason</strong></div>
+    <div class="col-sm-2" style="reason"><strong><small>Coming <br>to Class</small></strong></div>
+    <div class="col-sm-3" style="coming"><strong>Comments</strong></div>
+  </div>
+
+  {{ formset.management_form }}
+  {{ formset.non_field_errors }}
+  {{ formset.non_form_errors }}
+  {% for form in formset %}
+
+    <div class="row entry" style="form-top">
+      {{ form.id }}
+      <div class="form-group col-xs-6 col-sm-3">{{ form.absentee.errors }}{{ form.absentee }}</div>
+      <div class="form-group col-xs-5 col-sm-3">{{ form.reason.errors }}{{ form.reason }}</div>
+      <div class="hidden-xs form-group col-xs-1">{{ form.coming_to_class.errors }}<div style="margin-top:6px;">{{ form.coming_to_class }}</div></div>
+      <div class="col-xs-1 visible-xs" style="padding:0;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
+      <br class="visible-xs"><br class="visible-xs"> <!--This is a temporary hack to prevent the next div from overlapping the select boxes above it. It would be better to do this with Less.-->
+      <div class="form-group col-xs-8 col-sm-4 col-md-4" style="padding-right:15px;">{{ form.comments.error }}{{ form.comments }}</div>
+      <div class="visible-xs form-group col-xs-4" style="error">{{ form.coming_to_class.errors }}Coming to class: {{ form.coming_to_class }}</div>
+      <div class="col-sm-1 hidden-xs" style="padding:0;"><a class="delete" href="#"><span class="glyphicon glyphicon-remove" style="margin-top:8px;"></span></a></div>
+    </div>
+
+  {% endfor %}
+
+  <div class="row" style="padding-left:15px; margin-top:10px">
+    <a id="add" href="#">Add another trainee</a></p>
+  </div>
+
+  <div class="row" style="padding-left:15px;">
+    <input type="submit" value="Submit" />
+  </div>
+
+</form> 
+{% endblock %}

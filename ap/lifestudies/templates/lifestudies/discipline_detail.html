@@ -1,0 +1,48 @@
+{% extends "lifestudies/base_lifestudies.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Life Study{% endblock %}
+
+{% block lifestudies_content %}
+
+    <h2> {{discipline.trainee.account.get_full_name}} </h2>
+
+    {% for summary in discipline.summary_set.all %}
+    <div class="container">
+        <div class="col-md-12">
+            <h3>{{summary.book.name}}</h3>
+            <p>{{summary.content}}</p>
+            <div>
+                <span class="badge alert-info">{{summary.date_submitted}}</span>
+                {% if summary.approved %}
+                <span class="badge alert-success">approved</span>
+                {% else %}
+                <span class="badge alert-danger">not approved</span>
+                {% endif %}
+                <div class="pull-right">
+                    {% if summary.approved == False %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button type="submit" name="summary_pk" value="{{summary.pk}}" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                    {% endif %}        
+                </div>        
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-md-12">
+        <h4>No Summary Submitted</h4>
+    </div>
+    {% endfor %}
+    <div class="pull-right">
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" name="hard_copy" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-plus-sign"></span> Add Approved Hard-Copy Summary
+            </button>
+        </form>
+    </div>
+
+{% endblock %}

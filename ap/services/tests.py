@@ -1,5 +1,6 @@
+"""
 from django.test import TestCase
-from service.models import Category, Service, Period
+from services.models import Category, Service, Period
 
 
 class ServiceTest(TestCase):
@@ -34,3 +35,4 @@ class ServiceTest(TestCase):
         # checks if period lists all services in that period
         d = Period.objects.get(name="FTTA Regular Week")
         self.assertEqual('[<Service: Breakfast Cleanup>, <Service: Vacuuming>]', str(d.service.all()))
+"""

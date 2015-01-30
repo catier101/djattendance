@@ -1,0 +1,90 @@
+# Example of a single individual slip:
+
+{ 
+	"comments": "bingo", 
+	"description": "bingo", 
+	"finalized": null, 
+	"id": 27, 
+	"informed": false, 
+	"last_modified": "2014-05-24T15:22:09.177212", 
+	"resource_uri": "/leaveslip-api/individualslip/27/", 
+	"status": "P", 
+	"submitted": "2014-05-24T15:22:09.138935", 
+	"texted": true, 
+	"type": "GOSP"
+}
+
+# Post
+curl --dump-header - -H "Content-Type: application/json" -X POST --data 
+	'{"id": "1", comments": "Jesus is Lord!", "description": "Jesus is Lord!", finalized": null, "informed": false, "status": "P", "submitted": "2014-05-24T15:22:09.138935", "texted": true, "type": "GOSP"}' 
+	http://localhost:8000/leaveslip-api/individualslip/
+
+# Individual slip schema
+
+{
+	"allowed_detail_http_methods": ["get", "post"], 
+	"allowed_list_http_methods": ["get", "post"], 
+	"default_format": "application/json", 
+	"default_limit": 20, 
+	"fields": 
+		{
+			"comments": 
+				{
+					"blank": false, 
+					"default": "", 
+					"help_text": "Unicode string data. Ex: \"Hello World\"", 
+					"nullable": true, 
+					"readonly": false, 
+					"type": "string", 
+					"unique": false
+				}, 
+			"description": 
+				{
+					"blank": false, 
+					"default": "", 
+					"help_text": "Unicode string data. Ex: \"Hello World\"", 
+					"nullable": true, 
+					"readonly": false, 
+					"type": "string", 
+					"unique": false
+				}, 
+			"finalized": 
+				{
+					"blank": false, 
+					"default": "No default provided.", 
+					"help_text": "A date & time as a string. Ex: \"2010-11-10T03:07:43\"", 
+					"nullable": true, 
+					"readonly": false, 
+					"type": "datetime", 
+					"unique": false}, 
+			"id": 
+				{
+					"blank": true, 
+					"default": "", 
+					"help_text": "Integer data. Ex: 2673", 
+					"nullable": false, 
+					"readonly": false, 
+					"type": "integer", 
+					"unique": true
+				}, 
+			"informed": 
+				{
+					"blank": true, "default": false, "help_text": "Boolean data. Ex: True", "nullable": false, "readonly": false, "type": "boolean", "unique": false}, 
+			"last_modified": 
+				{
+					"blank": true, "default": true, "help_text": "A date & time as a string. Ex: \"2010-11-10T03:07:43\"", "nullable": false, "readonly": false, "type": "datetime", "unique": false}, 
+			"resource_uri": 
+				{
+					"blank": false, "default": "No default provided.", "help_text": "Unicode string data. Ex: \"Hello World\"", "nullable": false, "readonly": true, "type": "string", "unique": false}, 
+			"status": 
+				{
+					"blank": false, "default": "P", "help_text": "Unicode string data. Ex: \"Hello World\"", "nullable": false, "readonly": false, "type": "string", "unique": false}, 
+			"submitted": 
+				{	
+					"blank": true, "default": true, "help_text": "A date & time as a string. Ex: \"2010-11-10T03:07:43\"", "nullable": false, "readonly": false, "type": "datetime", "unique": false}, 
+			"texted": 
+				{	
+					"blank": true, "default": false, "help_text": "Boolean data. Ex: True", "nullable": false, "readonly": false, "type": "boolean", "unique": false}, 
+			"type": 
+				{	
+					"blank": false, "default": "No default provided.", "help_text": "Unicode string data. Ex: \"Hello World\"", "nullable": false, "readonly": false, "type": "string", "unique": false}}}

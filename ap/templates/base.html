@@ -1,106 +1,150 @@
 {% load staticfiles %}
+{% load bootstrap3 %}
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+    <link rel="shortcut icon" href="">
 
-    <title>FTTA - {% block title %}{% endblock %}</title>
+    <title>FTTA | {% block title %}{% endblock %}</title>
+    
+    {% block media %}
 
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet">
+      {% load bootstrap3 %}
 
-    <!-- Custom styles for this template -->
-    <link href="{% static "css/fluid.css" %}" rel="stylesheet"> <!--right now, just a fix for small-size screens-->
-    <link href="{% static "bootstrap/css/navbar-static-top.css" %}" rel="stylesheet">
-    <link href="{% static "bootstrap/css/offcanvas.css" %}" rel="stylesheet">
+      <link href="{% static "css/base.css" %}" rel="stylesheet"> 
+      <link href="{% static "css/offcanvas.css" %}" rel="stylesheet">
+      {% bootstrap_css %}
+      {% bootstrap_messages %}
+      {% block references %}
+          <!-- additional css/refs here -->
+      {% endblock references %}
 
-    {% block references %}{% endblock %}
+      <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
+      <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
+      <script src="{% static "js/offcanvas.js" %}"></script>
+      {% bootstrap_javascript %}
+      {% block scripts %}
+          <!-- additional js here -->
+      {% endblock scripts %}
+
+    {% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
+      <script src="{% static "js/html5shiv.min.js" %}"></script>
+      <script src="{% static "js/respond.min.js" %}"></script>
     <![endif]-->
   </head>
 
   <body>
 
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+
         <div class="navbar-header">
-          <div class="pull-left visible-xs">
-            <button type="button" class="sidebar-toggle" data-toggle="offcanvas">
+            <button class="navbar-toggle visible-xs" data-toggle="offcanvas" type="button" style="float: left; margin-left: 15px; margin-right: 0px">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-          </div>
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-dot"></span>
-            <span class="icon-dot"></span>
-            <span class="icon-dot"></span>
-          </button>
-          <a class="navbar-brand hidden-xs" href="/">Full-Time Training in Anaheim</a>
-          <a class="navbar-brand visible-xs" href="/">FTTA</a>
+
+            <button type="button" class="navbar-toggle glyphicon glyphicon-chevron-down visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            </button>
+
+          <a class="navbar-brand hidden-xs" href="{% url 'home' %}"></img>Full-Time Training in Anaheim</a>
+          <a class="navbar-brand visible-xs" href="{% url 'home' %}">FTTA</a>
         </div>
+
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% block navbar-right %}
-              <li><a href="#account">User Name</a></li>
-              <li><a href="#">Logout</a></li>
+              <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Hi, {{user.get_full_name}}! <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="dropdown-header">Account Settings</li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user_detail' user.id %}">Profile</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'email_change' user.id %}">Change Email</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'password_change' %}">Change Password</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user_update' user.id %}">Update Account</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'logout' %}">Logout</a></li>
+                  </ul>
+              </li>
             {% endblock %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
-    </div>
-
-    {% block sidebar %}
-    <div class="container">
+    </nav>
+    
+    <div class="container-fluid">
       <div class="row row-offcanvas row-offcanvas-left">
-        <!--SIDEBAR-->
-        <div class="col-xs-12 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation" style="padding:0px; margin-top:-20px">
-          <div class="well sidebar-nav" style="border-radius:0px">
-            <ul class="nav">
+
+        {% block sidebar %}
+          <!--SIDEBAR-->
+          <div id="sidebar" class="col-xs-6 col-sm-2 sidebar-offcanvas" role="navigation">
+            <div class="list-group small">
+
               {% block sidelinks %}
-              <li>Attendance</li>
-                {% block attendance_links %}
-                <li class="active"><a href="#">View Attendance Report</a></li>
-                <li><a href="#">Submit Attendance</a></li>
-                <li><a href="#">Link 3</a></li>
+
+              <h5>Attendance</h5> {% block attendance_links %}
+                <a class="list-group-item" href="{% url 'schedules:schedule' %}">View Schedule</a>
+                <a class="list-group-item" href="{% url 'schedules:event-create' %}">Create Event</a>
+                <a class="list-group-item" href="{% url 'attendance:attendance-submit' %}">Personal Attendance</a>
+                <a class="list-group-item" href="/leaveslips">View Leaveslips</a>
+                <a class="list-group-item" href="/leaveslips/individual/create">Submit Individual Leaveslips</a>
+                <a class="list-group-item" href="/leaveslips/group/create">Submit Group Leaveslips</a>
                 {% endblock %}
-              <hr style="border-top: 1px solid #dddddd;">
-              <li>Classes</li>
-                <li><a href="#">A/V Requests</a></li>
-                <li><a href="#">Class Notes</a></li>
+
+              <h5>Discipline</h5>
+                <a class="list-group-item" href="/lifestudies/">Life Studies</a></li>
+                <a class="list-group-item" href="#">Class Notes</a>
+
+              <h5>Requests</h5>
+                <a class="list-group-item" href="#">A/V Requests</a>
+                <a class="list-group-item" href="#">Maintenance Requests</a>
+                <a class="list-group-item" href="#">Room Reservations</a>
+                <a class="list-group-item" href="#">Web Access Requests</a>
+
+              <h5>Misc.</h5>
+                <a class="list-group-item" href="#">Announcements</a>
+                <a class="list-group-item" href="#">Bible Reading Tracker</a>
+                <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
+                <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
+
               {% endblock %}
-            </ul>
-          </div>
-        </div><!--/sidebar-->
-    {% endblock %}
+            </div>
+          </div> <!--/SIDEBAR-->
+        {% endblock %}
 
         <!--CONTENT-->
-        <div class="col-xs-12 col-sm-9 content">
-          
-          {% block content %}{% endblock %}
-        </div><!--/content-->
-      </div>
+        <div id="content" class="col-xs-12 col-sm-10">
 
+          {% block messages %}
+              <div id="messages">
+                {% if messages %}
+                  {% for message in messages %}
+                    {% bootstrap_messages message %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+          {% endblock %}
+
+          {% block content %}
+            <!-- CONTENT OF PAGE GOES HERE -->
+          {% endblock %}
+        </div> <!--/CONTENT -->
+
+      </div> <!-- /row -->
     </div> <!-- /container -->
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static "jquery/js/jquery-1.10.1.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
-    <script src="{% static "bootstrap/js/offcanvas.js" %}"></script>
-    {% block scripts %}{% endblock %}
   </body>
 </html>

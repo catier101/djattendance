@@ -1,0 +1,64 @@
+<h1>Welcome to the Syllabus Home Page</h1>
+
+<!-- <h1> Option 1: </h1> -->
+
+<h2>Term list: Please Choose a Term</h2>
+
+{% if termlist %}
+	<ul>
+		{% for term in termlist %}
+			<li><a href="{{ term.code }}">{{ term.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No terms.</p>
+{% endif %}
+
+
+
+
+<!-- <h1> Option 2: Need to figure out how to use multiple models in a single view. Also how to use form post data to querey the database</h1>
+<form>
+
+	<p> Please Chose a Term: </p>
+	<select name="term">
+		{% for term in termlist %}
+				<option value="{{ term.code }}"> {{ term.name }}</option>
+		{% endfor %}
+	</select>
+	</br>
+
+	<p> Please Chose a Year: </p>
+	<select name="year">
+		{% for term in termlist %}
+				<option value="{{ term.start }}"> {{ term.start }}</option>
+		{% endfor %}
+	</select>
+
+</br>
+
+	<p> Please Chose a Class: </p>
+	<select name="class">
+		{% for term in termlist %}
+				<option value="{{ term.end }}"> {{ term.end }}</option>
+		{% endfor %}
+	</select>
+
+</br>
+
+
+	<p> Please Chose Syllabus or Class Reading Schedule: </p>
+	<select name="crs">
+		{% for term in termlist %}
+				<option value="{{ term.season }}"> {{ term.season }}</option>
+		{% endfor %}
+	</select>
+
+</br>
+
+	<input type="submit">
+
+
+
+
+</form> -->

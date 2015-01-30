@@ -1,8 +1,0 @@
-Hey world, this is detail.html.
-
-<a href="{% url 'terms:index' %}">Back to term list.</a>
-
-<h1>{{ term.name }}</h1>
-<p>Start: {{ term.start }}</p>
-<p>End: {{ term.end }}</p>
-<p><a href="{% url 'terms:delete_term' term.code %}">Delete term.</a></p>

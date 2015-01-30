@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% load bootstrap3 %}
+
+{% block title %}Example Page{% endblock %}
+
+{% block content %}
+
+    <h3> User Profile </h3>
+    
+    <div class="container col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{user.get_full_name}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
+                <div class="col-md-9 "> 
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td>Date of Birth</td>
+                                <td>{{user.date_of_birth}}</td>
+                            </tr>
+                            <tr>
+                                <td>Gender</td>
+                                <td>{{user.gender}}</td>
+                            </tr>
+                            <tr>
+                                <td>Age</td>
+                                <td>{{user.get_age}}</td>
+                            </tr>
+                            <tr>
+                                <td>Home Address</td>
+                                <td>{{user.trainee.address}}</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>{{user.email}}</td>
+                            </tr>
+                                <td>Phone Number</td>
+                                <td>{{user.phone}}</td>
+                            </tr>
+                            {% if user.trainee %}
+                            <tr>
+                                <td>Type</td>
+                                <td>{{user.trainee.type}}</td>
+                            </tr>
+                            <tr>
+                                <td>Term</td>
+                                <td>{{user.trainee.calculate_term}}</td>
+                            </tr>
+                            <tr>
+                                <td>TA</td>
+                                <td>{{user.trainee.TA}}</td>
+                            </tr>
+                            <tr>
+                                <td>Mentor</td>
+                                <td>{{user.trainee.mentor}}</td>
+                            </tr>
+                            <tr>
+                                <td>Team</td>
+                                <td>{{user.trainee.team}}</td>
+                            </tr>
+                            <tr>
+                                <td>House</td>
+                                <td>{{user.trainee.house}}</td>
+                            </tr>
+                            <tr>
+                                <td>Bunk #</td>
+                                <td>{{user.trainee.bunk}}</td>
+                            </tr>
+                            {% if user.trainee.married %}
+                            <tr>
+                                <td>Spouse</td>
+                                <td>{{user.trainee.spouse}}</td>
+                            </tr>
+                            {% endif %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

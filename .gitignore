@@ -1,9 +1,11 @@
 *.pyc
 .DS_Store
 key.pub
+.project
 ap/.project
+.pydevproject
 ap/.pydevproject
-
-
 venv
-staticfiles
+*.sublime-project
+*.sublime-workspace
+ap/ap/settings/local.py

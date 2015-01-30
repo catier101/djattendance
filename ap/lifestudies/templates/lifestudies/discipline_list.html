@@ -1,0 +1,144 @@
+{% extends "lifestudies/base_lifestudies.html" %}
+
+{% load staticfiles %}
+
+{% block references %}
+    <link rel="stylesheet" href="{% static "lifestudies/css/lifestudies.css" %}" />
+{% endblock %}
+
+{% block tab1 %} class="active" {% endblock %}
+
+{% block title %}Life Study{% endblock %}
+
+{% block lifestudies_content %}
+
+    {% if user.trainee %}
+
+    <h1> Life Study Summaries</h1>
+
+    <div class="panel-group" id="accordion">
+
+        {% for discipline in user.trainee.discipline_set.all %}
+            {% if discipline.is_completed == False %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">
+                            Discipline assigned for {{discipline.infraction}}. Summaries left: <b>{{discipline.get_num_summary_due}}</b>
+                        </h2>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            {% for summary in discipline.summary_set.all %}
+                                {% if summary.approved == False %}
+                                <a href="{% url 'lifestudies:summary_detail' summary.pk %}" class="list-group-item">
+                                {% else %}
+                                <a class="list-group-item disabled">
+                                {% endif %}
+                                    <div class="col-md-12">
+                                        <h3>{{summary.book.name}}</h3>
+                                        <p>{{summary.content}}</p>
+                                        <div>
+                                            <span class="badge alert-info">{{summary.date_submitted}}</span>
+                                            {% if summary.approved %}
+                                            <span class="badge alert-success">approved</span>
+                                            {% else %}
+                                            <span class="badge alert-danger">not approved</span>
+                                            {% endif %}
+                                            <div class="pull-right">
+                                                {% if summary.approved == False %}
+                                                    <form action="{% url 'lifestudies:summary_detail' summary.pk %}" method="get">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-success btn-xs">Edit</button>
+                                                    </form>
+                                                {% endif %}        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                            {% if discipline.get_num_summary_due > 0 %}
+                                <form action="{% url 'lifestudies:summary_create' discipline.pk %}">
+                                    <div class="pull-right">
+                                        <button class="btn btn-success btn-xs">New Life-Study Summary </button>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% elif user.trainingassistant %}
+
+        <h2> Life Study TA View </h2>
+
+        <form role="form" action="{% url 'lifestudies:discipline_list' %}" method="post">
+            {% csrf_token %}
+
+            <table class="table table-hover table-condensed" id="mytable">
+
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="checkall" /></th>
+                        <th> Edit </th>
+                        <th> Name </th>
+                        <th> Reason </th>
+                        <th> Type </th>
+                        <th> Quantity </th>
+                        <th> Still Due </th>
+                        <th> Date Assigned </th>
+                        <th> Due Date </th>  
+                        <th> Unapproved Submission</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for discipline in disciplines %}
+                    {% if discipline.is_completed == False %}
+                    <tr>
+                        <td><input type="checkbox" name="selection" value="{{discipline.pk}}"></input></td>
+                        <td>
+                            <a href="{% url 'lifestudies:discipline_detail' discipline.pk %}" class="btn btn-primary btn-xs" role="button">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </a>
+                        </td>
+                        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+                        <td>{{discipline.infraction}}</td>
+                        <td>{{discipline.offense}}</td>
+                        <td>{{discipline.quantity}}</td>
+                        <td><b>{{discipline.get_num_summary_due}}</b></td>
+                        <td>{{discipline.date_assigned | date:"m/d/y"}}
+                        <td>{{discipline.due | date:"m/d/y"}}</td>
+                        <td>
+                            {% for summary in discipline.summary_set.all %}
+                            {% if summary.approved == False %}
+                            <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                                <span class="glyphicon glyphicon-file"></span>
+                            </a>
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            <div class="pull-right">
+                <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
+                <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "lifestudies/js/collapse-panel.js" %}"></script>
+    <script type="text/javascript" src="{% static "lifestudies/js/click-all.js" %}"></script>
+    <script type="text/javascript" src="{% static "lifestudies/js/checkboxes.js" %}"></script>
+    <script type="text/javascript" src="{% static "lifestudies/js/tooltip-submit-date.js" %}"></script>    
+{% endblock %}
+

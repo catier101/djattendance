@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+    <h3> Update Account </h3>
+       <form method="post" action="">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit"/>
+    </form>
+{% endblock %}

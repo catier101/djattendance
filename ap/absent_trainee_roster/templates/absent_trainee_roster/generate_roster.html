@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC >
+
+<html>
+	<head>
+		<title>Absent Trainee Roster</title>
+	</head>
+	<body>
+		
+<style type="text/css">
+
+	@page {
+                size: {{ pagesize }};
+                margin: 1cm;
+                @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                }
+            }
+            
+	body {
+		font-family: sans-serif;
+	}
+
+	th {
+		padding-top: 5px;
+		font-weight: bold;
+		text-align:center
+	}
+
+	h1 {
+		font-size: 28px;
+		font-weight: bold;
+	}
+
+	h2 {
+		font-size: 21px;
+		font-style: italic;
+		text-align: right;
+		font-weight: normal;
+	}
+
+	h1, h2 {
+		padding: 2px 2px;
+		margin: 0px;
+	}
+
+    table {
+            font-size: 14px;
+    }
+
+	table.center {
+		margin-left:auto;
+		margin-right:auto;
+	}
+
+	table.trainees {
+		border-collapse: collapse;
+		margin-top: 24px;
+	}
+
+	table#reportTitle {
+		border-bottom: 2pt double black;
+		padding: 0px;
+	}
+
+</style>
+
+<table width='100%' class='center'><tr><td>
+
+	<table width='100%' class='center' id='reportTitle'>
+		<tr>
+			<td style='text-align:left'><h1>Absent Trainee Roster</h1></td>
+			<td style='text-align:right'><h2>{{ roster.date|date:'l, F j, Y' }}</h2></td>
+		</tr>
+	</table>
+
+	<table width='100%' class='trainees center'>
+        <colgroup><col><col><col><col><col></colgroup>
+        {% for gender in genders %}
+	        <tr>
+				<td colspan='5' style='border-bottom: 1pt solid black;'></td>
+			</tr>
+			<tr>
+				<th>{{ gender.1 }}s</th>
+				<th>House</th>
+				<th>Term</th>
+				<th>Reason</th>
+				<th># Days</th>
+			</tr>
+			<tr>
+				<td colspan='5' style='border-top: 1pt solid black;'></td>
+			</tr>
+			
+				{% for entry in entries %}
+					{% if entry.absentee.account.gender == gender.0 %}
+						{% for k, v in days.items %}
+							{% ifequal k entry.absentee.name %}
+								{% if v > 2 %}
+									<tr style='font-weight:bold'>
+								{% else %}
+									<tr>
+								{% endif %}
+							{% endifequal %}
+						{% endfor %}
+						<td>{{entry.absentee.name}}</td>
+						<td style='text-align:center'>{{entry.absentee.house}}</td>
+						<td style='text-align:center'>{{entry.absentee.term}}</td>
+						<td style='text-align:center'>{{entry.get_reason_display}} </td>
+						<td style='text-align:center'>
+							{% for k, v in days.items %}
+								{% ifequal k entry.absentee.name %}
+									{{v}}
+								{% endifequal %}
+							{% endfor %}
+							{% if entry.absentee.house in unreported_list %}
+								+
+							{% endif %}
+						</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+
+		{% endfor %}
+
+		<tr>
+			<td colspan='5' style='border-bottom: 1pt solid black;'></td>
+		</tr>
+		<tr>
+			<th colspan='5' style='border-bottom:1pt solid black'>Unreported Houses</th>
+		</tr>
+		<tr>
+			<td style='vertical-align:top; width: 49%; padding-top: 5px;' colspan='2'>
+				<span style='font-weight:bold;'>Brothers:</span><br>
+				{% if bro_unreported_houses %}
+					{% for house in bro_unreported_houses %}
+						{{house}}<br>
+					{% endfor %}
+				{% else %}
+					<p style='font-style:italic'>No houses unreported.</p>
+				{% endif %}	
+			</td>
+
+			<td></td>
+			<td style='vertical-align:top; width: 49%; padding-top: 5px;' colspan='2'>
+				<span style='font-weight:bold;'>Sisters:</span><br>
+				{% if sis_unreported_houses %}
+					{% for house in sis_unreported_houses %}
+						{{house}}<br>
+					{% endfor %}
+				{% else %}
+					<p style='font-style:italic'>No houses unreported.</p>
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+	
+	<hr></hr>
+	<p><span style='font-weight:bold'># Days</span> is the number of days a trainee has been absent in the last 7 days. </p>
+	<p><span style='font-weight:bold'>+</span> means that within the last 7 days, the trainee's house has been unreported.</p>
+
+
+</td></tr></table>
+	</body>
+</html>

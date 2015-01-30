@@ -1,0 +1,94 @@
+// DEBUG:
+<p> Hey world, this is detail.html for syllabus instead. </p>
+<p>The current url path is {{ request.get_full_path }}</p>
+<p># of Syllabii: {{ syl_list|length }}</p>
+
+<h1> {{syl_list}} </h1>
+---
+<br><br>
+<b>FULL-TIME TRAINING IN ANAHEIM</b>
+
+{% if syl_list %}	
+	{% for syllabus in syl_list %}
+	<!-- /////////////////
+	TO DO:
+		- (psuedocode):
+			- if: the syllabus == the class.id in the URL
+				- then: display the syllabus.
+			- else: don't display the syllabus.
+		- so:
+			- how to track what class user selected
+		- 
+	
+	
+ 	///////////////////// -->
+		<h2>
+			<p>
+			{{ syllabus.classSyllabus.term }} |
+			{{ syllabus.classSyllabus.name }}
+			</p>
+		</h2>	
+			<p>Syllabus</p>
+
+			{% if syllabus.after %}
+				Complete the assigned reading AFTER each class section
+			{% else %}	
+				Complete the assigned reading BEFORE each class section
+			{% endif %}
+
+
+			<h5>// (debug) # of Sessions: {{ syllabus.session_set.all|length }}</h5>
+		</h4>
+			{% if syllabus.session_set.all %}
+				<h4>
+				{% for session in syllabus.session_set.all %}
+				<p>		
+						<!-- TO DO:
+							 add leading zero to session.date.month
+						-->
+						Date: {{ session.date.month }}/{{ session.date.day }} |
+						{% if session.exam %}
+							Topic: EXAM |
+						{% else %}
+							Topic: {{ session.topic }} |	
+						{% endif %}
+						{% if session.exam %}
+							{{ session.assignment }}
+						{% else %}	
+						{% if session.book %}
+							Reading Assignment: {{ session.book.code }},
+						{% endif %}	
+							{{ session.assignment }}
+						{% endif %}
+				</p>
+				{% endfor %}
+				</h4>
+				
+				<p>
+				{% for session in syllabus.session_set.all %}
+					{{ session.book.code }} - {{ session.book }}<br>
+				{% endfor %}	
+				</p>
+			{% endif %}
+		
+		<!-- TO DO: get session related objects by doing a REVERSE relationship from SYLLABUS object. -->
+	{% endfor %}
+
+{% endif %}
+
+
+--- 
+<br><br>
+// end of all syllabus
+
+<br><br>
+
+
+
+test test
+
+
+
+
+
+	

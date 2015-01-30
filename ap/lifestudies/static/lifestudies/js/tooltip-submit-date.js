@@ -1,0 +1,1 @@
+$('.tooltip-submit-date').tooltip();
