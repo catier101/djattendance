@@ -215,7 +215,7 @@ var EventGrid = React.createClass({
       });
 
       var day_col = [];
-      day_events.forEach(function(event) {
+      day_events.forEach(function(event) { // we should double check or make sure that day_events is an ordered array by start time otherwise this will break
         day_col.push(<EventView event={event} slips={this.props.slips} rolls={this.props.rolls} selectEvent={this.props.selectEvent} key={event.id} />);
       }, this);
 
