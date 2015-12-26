@@ -32,6 +32,7 @@ var Attendance = React.createClass({
           <div className="col-md-4 action-col">
             <RollView
               selectedEvents={this.state.selectedEvents}
+              showLeaveSlip={this.state.showLeaveSlip}
             />
           </div>
         </div>
@@ -131,58 +132,27 @@ var EventView = React.createClass({
     actions.toggleEvent(this.props.event);
   },
   render: function() {
-    //console.log('render event', this.props.event.attributes.start);
     var ev = this.props.event;
-
-    console.log("ev", ev);
-
-    var rolls = this.props.rolls;
-    console.log("rolls!", rolls);
-    var i = 0;
-    while (i < rolls.length) {
-      if (rolls[i].event == ev.id) {
-        console.log("roll", rolls[i]);
-        break;
-      }
-      i++;
-    }
-
-    console.log("roll", rolls[i]);
-    var roll = rolls[i]
-
-    var status = roll ? ATTENDANCE_STATUS_LOOKUP[roll['status']] : '';
-    var todayClass = (ev.id === 'TODAY') ? 'today-marker' : '';
-
     var slips = this.props.slips;
-    var i = 0;
-    while (i < slips.length) {
-      if (slips[i].events[0] == ev.id) { //this is broken!!!!
-        break;
-      }
-      i++;
-    }
+    console.log("Event", ev);
+    console.log("Rolls", this.props.rolls)
+    console.log("Slips", slips);
 
-    var leaveslip = slips[i]
-    var slipStatus = leaveslip ? leaveslip['status'] : '';
-    var classes = joinValidClasses(['schedule-event', status, SLIP_STATUS_LOOKUP[slipStatus], todayClass]); //ev['selected']
-    var classes = '';
-    // ev['rolls').at(ev['rolls').length - 1)['roll')
+    //creates box on schedule according to the time
     var divStyle = {
       top: moment.duration(moment(ev['start']).format('H:m')).subtract(6, 'hours').asMinutes()/2,
       height: moment(ev['end']).diff(moment(ev['start']), 'minutes')/2,
       position: 'relative',
       border: '1px solid black',
     };
-    //data-roll={ev['roll_id']}
+    //writes name of event on calendar, selects event on click.
     return(
-      <div className={classes} onClick={this.toggleEvent} style={divStyle} data-id={ev['id']} data-roll={roll['id']}>
-        {ev['code']}
-        <div className="slip-event-status">{SLIP_STATUS_LOOKUP[slipStatus]}</div>
-      </div>
+      <div onClick={this.toggleEvent} style={divStyle}>{ev.name}</div>
     );
   }
 });
 
+//creates the calendar
 var EventGrid = React.createClass({
   render: function() {
     var cols = [],
@@ -258,166 +228,136 @@ var TimesColumn = React.createClass({
   }
 });
 
-var Leaveslip = React.createClass({
-  getInitialState:function(){
-      return {
-        type: '',
-        comments: '',
-        description: '',
-        texted: false,
-        informed: false
-      }
-  },
-  render: function() {
-    var slip = this.props.slip,
-        comments = slip['comments'],
-        comments = (comments && comments !== '') ? comments : (<i>No Comments</i>),
-        description = slip['description'],
-        description = (description && description !== '') ? description : (<i>No Description</i>),
-        status = SLIP_STATUS_LOOKUP[slip['status']],
-        titleClasses = joinValidClasses(['list-group-item active', status]);
-    return (
-      <div className="leaveslip-container">
-        <div className="list-group">
-          <a href="#" className={titleClasses}>
-            {slip['type']}
-            <span className="badge">{status}</span>
-          </a>
-          <div className="list-group-item">{description}</div>
-          <div className="list-group-item">{comments}</div>
-        </div>
-      </div>
-    );
-  }
-});
-
-var Leaveslips = React.createClass({
-  render: function() {
-    var selectedSlips = this.props.selectedSlips,
-        slips = [],
-        i, _len;
-
-    for (i = 0, _len = this.props.selectedSlips.length; i < _len; i++) {
-      slips.push(<Leaveslip slip={selectedSlips[i]} />);
-    }
-
-    if (slips.length === 0) {
-      slips = (
-        <div>
-          <i>No event(s) with leaveslip(s) selected</i>
-          <div className="form-group center-padded">
-            <button className="btn btn-primary"><span className="glyphicon glyphicon-pencil"></span> Write New Leaveslip</button>
-          </div>
-        </div>
-      );
-    }
-
-    console.log('selected slips', selectedSlips);
-    return (
-      <div className="panel panel-default" id="submit-leaveslip">
-        <div className="panel-heading">
-          <h3 className="panel-title" id="event-title">Leave Slip(s)</h3>
-        </div>
-        <div className="panel-body event-info leaveslip-info">
-          {slips}
-        </div>
-      </div>
-    );
-  }
-});
-
+//roll view contains sessions selected, submit roll, and leave slip 
 var RollView = React.createClass({
   setRoll: function(ev) {
-    console.log('setRoll', arguments, this);
     var btn = ev.target;
-    var status = (btn.id.charAt(0)).toUpperCase();
+    var status = btn.id;
     actions.setRollStatus(status);
-
-    if (btn.id === 'present') {
-      console.log('present');
-    } else if (btn.id === 'absent') {
-      console.log('absent');
-    } else if (btn.id === 'tardy') {
-      console.log('tardy');
-    } else if (btn.id === 'uniform') {
-      console.log('uniform');
-    } else if (btn.id === 'left-class') {
-      console.log('left-class');
-    } else {
-      console.log('not recognized button');
-    }
+  },
+  toggleEvent: function(ev) {
+    var key = ev.target.id;
+    actions.toggleEvent(this.props.selectedEvents[key]);
+  },
+  toggleLeaveSlip: function(ev) {
+    actions.toggleLeaveSlip();
+  },
+  disableLeaveSlip: function() {
+    actions.disableLeaveSlip();
+  },
+  setLeaveSlip: function(ev) {
+    console.log('setLeaveSlip', arguments, this);
+    var btn = ev.target;
+    var reason = btn.id;
+    console.log('reason',reason)
+    actions.setLeaveSlipReason(reason);
+  },
+  submitLeaveSlip: function() {
+    actions.submitLeaveSlip();
   },
   render: function() {
     var disabled = _.size(this.props.selectedEvents) <= 0,
-        rollPane;
-
+        rollPane, rollHeading, rollStyle, sessionsSelectedPane, slipStyle;
+    
+    //disabled is whether there are events selected or not.
     if (!disabled) {
+      //sessions pane
+      var keys = [];
+      for(var k in this.props.selectedEvents) {
+        keys.push(<button id={k} type="button" key={k} onClick={this.toggleEvent} className="btn btn-default">{this.props.selectedEvents[k].name}</button>);
+      }
+      sessionsSelectedPane = (
+        <div>
+          {keys}
+        </div>
+      );
+
+      //roll pane
+      rollHeading = (
+        <div>
+          <h3 className="panel-title" id="event-title">Submit Roll</h3>
+        </div>
+      );
+      rollStyle = {display: 'block'};
       rollPane = (
         <div>
-          <button id="present" type="button" onClick={this.setRoll} className="btn btn-default btn-block" disabled={disabled}>Present</button>
-          <button id="absent" type="button" onClick={this.setRoll} className="btn btn-danger btn-block" disabled={disabled}>Absent</button>
-          <button id="tardy" type="button" onClick={this.setRoll} className="btn btn-warning btn-block" disabled={disabled}>Tardy</button>
-          <button id="uniform" type="button" onClick={this.setRoll} className="btn btn-warning btn-block" disabled={disabled}>Uniform</button>
-          <button id="left-class" type="button" onClick={this.setRoll} className="btn btn-warning btn-block" disabled={disabled}>Left Class</button>
+          <button id="present" type="button" onClick={this.setRoll} className="btn btn-info btn-block">Present</button>
+          <button id="absent" type="button" onClick={this.setRoll} className="btn btn-info btn-block">Absent</button>
+          <button id="tardy" type="button" onClick={this.setRoll} className="btn btn-info btn-block">Tardy</button>
+          <button id="uniform" type="button" onClick={this.setRoll} className="btn btn-info btn-block">Uniform</button>
+          <button id="left-class" type="button" onClick={this.setRoll} className="btn btn-info btn-block">Left Class</button>
+          <button id="submitleaveslip" type="button" onClick={this.toggleLeaveSlip} className="btn btn-link">Submit Leaveslip</button>
         </div>
       );
     } else {
-      rollPane = (
+      sessionsSelectedPane = (
         <span className="info-message">Please select event(s) to record attendance</span>
       );
+      rollHeading = (
+        <div
+          style = {{display: 'none'}}>
+        </div>
+      )
+      rollStyle = {display: 'none'};
+      rollPane = (
+        <div
+          style = {{display: 'none'}}>
+        </div>
+      )
+      if (this.props.showLeaveSlip) {
+        this.disableLeaveSlip();
+      }
+    }
+    
+    //leave slip pane
+    var leaveSlipPane = (
+      <div className="panel-heading">
+        <h3 className="panel-title" id="event-title" style={{fontSize: '20px'}}>Reason </h3>
+        <button id="sick" type="button" onClick={this.setLeaveSlip} className="btn btn-info btn-primary custom">Sick</button>
+        <button id="service" type="button" onClick={this.setLeaveSlip} className="btn btn-info btn-primary custom">Service</button>
+        <button id="night out" type="button" onClick={this.setLeaveSlip} className="btn btn-info btn-primary custom">Night Out</button>
+        <button id="meal out" type="button" onClick={this.setLeaveSlip} className="btn btn-info btn-primary custom">Meal Out</button>
+        <button id="fellowship" type="button" onClick={this.setLeaveSlip} className="btn btn-info btn-primary custom">Fellowship</button>
+        <h3 className="panel-title" id="event-title" style={{fontSize: '20px'}}>Comments </h3>
+        <div class="form-group">
+          <textarea class="form-control" rows="5" id="comment" style={{boxSizing: 'borderBox', width: '310px', height: '100px'}}></textarea>
+          <button id="submit" type="button" onClick={this.submitLeaveSlip} className="btn btn-warning btn-primary custom">Submit</button>
+        </div>
+      </div>
+    );
+    if (!this.props.showLeaveSlip){
+      slipStyle = {display: 'none'};
+    } else {
+      slipStyle = {display: 'block'};
     }
 
     return (
-      <div className="panel panel-default" id="submit-roll">
+      <div className="panel panel-default">
         <div className="panel-heading">
-          <h3 className="panel-title" id="event-title">Submit Roll</h3>
+          {<h3 className="panel-title" id="event-title">Sessions Selected</h3>}
         </div>
         <div className="panel-body event-info">
+          {sessionsSelectedPane}
+        </div>
+        
+        <div className="panel-heading" style={rollStyle}>
+          {rollHeading}
+        </div>
+        <div className="panel-body event-info" style={rollStyle}>
           {rollPane}
+        </div>
+        <div className="panel-heading" style={slipStyle}>
+          <h3 className="panel-title" id="event-title">Submit Leave Slip </h3>
+        </div>
+        <div className="panel-body event-info" style = {slipStyle}>
+          {leaveSlipPane}
         </div>
       </div>
     );
   }
 });
 
-
 module.exports = Attendance;
-// working on viewing the leaveslips *not working*
-
-// var slipsBar = React.createClass({
-//   render: function() {
-//     var selectedSlips = this.props.selectedSlips,
-//         slips = [],
-//         i, _len;
-
-//     for (i = 0, _len = this.props.selectedSlips.length; i < _len; i++) {
-//       slips.push(<Leaveslip slip={selectedSlips[i]} />);
-//     }
-
-//     if (slips.length === 0) {
-//       slips = (
-//         <div>
-//           <i>No event(s) with leaveslip(s) selected</i>
-//           <div className="form-group center-padded">
-//             <button className="btn btn-primary"><span className="glyphicon glyphicon-pencil"></span> Write New Leaveslip</button>
-//           </div>
-//         </div>
-//       );
-//     }
-//     return (
-//       <div className="panel panel-default leaveslip-container">
-//         <div className="list-group">
-//           <a href="#" className={titleClasses}>
-//             {slip['type')}
-//             <span className="badge">{status}</span>
-//           </a>
-//           <div className="list-group-item">{description}</div>
-//           <div className="list-group-item">{comments}</div>
-//         </div>
-//       </div>
-//     );
-//   }
-// });
 
 
 

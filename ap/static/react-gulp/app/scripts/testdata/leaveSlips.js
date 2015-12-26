@@ -30,7 +30,7 @@ var leaveSlips = [
         "texted": true, 
         "informed": false, 
         "events": [
-            136
+            136, 156
         ]
     }, 
     {
