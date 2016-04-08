@@ -5,6 +5,8 @@ from schedules.models import Event
 from accounts.models import Trainee
 from terms.models import Term
 
+from django.contrib.auth.models import Group
+
 """ attendance models.py
 The attendance module takes care of data and logic directly related
 to tracking attendance. It does not handle things such as schedules
@@ -19,6 +21,11 @@ DATA MODELS:
 
 
 class Roll(models.Model):
+
+    class Meta:
+        permissions = (
+            ("attendance_all", "Can view roll"),
+            )
 
     ROLL_STATUS = (
         ('A', 'Absent'),
@@ -49,3 +56,8 @@ class Roll(models.Model):
     def __unicode__(self):
         # return status, trainee name, and event
         return "[%s] %s @ %s" % (self.status, self.trainee, self.event)
+
+    # 
+    # TA_group.permissions.add
+
+    # TA_group.permission.add()

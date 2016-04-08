@@ -7,14 +7,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+from django.contrib.auth.decorators import permission_required
+
 from rest_framework import routers
 
 from accounts.views import *
 from schedules.views import EventViewSet, ScheduleViewSet
-from attendance.views import RollViewSet
+from attendance.views import AttendanceListAll, AttendanceDetail
 from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
 from books.views import BooksViewSet
 from lifestudies.views import DisciplineSummariesViewSet
+
+from attendance.admin import admin_site
 
 admin.autodiscover()
 
@@ -36,7 +40,9 @@ urlpatterns = patterns('',
     # admin urls
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls), name="admin"),
+    # HC Admin site
+    url(r'^hcadmin/', admin_site.urls),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -48,11 +54,14 @@ router.register(r'trainees', TraineeViewSet)
 router.register(r'tas', TrainingAssistantViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'schedules', ScheduleViewSet)
-router.register(r'rolls', RollViewSet)
+# router.register(r'rolls', RollListAPIView)
+# router.register(r'rolls/?P<pk>\d+)/$', RollDetail)
+# router.register(r'rolls', RollViewSet)
 router.register(r'leaveslips', IndividualSlipViewSet)
 router.register(r'groupleaveslips', GroupSlipViewSet)
 router.register(r'books', BooksViewSet)
 router.register(r'summaries', DisciplineSummariesViewSet)
+# router.register(r'attendance', AttendanceViewSet)
 
 urlpatterns += patterns('',
     url(r'^api/trainees/gender/(?P<gender>[BS])/$', TraineesByGender.as_view()),
@@ -62,6 +71,9 @@ urlpatterns += patterns('',
     url(r'^api/trainees/house/(?P<pk>\d+)/$', TraineesByHouse.as_view()),
     url(r'^api/trainees/locality/(?P<pk>\d+)/$', TraineesByLocality.as_view()),
     url(r'^api/trainees/hc/$', TraineesHouseCoordinators.as_view()),
+    # url(r'^api/attendance/(?P<pk>\d+)/$', AttendanceDetail.as_view(), name='attendancedetail'),
+    url(r'^api/attendances/$', AttendanceDetail.as_view(), name='attendancedetail'),
+    url(r'^api/attendance/$', AttendanceListAll.as_view()),
     url(r'^api/', include(router.urls)),
 
     #third party

@@ -1,3 +1,5 @@
+{% load admin_static %}
+{% load suit_tags %}
 {% load staticfiles %}
 {% load bootstrap3 %}
 
@@ -121,15 +123,27 @@
                 <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
 
+              <h6>My Actions</h6>
+<!--                 {% if app_list %}
+                  {% for app in app_list %}
+                    <a class="list-group-item" href="{{app.app_url}}">{{ app.name }}</a>
+                  {% endfor %}
+                {% endif %} -->
+
+                {% include 'suit/menu.html' %}
+
               {% endblock %}
             </div>
           </div> <!--/SIDEBAR-->
         {% endblock %}
 
+
+
         <!--CONTENT-->
         <div id="content" class="col-xs-12 col-sm-10">
 
           {% bootstrap_messages %}
+          {% block breadcrumbs %}{% endblock %}
 
           {% block content %}
             <!-- CONTENT OF PAGE GOES HERE -->

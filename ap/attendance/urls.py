@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from django.conf import settings
 
+from django.contrib.auth.decorators import permission_required
+
 from attendance import views
 
 urlpatterns = patterns('',

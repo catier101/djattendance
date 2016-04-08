@@ -135,6 +135,15 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'accounts.User'
 
+#Authentication backends for django-guardian
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+ANONYMOUS_USER_ID = -1
+# End settings for django-guardian
+
 INSTALLED_APPS = (
 
     # admin third-party modules
@@ -175,6 +184,9 @@ INSTALLED_APPS = (
     'services',
     'teams',
     'terms',
+
+    # ap permissions
+    'guardian',
 
     # ap modules
     'attendance',

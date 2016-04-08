@@ -2,8 +2,8 @@ from django.conf import settings
 from datetime import date
 
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
-    PermissionsMixin
+from django.contrib.auth.models import Group, AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin, Permission
 from django.core.mail import send_mail
 from django.utils.http import urlquote
 
@@ -42,9 +42,13 @@ PROFILES
     Trainee and then later a TA can keep the same account throughout).
 """
 
+# permission = Permission.objects.get(codename='attendance_all')
+# TA_group = Group(name='TA Group') #Stopping point - how, and where, to assign permissions to a group 
+
 
 class APUserManager(BaseUserManager):
 
+    # @permission(onlyTAsButNot1sttermersWithSisters, AP, Floors)
     def create_user(self, email, password=None):
         """ Creates a user, given an email and a password (optional) """
 
@@ -133,8 +137,22 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None):
         send_mail(subject, message, from_email, [self.email])
 
+    # def is_TA(self):
+    #     return False
+
     def __unicode__(self):
         return "%s, %s <%s>" % (self.lastname, self.firstname, self.email)
+
+    # def is_ta(self):
+    #     return False 
+
+
+    # class Meta:
+    #     permissions = (
+    #         ("is_TA", "TA access privileges"), 
+    #         ("is_AM", "Attendance Monitor access privileges"),
+    #     )
+
 
 
 class Profile(models.Model):
@@ -161,12 +179,17 @@ class Profile(models.Model):
 class TrainingAssistant(Profile):
 
     badge = models.ForeignKey(Badge, blank=True, null=True)
-
     services = models.ManyToManyField(Service, blank=True)
     houses = models.ManyToManyField(House, blank=True)
 
+    # def is_TA(self):
+    #     return True
+
     def __unicode__(self):
         return self.account.get_full_name()
+
+    # def is_TA(self):
+    #     return True
 
 class Trainee(Profile):
 
@@ -213,6 +236,9 @@ class Trainee(Profile):
     def _trainee_email(self):
         return self.account.email
 
+    # def is_TA(self):
+    #     return False
+
     def get_outstanding_discipline(self):
         o_discipline = []
         for discipline in self.discipline_set.all():
@@ -224,6 +250,9 @@ class Trainee(Profile):
 
     def __unicode__(self):
         return self.account.get_full_name()
+
+# GROUPS
+
 
 
 # Statistics / records on trainee (e.g. attendance, absences, service/fatigue level, preferences, etc)
