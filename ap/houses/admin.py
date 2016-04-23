@@ -15,7 +15,9 @@ from aputils.models import Address
 # admin_site.register(Bunk)
 # admin_site.register(House)
 # admin_site.register(Room)
+        
 
 admin.site.register(House)
 admin.site.register(Room)
 admin.site.register(Bunk)
+

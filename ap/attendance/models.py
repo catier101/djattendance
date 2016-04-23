@@ -24,7 +24,7 @@ class Roll(models.Model):
 
     class Meta:
         permissions = (
-            ("attendance_all", "Can view roll"),
+            ("attendance_all", "Can view all rolls"),
             )
 
     ROLL_STATUS = (

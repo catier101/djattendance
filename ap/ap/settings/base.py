@@ -193,6 +193,7 @@ INSTALLED_APPS = (
     'absent_trainee_roster',
     'dailybread',  # daily nourishment
     'badges', # badge pictures and facebooks
+    'house_forms',
     'leaveslips',
     'lifestudies',
     'meal_seating',

@@ -57,7 +57,8 @@ class UserAutoFixture(AutoFixture):
     field_values = {
         'email' : generators.EmailGenerator(static_domain='example.com'),
         'firstname' : FirstNameGenerator(),
-        'lastname' : LastNameGenerator()
+        'lastname' : LastNameGenerator(),
+        'password' : 'secret'
     }
 
 register(User, UserAutoFixture)

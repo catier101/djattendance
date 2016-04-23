@@ -9,6 +9,7 @@ Data Models:
     - House: a training house
     - Room: a room inside a training house (any type)
     - Bunk: a bunk (either lower of upper) in a given house
+    - Linen: the bedding used for the bunks
 """
 
 
@@ -131,4 +132,8 @@ class Bunk(models.Model):
 
     def __unicode__(self):
         return self.room.house.name + " Bunk " + str(self.number)
+
+
+
+
     

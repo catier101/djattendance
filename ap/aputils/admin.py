@@ -26,7 +26,8 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class CityAdminForm(forms.ModelForm):
-    country = forms.ModelChoiceField(queryset=Country.objects.order_by('name'))
+    # Why is this here? It prevents the admin from adding a new country from this form
+    # country = forms.ModelChoiceField(queryset=Country.objects.order_by('name'))
 
     class Meta:
         model = City
@@ -44,7 +45,14 @@ class CityAdmin(admin.ModelAdmin):
     search_fields = ['name', 'state']
 
 
+class CountryAdminForm(forms.ModelForm):
+    class Meta:
+        model = Country
+        fields = '__all__'
+
+
 class CountryAdmin(admin.ModelAdmin):
+    form = CountryAdminForm
     list_display = (
         'name',
         'code'

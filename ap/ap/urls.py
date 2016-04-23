@@ -17,6 +17,7 @@ from attendance.views import AttendanceListAll, AttendanceDetail
 from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet
 from books.views import BooksViewSet
 from lifestudies.views import DisciplineSummariesViewSet
+from house_forms.views import LinenRequestListAll, LinenRequestListHC
 
 from attendance.admin import admin_site
 
@@ -74,6 +75,8 @@ urlpatterns += patterns('',
     # url(r'^api/attendance/(?P<pk>\d+)/$', AttendanceDetail.as_view(), name='attendancedetail'),
     url(r'^api/attendances/$', AttendanceDetail.as_view(), name='attendancedetail'),
     url(r'^api/attendance/$', AttendanceListAll.as_view()),
+    url(r'^api/house_forms/linen_requests_p/$', LinenRequestListAll.as_view()),
+    url(r'^api/house_forms/linen_requests/$', LinenRequestListHC.as_view()),
     url(r'^api/', include(router.urls)),
 
     #third party
