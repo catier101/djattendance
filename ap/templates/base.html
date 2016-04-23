@@ -1,3 +1,5 @@
+{% load admin_static %}
+{% load suit_tags %}
 {% load staticfiles %}
 {% load bootstrap3 %}
 
@@ -121,6 +123,10 @@
                 <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
 
+                <h6>My Actions</h6>
+
+                  {% include 'suit/menu.html' %}
+
               {% endblock %}
             </div>
           </div> <!--/SIDEBAR-->
@@ -130,7 +136,7 @@
         <div id="content" class="col-xs-12 col-sm-10">
 
           {% bootstrap_messages %}
-
+          {% block breadcrumbs %}{% endblock %}
           {% block content %}
             <!-- CONTENT OF PAGE GOES HERE -->
           {% endblock %}
