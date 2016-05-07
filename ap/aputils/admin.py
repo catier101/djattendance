@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from aputils.models import Country, City, State, Address, Vehicle, EmergencyInfo
+from aputils.models import City, State, Address, Vehicle, EmergencyInfo
 
 class AddressAdminForm(forms.ModelForm):
     city = forms.ModelChoiceField(queryset=City.objects.order_by('name'))
@@ -26,8 +26,6 @@ class AddressAdmin(admin.ModelAdmin):
 
 
 class CityAdminForm(forms.ModelForm):
-    country = forms.ModelChoiceField(queryset=Country.objects.order_by('name'))
-
     class Meta:
         model = City
         fields = '__all__'
@@ -42,16 +40,6 @@ class CityAdmin(admin.ModelAdmin):
     )
     ordering = ('country', 'state', 'name',)
     search_fields = ['name', 'state']
-
-
-class CountryAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-        'code'
-    )
-    ordering = ('name', 'code',)
-    search_fields = ['name', 'code']
-
 
 class VehicleAdmin(admin.ModelAdmin):
     list_display = (
@@ -82,6 +70,5 @@ class EmergencyInfoInline(admin.TabularInline):
 admin.site.register(Address, AddressAdmin)
 admin.site.register(State)
 admin.site.register(City, CityAdmin)
-admin.site.register(Country, CountryAdmin)
 admin.site.register(Vehicle, VehicleAdmin)
 admin.site.register(EmergencyInfo)

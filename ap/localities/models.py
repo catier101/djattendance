@@ -1,6 +1,7 @@
 from django.db import models
 
 from aputils.models import City
+from django_countries.fields import CountryField
 
 """ LOCALITIES models.py
 
@@ -16,6 +17,7 @@ Data Models:
 class Locality(models.Model):
 
     city = models.ForeignKey(City)
+    #country = CountryField()
 
     def __unicode__(self):
         return self.city.name + ", " + str(self.city.state)

@@ -2,6 +2,7 @@ from localities.models import Locality
 import unittest
 import mock
 
+#probably need to change this test
 def set_up_data():
         # model1: Locality
         # notice each instance is made to cover different combinations of attribute values

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).on('click', ".delete_request_button", function() {
+            var accessID = +$(this).val();
+            var csrf_token = "{% csrf_token %}";
+            $('#deleteModal .modal-title').html('Delete web access request');
+            $('#deleteModal .modal-body').html('<p>Are you sure you want to delete this web access request?</p>');
+            $('#deleteModal .modal-form').html('<form action="delete/' + accessID + '" method="post">' + csrf_token + '<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button><input class="btn btn-danger" type="submit" value="Delete"/></form>');
+            $('#deleteModal').modal('show');
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+<h1>Web access requests</h1>
+
+<a href="/web_access/create">Create new web access request</a>
+
+{% regroup object_list by get_status_display as sorted %}
+    <div>
+    {% for requestGroups in sorted %}
+        {% if requestGroups.grouper == 'Approved' %}
+            <h4>{{ requestGroups.grouper }}</h4>
+            <div class="panel panel-success">
+        {% elif requestGroups.grouper == 'Pending' %}
+            <h4>{{ requestGroups.grouper }}</h4>
+            <div class="panel panel-default">
+        {% elif requestGroups.grouper == 'Denied'%}
+            <h4>{{ requestGroups.grouper }}</h4>
+            <div class="panel panel-danger">
+        {% elif requestGroups.grouper == 'Marked for Fellowship' %}
+            <h4>{{ requestGroups.grouper }}</h4>
+            <div class="panel panel-info">
+        {% elif requestGroups.grouper == 'Expired' %}
+            <h4>{{ requestGroups.grouper }}</h4>
+            <div class="panel panel-danger">
+        {% endif %}
+
+        {% for request in requestGroups.list|dictsortreversed:"date_assigned" %}
+             <a href="{{ request.get_absolute_url }}">
+                 <div class="panel-heading">
+                    <h4 class="panel-title">{{ request.get_reason_display }}</h4>
+
+                    <div class="pull-right">
+                        {% if request.get_status_display == 'Approved' and request.time_started == NULL %}
+                            <a href="{% url 'web_access:start-access' request.minutes request.id %}">
+                                <button style="font-size:3em;" class="btn btn-success approve" title="Start internet access"><span class="glyphicon glyphicon-play-circle"></span></button>
+                            </a>
+                        {% endif %}
+                        {% if request.get_status_display != 'Approved' and request.get_status_display != 'Expired' %}
+                            <a href ="{{ request.get_update_url }}">
+                                <button class="btn btn-primary" title="Edit details"><span class="glyphicon glyphicon-pencil"></span></button>
+                            </a>
+                        {% endif %}
+
+                        <button value="{{ request.id }}" class="btn btn-danger delete_request_button" title="Delete request"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+
+                </div>
+            </a>
+
+            <div class="panel-body">
+                {% include "web_access/web_access_description.html" %}
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete web access request" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <h3 class="modal-title">Title</h3>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <div class="modal-form"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% empty %}
+        <h4><i>You have no web access requests.</i></h4>
+    {% endfor %}
+    </div>
+{% endblock %}

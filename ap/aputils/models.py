@@ -1,5 +1,7 @@
 from django.db import models
 
+from django_countries.fields import CountryField
+
 """ APUTILS models.py
 
 The APUTILS model handles various miscellaneous data models that will be used
@@ -14,23 +16,6 @@ Data Models:
     - Vehicle: Represents vehicles owned by trainees
     - EmergencyInfo: Emergency contact info for a trainee, used in accounts
 """
-
-
-class Country(models.Model):
-
-    # the name of the country
-    name = models.CharField(max_length=50)
-
-    # e.g. "USA", "JPN"
-    code = models.CharField(max_length=3)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = "countries"
-
-
 class State(models.Model):
 
     STATES = (
@@ -103,7 +88,7 @@ class City(models.Model):
     state = models.ForeignKey(State, blank=True, null=True)
 
     # Country foreign key
-    country = models.ForeignKey(Country)
+    country = CountryField()
 
     def __unicode__(self):
         return self.name

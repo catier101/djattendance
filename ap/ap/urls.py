@@ -34,6 +34,7 @@ urlpatterns = patterns('',
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
     url(r'^apimport/', include('apimport.urls', namespace="apimport")),
+    url(r'^web_access/', include('web_access.urls', namespace="web_access")),
     # admin urls
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
