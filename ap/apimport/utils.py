@@ -6,9 +6,10 @@ from urllib import urlencode
 
 from django.conf import settings # for access to MEDIA_ROOT
 from django.contrib import messages
+from django_countries import countries
 
 from accounts.models import Trainee, TrainingAssistant, User
-from aputils.models import Address, City, Country, State
+from aputils.models import Address, City, State
 from houses.models import House
 from localities.models import Locality
 from teams.models import Team
@@ -188,7 +189,7 @@ def check_office_id(id):
 
 def fake_creation(localities, teams, residences):
     """ Temporarily force create all new objects in the list in a non-correct way """
-    country = Country.objects.get(code='US')
+    country = dict(countries)['US']
     for locality in localities:
         city = City(name=locality, country=country)
         city.save()
@@ -260,10 +261,11 @@ def import_address(row, trainee):
 
     if best == None:
         return
-    
-    country, created = Country.objects.get_or_create(name=best['country'], code=best['country_a'])
+
+    code = best['country_a']
+    country = dict(countries)[code]
     city, created = City.objects.get_or_create(name=best['name'], country=country)
-    if created and country.code == "USA":
+    if created and code == "US":
         state = None
         if best['region'] == "Puerto Rico":
             state, created = State.objects.get_or_create(name="PR")
@@ -274,6 +276,7 @@ def import_address(row, trainee):
 
         if state != None:
             city.state = state
+            city.country = country
             city.save()
 
     try:
