@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load admin_static %}{% load suit_tags %}{% load url from future %}
+
+  {% block references %}
+  <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'suit/bootstrap/css/bootstrap.min.css' %}" media="all"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'suit/css/suit.css' %}" media="all">
+  {% endblock references %}
+
+  {% block extrastyle %}{% endblock %}
+
+  {% block scripts %}
+  <script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
+  <script src="{% static 'suit/js/jquery-1.8.3.min.js' %}"></script>
+  <script type="text/javascript">var Suit = { $: $.noConflict() }; if (!$) $ = Suit.$; </script>
+  <script src="{% static 'suit/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'suit/js/suit.js' %}"></script>
+  {% endblock scripts %}
+
+  {% block extrahead %}{% endblock %}
+<!-- 
+  {% block blockbots %}
+    <meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %} -->
+
+{% load i18n %}
+
+        {% block content-center %}
+          <!-- <div id="suit-right" class="suit-column"> -->
+
+            {% if not is_popup %}
+              {% block breadcrumbs %}
+                <ul class="breadcrumb">
+                  <li><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+                    {% if title %}
+                      <span class="divider">&raquo;</span>
+                      </li>
+                      <li class="active">
+                      {{ title }}
+                    {% endif %}
+                    </li>
+                </ul>
+              {% endblock %}
+            {% endif %}
+
+            {% block messages %}
+              {% if messages %}
+
+                {% for message in messages %}
+                  <div class="alert alert-{% firstof message.tags 'info' %}">
+                    <button class="close" data-dismiss="alert">×</button>
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endblock messages %}
+
+            <!-- Content -->
+            <div id="content" class="{% block coltype %}colM{% endblock %} row-fluid">
+              {% block pretitle %}{% endblock %}
+              {% block content_title %}{% if title %}
+                <h2 class="content-title">{{ title }}</h2>
+              {% endif %}{% endblock %}
+              {% block content_admin %}
+                {% block object-tools %}{% endblock %}
+                {{ content }}
+              {% endblock %}
+              {% block sidebar_content %}
+                {% block sidebar_admin %}{% endblock %}
+              {% endblock %}
+            </div>
+            <!-- END Content -->
+          </div>
+        {% endblock %}
+
+<!-- Should go into sidebar -->
+        {% block content-left %}
+          {% if not is_popup %}
+            <div id="suit-left" class="suit-column">
+              {% block quick-search %}
+                {% with 'SEARCH_URL'|suit_conf as search_url %}
+                  {% if search_url %}
+                    <form class="form-search nav-quick-search" autocomplete="off" action="{% if '/' in search_url %}{{ search_url }}{% else %}{% url search_url %}{% endif %}" method="GET">
+                      <input type="text" name="q" class="input-medium search-query" id="quick-search">
+                      <i class="input-icon icon-search"></i>
+                      <input type="submit" class="submit" value="">
+                    </form>
+                  {% endif %}
+                {% endwith %}
+              {% endblock %}
+
+              {% include 'suit/menu.html' %}
+
+            </div>
+          {% endif %}
+        {% endblock %}
+
+
+  {% block extrajs %}{% endblock %}

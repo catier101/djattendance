@@ -121,6 +121,9 @@
                 <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
 
+              <h6>My Admin</h6>
+                {% include 'suit/menu.html' %}
+
               {% endblock %}
             </div>
           </div> <!--/SIDEBAR-->
@@ -132,6 +135,8 @@
           {% bootstrap_messages %}
 
           {% block content %}
+            {% block content-center %}
+            {% endblock %}
             <!-- CONTENT OF PAGE GOES HERE -->
           {% endblock %}
         </div> <!--/CONTENT -->
