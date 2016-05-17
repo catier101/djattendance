@@ -99,22 +99,26 @@
 
                 {% for menu_item in user_menu %}
                     <h5>{{ menu_item.name }}</h5>
+                    <!-- Visible to everyone -->
                     {% for sub_item in menu_item.common %}
                       {% url sub_item.url as the_url %}
                         <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
                     {% endfor %}
+                    <!-- Visible exclusively to TA's -->
                     {% if user.is_superuser %}
                       {% for sub_item in menu_item.ta_only %}
                         {% url sub_item.url as the_url %}
                         <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
                       {% endfor %}
                     {% endif %}
+                    <!-- Visible exclusively to trainees -->
                     {% if user.trainee %}
                       {% for sub_item in menu_item.trainee_only %}
                         {% url sub_item.url as the_url %}
                         <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
                       {% endfor %}
                     {% endif %}
+                    <!-- Visible to TA's and anyone with a specific permission --> 
                     {% for specific_perm_item in menu_item.specific %}
                       {% if specific_perm_item.permission in perms %}
                           {% url specific_perm_item.url as the_url %}
