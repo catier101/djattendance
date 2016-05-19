@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission #do I need this? 
 from collections import namedtuple
 
 def user_menu(request):
@@ -18,7 +18,7 @@ def user_menu(request):
 		specific=[])
 	exam_menu = MenuItem(name = 'Exams', 
 		ta_only=[], 
-		trainee_only=[SubMenuItem(name="Take Exam", url='exams:take')], 
+		trainee_only=[SubMenuItem(name="Take Exam", url='exams:list')], 
 		common=[], 
 		specific = [SpecificPermItem(name="Create Exam", permission='exams.add_exam', url='exams:submit')])
 	requests_menu = MenuItem(name= 'Requests', 
@@ -32,5 +32,8 @@ def user_menu(request):
 		common=[SubMenuItem(name='Announcements', url='#'), SubMenuItem(name='Bible Reading Tracker', url='#')],
 		specific=[SpecificPermItem(name='Badges', permission='badges.add_badge', url='badges:badges_list'), SpecificPermItem(name="Absent Trainee Roster", permission='attendance.add_roll', url='absent_trainee_roster:absent_trainee_form'), SpecificPermItem(name='Meal Seating', permission='meal_seating.add_table', url='meal_seating.views.newseats')])
 
-	menu = [attendance_menu, discipline_menu, exam_menu, requests_menu, misc_menu]
-	return dict(user_menu = menu)
+
+# I want to be able to write a list of conditions here and then check on these conditions in base.html
+
+	menu = [attendance_menu, discipline_menu, requests_menu, misc_menu]
+	return dict(user_menu = menu, exam_menu= exam)
