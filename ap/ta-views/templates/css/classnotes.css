@@ -1,0 +1,61 @@
+body {
+  min-height: 2000px;
+}
+
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+
+/* NAVBAR */
+
+.navbar {
+
+}
+
+.nav {
+  float:right;
+}
+
+/* EMPTY NAV SPACE */
+.empty-nav {
+  max-width:300px;
+  text-align: center;
+}
+
+/* CLASS NOTES NAV */
+
+.class-notes {
+  display:block;
+  max-width:300px;
+  margin-left:200px;
+}
+
+.class-notes .table-borderless td {
+    border: none;
+}
+
+.class-notes .table-borderless .tr-outer {
+  border:1px solid black;
+}
+
+.assignments{
+  font-size:10px;
+  border:1px solid black;
+}
+
+.trainee-name{
+  font-weight: bold;
+  margin-left:0;
+}
+
+.date-assigned{
+  margin-right:0;
+}
+
+/* STUDENT NOTES */
+.notes{
+  display:inline-block;
+  width:600px;
+  height:700px;
+  border:1px solid black
+}
