@@ -1,5 +1,5 @@
 body {
-  min-height: 2000px;
+  /*min-height: 2000px;*/
 }
 
 .navbar-static-top {
@@ -18,23 +18,33 @@ body {
 
 /* EMPTY NAV SPACE */
 .empty-nav {
-  max-width:300px;
+  display:inline-block;
+  width:300px;
+  height:500px;
   text-align: center;
+  border: 1px solid black;
 }
 
 /* CLASS NOTES NAV */
 
-.class-notes {
-  display:block;
-  max-width:300px;
+/*.class-notes {
+  /*display:inline-block;
+  width:250px;
+  height:500px;
   margin-left:200px;
+  border:1px solid black;
+}*/
+
+.table-borderless tr {
+  border:1px solid black;
+  padding:5px;
 }
 
-.class-notes .table-borderless td {
+/*.class-notes .table-borderless td {
     border: none;
-}
+}*/
 
-.class-notes .table-borderless .tr-outer {
+.table-borderless{
   border:1px solid black;
 }
 
@@ -54,8 +64,9 @@ body {
 
 /* STUDENT NOTES */
 .notes{
-  display:inline-block;
-  width:600px;
+  /*display:inline-block;
+  margin-right:400px;
+  width:600px;*/
   height:700px;
-  border:1px solid black
+  border:1px solid black;
 }
