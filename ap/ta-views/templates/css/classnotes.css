@@ -8,8 +8,8 @@ body {
 
 /* NAVBAR */
 
-.navbar {
-
+nav {
+  border-bottom: 1px solid black;
 }
 
 .nav {
@@ -18,35 +18,39 @@ body {
 
 /* EMPTY NAV SPACE */
 .empty-nav {
-  display:inline-block;
-  width:300px;
-  height:500px;
+  height:100%;
   text-align: center;
   border: 1px solid black;
 }
 
 /* CLASS NOTES NAV */
 
-/*.class-notes {
-  /*display:inline-block;
-  width:250px;
-  height:500px;
-  margin-left:200px;
-  border:1px solid black;
-}*/
+.cn-h1 {
+  margin-left:20%;
+}
 
-.table-borderless tr {
-  border:1px solid black;
+.class-notes {
+  height:500px;
+  border:2px solid grey;
+  margin-left:200px;
+}
+
+.table-borderless {
   padding:5px;
 }
 
-/*.class-notes .table-borderless td {
-    border: none;
-}*/
-
-.table-borderless{
-  border:1px solid black;
+.table-borderless tr {
+  padding:5px;
+  margin-top:5px;
 }
+
+.class-notes .table-borderless td {
+    border: none;
+}
+
+/*.table-borderless{
+  border:1px solid black;
+}*/
 
 .assignments{
   font-size:10px;
@@ -64,9 +68,7 @@ body {
 
 /* STUDENT NOTES */
 .notes{
-  /*display:inline-block;
-  margin-right:400px;
-  width:600px;*/
+  margin-left:10px;
   height:700px;
-  border:1px solid black;
+  border:2px solid grey;
 }
