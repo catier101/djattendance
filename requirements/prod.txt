@@ -1,7 +1,0 @@
--r base.txt
-
-# production specific dependencies
-# used for staging and production
-
-dj-database-url==0.3.0
-gunicorn==19.0
