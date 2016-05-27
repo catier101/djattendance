@@ -8,5 +8,6 @@ ap/.pydevproject
 venv
 *.sublime-project
 *.sublime-workspace
-ap/media/badges/**
 *.log
+*
+!*migrations
