@@ -1,5 +1,5 @@
-body {
-  /*min-height: 2000px;*/
+*{
+  font-family: 'Roboto', sans-serif;
 }
 
 .navbar-static-top {
@@ -26,49 +26,53 @@ nav {
 /* CLASS NOTES NAV */
 
 .cn-h1 {
-  margin-left:20%;
+  margin-left:150px;
 }
 
 .class-notes {
   height:500px;
   border:2px solid grey;
-  margin-left:200px;
+  margin-left:150px;
+  padding:5px;
+}
+
+.class-notes table {
+  margin:2px;
+  padding:0;
 }
 
 .table-borderless {
-  padding:5px;
-}
-
-.table-borderless tr {
-  padding:5px;
-  margin-top:5px;
-}
-
-.class-notes .table-borderless td {
-    border: none;
-}
-
-/*.table-borderless{
   border:1px solid black;
-}*/
+}
+
+.active {
+  border:3px solid black;
+}
+
+.class-notes .table-borderless tr,
+.class-notes .table-borderless td {
+  border:none;
+  max-height:1;
+}
 
 .assignments{
-  font-size:10px;
-  border:1px solid black;
+  font-size:12px;
 }
 
 .trainee-name{
   font-weight: bold;
   margin-left:0;
+  text-align: left;
 }
 
-.date-assigned{
-  margin-right:0;
+.date-assigned,
+.date-submitted {
+  text-align: right;
 }
 
 /* STUDENT NOTES */
 .notes{
   margin-left:10px;
-  height:700px;
+  height:600px;
   border:2px solid grey;
 }
