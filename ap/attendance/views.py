@@ -23,6 +23,8 @@ from accounts.serializers import TraineeSerializer, TrainingAssistantSerializer
 from schedules.serializers import EventSerializer
 from leaveslips.serializers import IndividualSlipSerializer
 
+from aputils.utils import trainee_from_user
+
 class AttendancePersonal(TemplateView):
     template_name = 'attendance/attendance_react.html'
     context_object_name = 'context'
@@ -31,25 +33,30 @@ class AttendancePersonal(TemplateView):
         #jsx.transform('static/js/react/attendance/calendar.jsx', 'static/js/react/attendance/calendar.js')
 
         listJSONRenderer = JSONRenderer()
+        l_render = listJSONRenderer.render
 
-        context = super(AttendancePersonal, self).get_context_data(**kwargs)
-        context['events'] = Event.objects.filter(term=Term.current_term())
-        context['trainee'] = self.request.user.trainee
-        context['trainee_bb'] = listJSONRenderer.render(TraineeSerializer(context['trainee']).data)
-        # context['tas'] = TrainingAssistant.objects.all()
-        # context['tas_bb'] = listJSONRenderer.render(TrainingAssistantSerializer(context['tas'].data))
+        trainee = trainee_from_user(self.request.user)
+        c_term = Term.current_term()
 
-        print 'current term', Term.current_term()
-        context['schedule'] = Schedule.objects.filter(term=Term.current_term()).get(trainee=self.request.user.trainee)
-        context['events_bb'] = listJSONRenderer.render(EventSerializer(context['schedule'].events.all(), many=True).data)
-        context['attendance'] = Roll.objects.filter(trainee=self.request.user.trainee).filter(event__term=Term.current_term())
-        context['attendance_bb'] = listJSONRenderer.render(RollSerializer(context['attendance'], many=True).data)
-        context['leaveslipform'] = IndividualSlipForm()
-        print 'trainee', self.request.user.trainee, IndividualSlip.objects.filter(trainee=self.request.user.trainee), IndividualSlip.objects.filter(trainee=self.request.user.trainee).filter(events__term=Term.current_term())
-        context['leaveslips'] = IndividualSlip.objects.filter(trainee=self.request.user.trainee).filter(events__term=Term.current_term())
-        context['groupslips'] = GroupSlip.objects.filter(trainee=self.request.user.trainee).filter(start__gte=Term.current_term().start).filter(end__lte=Term.current_term().end)
-        print 'slips', context['leaveslips']
-        context['leaveslips_bb'] = listJSONRenderer.render(IndividualSlipSerializer(context['leaveslips'], many=True).data)
+
+        ctx = super(AttendancePersonal, self).get_context_data(**kwargs)
+        ctx.events = Event.objects.filter(term=c_term)
+        ctx.trainee = trainee
+        ctx.trainee_bb = l_render(TraineeSerializer(trainee).data)
+        # ctx.tas = TrainingAssistant.objects.all()
+        # ctx.tas_bb = l_render(TrainingAssistantSerializer(ctx.tas.data))
+
+        print 'current term', c_term
+        ctx.schedule = Schedule.objects.filter(term=c_term).get(trainee=trainee)
+        ctx.events_bb = l_render(EventSerializer(ctx.schedule.events.all(), many=True).data)
+        ctx.attendance = Roll.objects.filter(trainee=trainee, event__term=c_term)
+        ctx.attendance_bb = l_render(RollSerializer(ctx.attendance, many=True).data)
+        ctx.leaveslipform = IndividualSlipForm()
+        print 'trainee', trainee, IndividualSlip.objects.filter(trainee=trainee), IndividualSlip.objects.filter(trainee=trainee, events__term=c_term)
+        ctx.leaveslips = IndividualSlip.objects.filter(trainee=trainee, events__term=c_term)
+        ctx.groupslips = GroupSlip.objects.filter(trainee=trainee, start__gte=c_term.start, end__lte=c_term.end)
+        print 'slips', ctx.leaveslips
+        ctx.leaveslips_bb = l_render(IndividualSlipSerializer(ctx.leaveslips, many=True).data)
         return context
 
 class RollViewSet(BulkModelViewSet):
@@ -59,7 +66,8 @@ class RollViewSet(BulkModelViewSet):
     filter_class = RollFilter
     def get_queryset(self):
         user = self.request.user
-        roll = Roll.objects.filter(trainee=user.trainee).filter(event__term=Term.current_term())
+        trainee = trainee_from_user(user)
+        roll = Roll.objects.filter(trainee=(trainee), event__term=Term.current_term())
         return roll
     def allow_bulk_destroy(self, qs, filtered):
         return not all(x in filtered for x in qs)

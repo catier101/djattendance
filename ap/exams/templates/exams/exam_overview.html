@@ -15,7 +15,7 @@
         </div>
         <h3 class="panel-title exam-panel-title">{{ exam }}</h3>
     </div>
-    {% if user.trainee.is_designated_grader or user.trainingassistant %}
+    {% if user.is_designated_grader or user.type == 'T' %}
     <div class="panel-body">
 
     <h4>General</h4>

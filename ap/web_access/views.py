@@ -6,6 +6,7 @@ from .forms import WebAccessRequestCreateForm, WebAccessRequestTACommentForm
 from .models import WebRequest
 from accounts.models import User
 
+from aputils.utils import trainee_from_user
 
 class WebAccessCreate(generic.CreateView):
     model = WebRequest
@@ -14,8 +15,8 @@ class WebAccessCreate(generic.CreateView):
 
     def form_valid(self, form):
         req = form.save(commit=False)
-        user = User.objects.get(id=self.request.user.id)
-        req.trainee = user.trainee
+        trainee = trainee_from_user(self.request.user)
+        req.trainee = trainee
         req.save()
         return super(WebAccessCreate, self).form_valid(form)
 
@@ -45,7 +46,7 @@ class WebRequestList(generic.ListView):
     template_name = 'web_access/webrequest_list.html'
 
     def get_queryset(self):
-        return WebRequest.objects.filter(trainee=self.request.user.trainee.id).order_by('status')
+        return WebRequest.objects.filter(trainee=self.request.user.id).order_by('status')
 
 
 class TAWebRequestList(generic.ListView):

@@ -3,6 +3,7 @@
 {% load staticfiles %}
 
 {% load bootstrap3 %}
+{% load common_tags %}
 
 {% block title %}Example Page{% endblock %}
 
@@ -13,7 +14,7 @@
     <div class="container col-md-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title">{{user.get_full_name}}</h3>
+                <h3 class="panel-title">{{user.full_name}}</h3>
             </div>
             <div class="panel-body">
                 <div class="col-md-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
@@ -30,11 +31,11 @@
                             </tr>
                             <tr>
                                 <td>Age</td>
-                                <td>{{user.get_age}}</td>
+                                <td>{{user.age}}</td>
                             </tr>
                             <tr>
                                 <td>Home Address</td>
-                                <td>{{user.trainee.address}}</td>
+                                <td>{{user.meta.address}}</td>
                             </tr>
                             <tr>
                                 <td>Email</td>
@@ -43,39 +44,39 @@
                                 <td>Phone Number</td>
                                 <td>{{user.phone}}</td>
                             </tr>
-                            {% if user.trainee %}
+                            {% if user|is_trainee %}
                             <tr>
                                 <td>Type</td>
-                                <td>{{user.trainee.type}}</td>
+                                <td>{{user.get_type_display}}</td>
                             </tr>
                             <tr>
                                 <td>Term</td>
-                                <td>{{user.trainee.calculate_term}}</td>
+                                <td>{{user.term}}</td>
                             </tr>
                             <tr>
                                 <td>TA</td>
-                                <td>{{user.trainee.TA}}</td>
+                                <td>{{user.TA}}</td>
                             </tr>
                             <tr>
                                 <td>Mentor</td>
-                                <td>{{user.trainee.mentor}}</td>
+                                <td>{{user.mentor}}</td>
                             </tr>
                             <tr>
                                 <td>Team</td>
-                                <td>{{user.trainee.team}}</td>
+                                <td>{{user.team}}</td>
                             </tr>
                             <tr>
                                 <td>House</td>
-                                <td>{{user.trainee.house}}</td>
+                                <td>{{user.house}}</td>
                             </tr>
                             <tr>
                                 <td>Bunk #</td>
-                                <td>{{user.trainee.bunk}}</td>
+                                <td>{{user.meta.bunk}}</td>
                             </tr>
-                            {% if user.trainee.married %}
+                            {% if user.meta.married %}
                             <tr>
                                 <td>Spouse</td>
-                                <td>{{user.trainee.spouse}}</td>
+                                <td>{{user.meta.spouse}}</td>
                             </tr>
                             {% endif %}
                             {% endif %}

@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load bootstrap3 %} 
+{% load common_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +69,7 @@
             {% block navbar-right %}
               <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Hi, {{user.get_full_name}}! <span class="caret"></span>
+                    Hi, {{user.full_name}}! <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation" class="dropdown-header">Account Settings</li>
@@ -97,43 +98,47 @@
 
               {% block sidelinks %}
 
-                {% for menu_item in user_menu %}
-                    <h5>{{ menu_item.name }}</h5>
-                    <!-- Visible to everyone -->
-                    {% for sub_item in menu_item.common %}
-                      {% url sub_item.url as the_url %}
-                        <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
-                    {% endfor %}
-                    <!-- Visible exclusively to TA's -->
-                    {% if user.is_superuser %}
-                      {% for sub_item in menu_item.ta_only %}
+                {% generate_current_menu as current_menu %}
+                <!-- {% with user_menu as menu %} -->
+                  {% for menu_item in current_menu %}
+                      <h5>{{ menu_item.name }}</h5>
+                      <!-- Visible to everyone -->
+                      {% for sub_item in menu_item.common %}
+                        {% if sub_item.condition != False %}
                         {% url sub_item.url as the_url %}
-                        <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
+                          <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
+                        {% endif %}
                       {% endfor %}
-                    {% endif %}
-                    <!-- Visible exclusively to trainees -->
-                    {% if user.trainee %}
-                      {% for sub_item in menu_item.trainee_only %}
-                        {% url sub_item.url as the_url %}
-                        <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
-                      {% endfor %}
-                    {% endif %}
-                    <!-- Visible to TA's and anyone with a specific permission --> 
-                    {% for specific_perm_item in menu_item.specific %}
-                      {% if specific_perm_item.permission in perms %}
-                          {% url specific_perm_item.url as the_url %}
-                          <a class="list-group-item" href="{{ the_url }}">{{ specific_perm_item.name }}</a>
+                      <!-- Visible exclusively to TA's -->
+                      {% if user.is_superuser %}
+                        {% for sub_item in menu_item.ta_only %}
+                          {% if sub_item.condition != False %}
+                            {% url sub_item.url as the_url %}
+                            <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
+                          {% endif %}
+                        {% endfor %}
                       {% endif %}
-                    {% endfor %}
-                {% endfor %}
+                      <!-- Visible exclusively to trainees -->
+                      {% if user|is_trainee %}
+                        {% for sub_item in menu_item.trainee_only %}
+                          {% if sub_item.condition != False %}
+                            {% url sub_item.url as the_url %}
+                            <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                      <!-- Visible to TA's and anyone with a specific permission --> 
+                      {% for specific_perm_item in menu_item.specific %}
+                        {% if specific_perm_item.permission in perms %}
+                          {% if sub_item.condition != False %}
+                            {% url specific_perm_item.url as the_url %}
+                            <a class="list-group-item" href="{{ the_url }}">{{ specific_perm_item.name }}</a>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                  {% endfor %}
 
-                {% if exam_condition == exams_available %}
-                  HI again!!
-                {% endif %}
-
-                <!-- Have a dictionary item of all the 'current' things needed. If current thing name matches something else, display it --> 
-
-
+                <!-- {% endwith %} -->
               {% endblock %}
             </div>
           </div> <!--/SIDEBAR-->

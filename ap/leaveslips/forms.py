@@ -12,7 +12,7 @@ class IndividualSlipForm(forms.ModelForm):
 
 class GroupSlipForm(forms.ModelForm):
 
-    trainees = forms.ModelMultipleChoiceField(queryset=Trainee.objects.select_related().filter(active=True))
+    trainees = forms.ModelMultipleChoiceField(queryset=Trainee.objects.select_related().filter(is_active=True))
 
     class Meta:
         model = GroupSlip

@@ -2,11 +2,12 @@
 
 {% load staticfiles %}
 {% load exam_extras %}
+{% load common_tags %}
 
 {% block title %}Exam{% endblock %}
 
 {% block content %}
-{% if user.trainee %}
+{% if user|is_trainee %}
     <div class="panel panel-default">
         <div class="panel-heading exam-panel-heading">
             <div class="btn-group pull-right">

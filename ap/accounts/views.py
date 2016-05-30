@@ -49,12 +49,12 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class TraineeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Trainee.objects.filter(active=True)
+    queryset = Trainee.objects.filter(is_active=True)
     serializer_class = TraineeSerializer
 
 
 class TrainingAssistantViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = TrainingAssistant.objects.filter(active=True)
+    queryset = TrainingAssistant.objects.filter(is_active=True)
     serializer_class = TrainingAssistantSerializer
 
 
@@ -64,7 +64,7 @@ class TraineesByGender(generics.ListAPIView):
 
     def get_queryset(self):
         gender = self.kwargs['gender']
-        return Trainee.objects.filter(account__gender=gender).filter(active=True)
+        return Trainee.objects.filter(account__gender=gender).filter(is_active=True)
 
 
 class TraineesByTerm(APIView):
@@ -72,7 +72,7 @@ class TraineesByTerm(APIView):
 
     def get(self, request, format=None, **kwargs):
         term = int(kwargs['term'])
-        trainees = [trainee for trainee in list(Trainee.objects.filter(active=True)) if trainee.current_term==term]
+        trainees = [trainee for trainee in list(Trainee.objects.filter(is_active=True)) if trainee.current_term==term]
         serializer = TraineeSerializer(trainees, many=True)
         return Response(serializer.data)
 
@@ -83,7 +83,7 @@ class TraineesByTeam(generics.ListAPIView):
 
     def get_queryset(self):
         team = self.kwargs['pk']
-        return Trainee.objects.filter(team__id=team).filter(active=True)
+        return Trainee.objects.filter(team__id=team).filter(is_active=True)
 
 
 class TraineesByTeamType(generics.ListAPIView):
@@ -92,7 +92,7 @@ class TraineesByTeamType(generics.ListAPIView):
 
     def get_queryset(self):
         type = self.kwargs['type'].upper()
-        return Trainee.objects.filter(team__type=type).filter(active=True)
+        return Trainee.objects.filter(team__type=type).filter(is_active=True)
 
 
 class TraineesByHouse(generics.ListAPIView):
@@ -101,7 +101,7 @@ class TraineesByHouse(generics.ListAPIView):
 
     def get_queryset(self):
         house = self.kwargs['pk']
-        return Trainee.objects.filter(house__id=house).filter(active=True)
+        return Trainee.objects.filter(house__id=house).filter(is_active=True)
 
 
 class TraineesByLocality(generics.ListAPIView):
@@ -110,7 +110,7 @@ class TraineesByLocality(generics.ListAPIView):
 
     def get_queryset(self):
         locality = self.kwargs['pk']
-        return Trainee.objects.filter(locality__id=locality).filter(active=True)
+        return Trainee.objects.filter(locality__id=locality).filter(is_active=True)
 
 
 class TraineesHouseCoordinators(generics.ListAPIView):
@@ -118,4 +118,4 @@ class TraineesHouseCoordinators(generics.ListAPIView):
     model = Trainee
 
     def get_queryset(self):
-        return Trainee.objects.filter(account__groups__name__iexact="house coordinators").filter(active=True)
+        return Trainee.objects.filter(account__groups__name__iexact="house coordinators").filter(is_active=True)

@@ -21,7 +21,6 @@ def link_text(exam):
         return exam.grade
     return "Grade exam"
 
-
 register.filter('lookup', lookup)
 register.filter('is_taking_exam', is_taking_exam)
 register.filter('link_text', link_text)

@@ -1,6 +1,7 @@
 {% extends "lifestudies/base_lifestudies.html" %}
 
 {% load staticfiles %}
+{% load common_tags %}
 
 {% block references %}
 <link rel="stylesheet" href="{% static "lifestudies/css/lifestudies.css" %}" />
@@ -12,15 +13,15 @@
 
 {% block lifestudies_content %}
 
-{% if user.trainee and not user.trainingassistant %}
+{% if user|is_trainee %}
 
 <h1> Life Study Summaries</h1>
-{% if user.trainee.get_outstanding_discipline|length <= 0 %}
+{% if user.get_outstanding_discipline|length <= 0 %}
   <div class="well">
     Congratulations, you have no life studies assigned currently!
   </div>
 {% endif %}
-  {% for discipline in user.trainee.get_outstanding_discipline %}
+  {% for discipline in user.get_outstanding_discipline %}
   {% if discipline.is_completed == False %}
   <div class="panel-group" id="accordion">
   <div class="panel panel-default">
@@ -78,7 +79,7 @@
     </div>
     {% endfor %}
 
-  {% elif user.trainingassistant %}
+  {% elif user.type == 'T' %}
 
   <h2> Life Study TA View </h2>
 
@@ -112,7 +113,7 @@
               <span class="glyphicon glyphicon-pencil"></span>
             </a>
           </td>
-          <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+          <td>{{discipline.trainee.firstname}} {{discipline.trainee.lastname|slice:"1"}}.</td>
           <td class="text-danger">{{discipline.infraction}}</td>
           <td>{{discipline.offense}}</td>
           <td>{{discipline.quantity}}</td>

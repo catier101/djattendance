@@ -3,7 +3,7 @@ from datetime import datetime, time, date, timedelta
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from accounts.models import Trainee
+from accounts.models import User
 from attendance.utils import Period
 from books.models import Book
 from schedules.models import Schedule
@@ -68,13 +68,13 @@ class Discipline(models.Model):
     offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default='RO',
                                max_length=2)
 
-    trainee = models.ForeignKey(Trainee)
+    trainee = models.ForeignKey(User)
 
     note = models.TextField(blank=True)
 
     #sort disciplines by name
     class Meta:
-        ordering = ["trainee__account__lastname"]
+        ordering = ["trainee__lastname"]
 
     def approve_all_summary(self):
         for summary in self.summary_set.all():
@@ -157,7 +157,7 @@ class Discipline(models.Model):
         return "[{offense}] {name}. Infraction: {infraction}. Quantity: \
             {quantity}. Still need {num_summary_due} summaries. Completed: \
             {is_completed}".format(
-            name=self.trainee.account.get_full_name(),
+            name=self.trainee.full_name,
             infraction=self.infraction, offense=self.offense,
             quantity=self.quantity, num_summary_due=self.get_num_summary_due(),
             is_completed=self.is_completed())
@@ -189,7 +189,7 @@ class Summary(models.Model):
 
     def __unicode__(self):
         return "[{book} ch. {chapter}] {name}. Approved: {approved}".format(
-            name=self.discipline.trainee.account.get_full_name,
+            name=self.discipline.trainee.full_name,
             book=self.book.name, chapter=self.chapter, approved=self.approved)
 
     def approve(self):

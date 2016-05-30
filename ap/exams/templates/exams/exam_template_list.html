@@ -1,5 +1,6 @@
 {% extends "exams/base_exams.html" %}
 {% load exam_extras %}
+{% load common_tags %}
 
 {% block title %}Exam Templates{% endblock %}
 
@@ -11,9 +12,9 @@
 <div class="panel panel-default">
     <div class="panel-heading exam-panel-heading">
         <div class="btn-group pull-right">
-            {% if user.trainingassistant %}
-                <button type="button" class="btn btn-default">View statistics</button>
-            {% elif user.trainee %}
+            {% if user.type == 'T' %}
+<!--                 <button type="button" class="btn btn-default">View statistics</button> -->
+            {% elif user|is_trainee %}
                 {% if exam_template.is_open and available|lookup:forloop.counter0 %} 
                 <!-- TODO: or trainee is retaking exam -->
                     <a href="{% url 'exams:take' exam_template.id %}">
@@ -21,7 +22,7 @@
                 {% endif %}
             {% endif %}
 
-            {% if user.trainee.is_designated_grader or user.trainingassistant %}
+            {% if user.is_designated_grader or user.type == 'T' %}
                   <a href="{% url 'exams:edit' exam_template.id %}">
                     <button type="button" class="btn btn-default">Edit exam</button></a>
                   <a href="{% url 'exams:grades' exam_template.id %}">

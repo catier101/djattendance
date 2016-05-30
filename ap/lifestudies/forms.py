@@ -7,7 +7,6 @@ from books.models import Book
 
 
 class NewDisciplineForm(forms.ModelForm):
-
     class Meta:
         model = Discipline
         fields = '__all__'

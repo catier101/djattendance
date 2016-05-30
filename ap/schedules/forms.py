@@ -10,7 +10,7 @@ from localities.models import Locality
 
 
 class EventForm(forms.ModelForm):
-    active_trainees = Trainee.objects.select_related().filter(active=True)
+    active_trainees = Trainee.objects.select_related().filter(is_active=True)
     trainees = ModelSelect2MultipleField(queryset=active_trainees, required=False, search_fields=['^first_name', '^last_name'])
 
     class Meta:
@@ -34,7 +34,7 @@ class EventGroupForm(forms.ModelForm):
 
     repeat = forms.MultipleChoiceField(choices=DAYS, help_text="Which days this event repeats on")
     duration = forms.IntegerField(help_text="How many weeks this event repeats for")
-    active_trainees = Trainee.objects.filter(active=True)
+    active_trainees = Trainee.objects.filter(is_active=True)
     trainees = ModelSelect2MultipleField(queryset=active_trainees, required=False, search_fields=['^first_name', '^last_name'])
 
     class Meta:

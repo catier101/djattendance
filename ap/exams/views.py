@@ -1,4 +1,3 @@
-
 import datetime
 import json
 
@@ -17,9 +16,11 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, FormView
 from django.views.generic.list import ListView
 
+from aputils.utils import trainee_from_user
+from terms.models import Term
+
 from .forms import ExamCreateForm
 from .models import Class
-from terms.models import Term
 from .models import Trainee
 from .models import Exam, Section, Session, Responses, Retake
 
@@ -115,11 +116,12 @@ class ExamTemplateListView(ListView):
         # TODO: there's gotta be a better way of doing this
         context = super(ExamTemplateListView, self).get_context_data(**kwargs)
         context['available'] = []
-        retakes = Retake.objects.filter(trainee=self.request.user.trainee, 
+        user = self.request.user
+        retakes = Retake.objects.filter(trainee=user, 
                                             is_complete=False)
         for exam in Exam.objects.all():
-            if trainee_can_take_exam(self.request.user.trainee, exam) and \
-                ((not exam.has_trainee_completed(self.request.user.trainee)) or \
+            if trainee_can_take_exam(user, exam) and \
+                ((not exam.has_trainee_completed(user)) or \
                     (self.exam_in_retakes(retakes, exam))):
                 context['available'].append(True)
             else:
@@ -143,18 +145,18 @@ class SingleExamGradesListView(CreateView, SuccessMessageMixin):
         second_sessions = []
 
         if exam.training_class.type == 'MAIN':
-            trainees = Trainee.objects.filter(active=True).order_by('account__lastname')
+            trainees = Trainee.objects.filter(is_active=True).order_by('lastname')
         elif exam.training_class.type == '1YR':
-            trainees = Trainee.objects.filter(active=True, current_term__lte=2)
+            trainees = Trainee.objects.filter(is_active=True, current_term__lte=2)
         elif exam.training_class.type == '2YR':
-            trainees = Trainee.objects.filter(active=True, current_term__gte=3)
+            trainees = Trainee.objects.filter(is_active=True, current_term__gte=3)
 
         # TODO: Is there a more efficient way of doing this?  Prefetch_related,
         # maybe?  Is there a way to apply a filter to prefetch related?
         for trainee in trainees:
             try:
                 sessions = Session.objects.filter(exam=exam, is_complete=True, 
-                    trainee=trainee).order_by('trainee__account__lastname')
+                    trainee=trainee).order_by('trainee__lastname')
                 if sessions.count() > 0:
                     first_sessions.append(sessions[0])
                 else:
@@ -293,7 +295,7 @@ class GenerateOverview(DetailView):
         context['exam_min'] = exam_stats['minimum']
         context['exam_average'] = exam_stats['average']
         try:
-            context['sessions'] = Session.objects.filter(exam=context['exam']).order_by('trainee__account__lastname')
+            context['sessions'] = Session.objects.filter(exam=context['exam']).order_by('trainee__lastname')
         except Session.DoesNotExist:
             context['sessions'] = []
         return context
@@ -306,7 +308,7 @@ class ExamRetakeView(DetailView):
         context = super(ExamRetakeView, self).get_context_data(**kwargs)
         context['exam'] = Exam.objects.get(pk=self.kwargs['pk'])
         try:
-            context['sessions'] = Session.objects.filter(exam=context['exam']).order_by('trainee__account__lastname')
+            context['sessions'] = Session.objects.filter(exam=context['exam']).order_by('trainee__lastname')
         except Session.DoesNotExist:
             context['sessions'] = []
         return context
@@ -337,7 +339,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
         try:
             sessions = Session.objects.filter(
                 exam=self._get_exam(), 
-                trainee=self.request.user.trainee).order_by('-id')
+                trainee=self.request.user).order_by('-id')
             if sessions:
                 return sessions[0]
         except Session.DoesNotExist:
@@ -354,7 +356,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
         if session == None or session.is_complete:
             retake_count = session.retake_number + 1 if session != None else 0
             new_session = Session(exam=self._get_exam(), 
-                trainee=self.request.user.trainee,
+                trainee=trainee_from_user(self.request.user),
                 is_complete=False,
                 is_submitted_online=True,
                 retake_number=retake_count)
@@ -374,8 +376,9 @@ class TakeExamView(SuccessMessageMixin, CreateView):
 
     def _exam_available(self):
         exam = self._get_exam()
+        user = self.request.user
 
-        if not trainee_can_take_exam(self.request.user.trainee, exam):
+        if not trainee_can_take_exam(user, exam):
             return False
 
         # if the exam is in progress or doesn't exist, we're in business
@@ -384,7 +387,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
         if (most_recent_session == None or not most_recent_session.is_complete):
             return True
 
-        return retake_available(exam, self.request.user.trainee)
+        return retake_available(exam, user)
 
     def _is_retake(self):
         return self._get_session().retake_number > 0
@@ -404,7 +407,7 @@ class TakeExamView(SuccessMessageMixin, CreateView):
         if 'Submit' in request.POST:
             finalize = True
 
-        trainee = self.request.user.trainee
+        trainee = self.request.user
         exam = self._get_exam()
         session = self._get_session()
 

@@ -9,21 +9,24 @@ from schedules.models import Schedule
 from terms.models import Term
 from accounts.models import Trainee
 
+from aputils.utils import is_trainee, is_TA, trainee_from_user
+
 @login_required
 def home(request):
     data = {'daily_nourishment': Portion.today(),
             'user': request.user}
 
-    if hasattr(request.user, 'trainee'):
+    if is_trainee(request.user):
+        trainee = trainee_from_user(request.user)
         try:
-            data['schedule'] = request.user.trainee.schedule.get(term=Term.current_term())
+            data['schedule'] = trainee.schedule.get(term=Term.current_term())
         except ObjectDoesNotExist:
             pass
-        for discipline in request.user.trainee.discipline_set.all():
+        for discipline in trainee.discipline_set.all():
             if discipline.get_num_summary_due() > 0:
                 messages.warning(request, 'Life Study Summary Due for {infraction}. <a href="/lifestudies">Still need: {due}</a>'.format(infraction=discipline.infraction, due=discipline.get_num_summary_due()))
 
-    elif hasattr(request.user, 'trainingassistant'):
+    elif is_TA(request.user):
         #do stuff to TA
         pass
     else:

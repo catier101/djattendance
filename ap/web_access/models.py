@@ -70,10 +70,13 @@ class WebRequest(models.Model):
     trainee = models.ForeignKey(Trainee)
 
     # Field for comments submitted with the request.
-    comments = models.TextField(blank=True, null=True)
+    comments = models.TextField()
 
     # Field for comments submitted by the TA.
     TA_comments = models.TextField(blank=True, null=True)
+
+    # Whether the request is urgent or not
+    urgent = models.BooleanField(default=False)
 
     def get_update_url(self):
         return reverse('web_access:web_access-update', kwargs={'pk': self.id})
@@ -87,7 +90,7 @@ class WebRequest(models.Model):
 
     def __unicode__(self):
         return '[{reason}] {name}. Duration: {duration}'.format(
-            name=self.trainee.account.get_full_name(),
+            name=self.trainee.full_name,
             reason=self.reason,
             duration=self.minutes
         )

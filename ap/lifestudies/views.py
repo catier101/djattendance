@@ -16,7 +16,8 @@ from django.views.generic.list import ListView
 from .forms import NewSummaryForm, NewDisciplineForm, \
     EditSummaryForm, HouseDisciplineForm
 from .models import Discipline, Summary
-from accounts.models import User, Profile, Trainee, TrainingAssistant
+from accounts.models import User, Trainee, TrainingAssistant
+from aputils.utils import trainee_from_user
 from attendance.utils import Period
 from books.models import Book
 from houses.models import House
@@ -34,12 +35,6 @@ logger = logging.getLogger(__name__)
 
 from rest_framework.decorators import permission_classes
 from .permissions import IsOwner
-
-
-# TODO: pull this function out into aputils as a generic function
-def getTraineeFromUser(user):
-    return Trainee.objects.get(account=user)
-
 
 class DisciplineListView(ListView):
     template_name = 'lifestudies/discipline_list.html'
@@ -156,7 +151,7 @@ class SummaryCreateView(SuccessMessageMixin, CreateView):
         Returns an instance of the form to be used in this view.
         """
         kargs = self.get_form_kwargs()
-        kargs['trainee'] = getTraineeFromUser(self.request.user)
+        kargs['trainee'] = trainee_from_user(self.request.user)
 
         return form_class(**kargs)
 
@@ -212,7 +207,8 @@ class CreateHouseDiscipline(TemplateView):
             print(form)
             print(form.errors)
             if form.is_valid():
-                listTrainee = form.cleaned_data['House'].trainee_set.all()
+                house = House.objects.get(id=request.POST['House'])
+                listTrainee = Trainee.objects.filter(house=house, active=True)
                 for trainee in listTrainee:
                     discipline = Discipline(
                         infraction=form.cleaned_data['infraction'],

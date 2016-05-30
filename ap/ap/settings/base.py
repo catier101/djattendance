@@ -8,7 +8,8 @@ from django.contrib.messages import constants as message_constants
 # calculated paths for django and the site
 # used as starting points for various other paths
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
-SITE_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+SITE_ROOT = os.path.dirname(os.path.abspath(__name__))
+
 
 ADMINS = (
     ('Attendance Project', 'attendanceproj@gmail.com'),
@@ -90,9 +91,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    "exams.context_processors.exams_available",
+    "aputils.permissions.user_menu",
+    "exams.context_processors.exams_available" #must be after user_menu to overwrite exams_available condition
     # "aputils.permissions.append_privileges",
-    "aputils.permissions.user_menu"
+    
 )
 
 # List of callables that know how to import templates from various sources.

@@ -9,7 +9,7 @@
 
 <h1>Exam Grades</h1>
 
-{% if user.trainee.is_designated_grader or user.trainingassistant %}
+{% if user.is_designated_grader or user.type == 'T' %}
     <form action="" method="post">
         {% csrf_token %}
     <div class="panel panel-default">
