@@ -6,4 +6,3 @@ register = template.Library()
 register.filter('is_trainee', is_trainee)
 
 register.filter('is_TA', is_TA)
-
