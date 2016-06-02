@@ -74,7 +74,6 @@ def generate_menu(context):
 					if specific_perm_item.condition:
 						items += smart_add(specific_perm_item.url, specific_perm_item.name)
 		if items:
-			print items
 			menu += "<h5>" + menu_item.name +"</h5>"
 			for (path, name) in items:
 				menu += "<a class=\"list-group-item\" href=\"" + path + "\">" + name + "</a>"
