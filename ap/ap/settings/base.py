@@ -91,7 +91,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    "exams.context_processors.exams_available"
+    "exams.context_processors.exams_available",
 )
 
 # List of callables that know how to import templates from various sources.

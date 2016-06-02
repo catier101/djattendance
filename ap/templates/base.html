@@ -93,7 +93,7 @@
 
         {% block sidebar %}
           <!--SIDEBAR-->
-          <div id="sidebar" class="col-xs-10 col-md-3 sidebar-offcanvas" role="navigation">
+          <div id="sidebar" class="col-xs-5 col-lg-2 sidebar-offcanvas" role="navigation">
             <div class="list-group small">
 
 
@@ -104,14 +104,23 @@
 
               {% endblock %}
 
+
             </div>
           </div> <!--/SIDEBAR-->
         {% endblock %}
 
         <!--CONTENT-->
-        <div id="content" class="col-xs-24 col-md-19">
+        <div id="content" class="col-xs-12 col-lg-10">
 
-          {% bootstrap_messages %}
+          {% block messages %}
+              <div id="messages">
+                {% if messages %}
+                  {% for message in messages %}
+                    {% bootstrap_messages message %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+          {% endblock %}
 
           {% block content %}
             <!-- CONTENT OF PAGE GOES HERE -->
