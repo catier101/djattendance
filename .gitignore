@@ -10,3 +10,4 @@ venv
 *.sublime-workspace
 ap/media/badges/**
 *.log
+migrations/

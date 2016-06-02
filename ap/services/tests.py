@@ -7,10 +7,11 @@ class ServiceTest(TestCase):
     def setUp(self):
         # sets up category 'cleaning', then adds service objects 'breakfastCleanup', 'vacuuming'
         cleaning = Category.objects.create(name="cleaning", description="vacuuming, lunch cleanup, etc.")
-        breakfastCleanup = Service.objects.create(category=cleaning, name="Breakfast Cleanup", isActive=True, workload=2)
-        vacuuming = Service.objects.create(category=cleaning, name="Vacuuming", isActive=False, workload=1)
+        breakfastCleanup = Service.objects.create(category=cleaning, name="Breakfast Cleanup", active=True, workload=2)
+        vacuuming = Service.objects.create(category=cleaning, name="Vacuuming", active=False, workload=1)
         # creates period 'regularWeek', then addes services 'breakfastCleanup', 'vacuuming' to that period
-        regularWeek = Period.objects.create(name="FTTA Regular Week", description="Regular Week", startDate="2013-06-28", endDate="2013-07-07")
+        regularWeek = Period.objects.create(name="FTTA Regular Week", description="Regular Week",
+                                            startDate="2013-06-28", endDate="2013-07-07")
         regularWeek.service.add(breakfastCleanup, vacuuming)
 
     def test_category_get_services(self):

@@ -46,7 +46,6 @@ class Badge(models.Model):
     # for defining images' paths after dropping it through dropzonejs
     def get_upload_path(self, filename):
         path = "badges/"
-        
         if self.type == 'T':
             path += "trainees/" + self.term_created.code + '/'
         elif self.type == 'S':

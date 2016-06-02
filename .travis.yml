@@ -10,6 +10,8 @@ install:
   - pip install -r requirements/dev.txt
 before_script:
   - psql -c 'create database djattendance;' -U postgres
+  - psql -d djattendance -c "CREATE EXTENSION IF NOT EXISTS hstore;"
+  - python ap/makeallmigrations.py
  # - python ap/manage.py makemigrations accounts aputils books classes houses localities rooms services teams terms attendance absent_trainee_roster dailybread leaveslips lifestudies meal_seating schedules syllabus verse_parse
 script:
   - python ap/manage.py migrate --noinput

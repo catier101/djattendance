@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
 
 from rest_framework import viewsets, generics
 from rest_framework.views import APIView
@@ -19,6 +19,14 @@ class UserDetailView(DetailView):
     context_object_name = 'user'
     template_name = 'accounts/user_detail.html'
 
+class EventsListView(ListView):
+    model = Trainee
+    context_object_name = 'events'
+    template_name = 'accounts/events_list.html'
+    def get_queryset(self):
+        trainee = self.request.user.trainee
+        queryset = trainee.events
+        return queryset
 
 class UserUpdateView(UpdateView):
     model = User

@@ -19,7 +19,7 @@ def home(request):
     if is_trainee(request.user):
         trainee = trainee_from_user(request.user)
         try:
-            data['schedule'] = trainee.schedule.get(term=Term.current_term())
+            data['schedules'] = trainee.schedules.filter(season=trainee.current_season)
         except ObjectDoesNotExist:
             pass
         for discipline in trainee.discipline_set.all():

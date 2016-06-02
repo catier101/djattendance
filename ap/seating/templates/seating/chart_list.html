@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static "js/jquery.seat-charts.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/jquery.autocomplete.js" %}"></script>
+{% endblock %}
+{% block references %}
+  <link rel="stylesheet" type="text/css" href="{% static 'seating/css/seating.css' %}" />
+{% endblock %}
+
+
+{% block content %}
+<h2>Seating Charts</h2>
+<div class="box-container">
+  <a href="{% url 'seating:chart_create' %}">
+    <div class="chart-box new-chart-box">
+      Create New Seating Chart
+    </div>
+  </a>
+{% for chart in object_list %}
+  <div class="chart-box">
+    <div class="chart-box-name">{{chart.name}}</div>
+    <div class="chart-box-term">{{chart.term}}</div>
+    <a href="{% url 'seating:chart_edit' pk=chart.id %}" class="btn btn-default view-chart-btn">
+      view/edit
+    </a>
+    <a class="btn btn-danger delete-chart-btn">
+      delete
+    </a>
+  </div>
+{% endfor %}
+<div>
+
+{% endblock %}

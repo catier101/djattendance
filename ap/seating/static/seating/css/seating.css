@@ -1,0 +1,104 @@
+.cell {
+  width: 30px;
+	height: 30px;
+	background: #fafafa;
+  border: 1px dotted grey;
+}
+
+.cell:hover {
+  background: #cccccc;
+}
+
+.cell.seat {
+  background: white;
+  border: 1px solid black;
+}
+
+
+#width, #height {
+  width: 75px;
+  margin: 10px;
+}
+
+#submit-chart-form {
+  display: none;
+}
+
+#chart-name {
+  width: 250px;
+  margin: 10px;
+}
+
+#name, #desc {
+  width: 250px;
+  margin: 10px;
+}
+
+#trainee-name {
+  margin: 10px;
+}
+
+#edit-seat {
+  position: absolute;
+  width: 250px;
+}
+
+#chart-submit-success, #chart-submit-error {
+  display: none;
+}
+
+.box-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  /* tweak the where items line up on the row */
+  /* valid values are: flex-start, flex-end, space-between, space-around, stretch */
+  -webkit-align-content: flex-end;
+  align-content: flex-end;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+a:first-child {
+  /*get rid of underline for create new seating chart link*/
+  text-decoration: none;
+}
+
+.new-chart-box {
+  color: black;
+  font-size: 20px;
+}
+
+.new-chart-box:hover {
+  background-color: #e6e6e6;
+}
+
+.chart-box {
+  padding: 10px;
+  margin: 5px;
+  border: solid thin #ccc;
+  width: 150px;
+  height: 175px;
+  position: relative;
+}
+
+.chart-box-name {
+  font-size: 20px;
+}
+
+.chart-box-term {
+  font-size: 11px;
+}
+
+.view-chart-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.delete-chart-btn {
+  display: none;
+}

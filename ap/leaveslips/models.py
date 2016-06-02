@@ -1,11 +1,11 @@
 from django import forms
 from django.db import models
 from django.core.urlresolvers import reverse
-
 from datetime import datetime, timedelta
-
-from schedules.models import Event
+from attendance.models import Roll
 from accounts.models import Trainee, TrainingAssistant
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 
 """ leaveslips models.py
@@ -69,11 +69,10 @@ class LeaveSlip(models.Model):
 
     informed = models.BooleanField(blank=True, default=False)  # not sure, need to ask
 
-    def _classname(self):
+    @property
+    def classname(self):
         # returns whether slip is individual or group
         return str(self.__class__.__name__)[:-4].lower()
-
-    classname = property(_classname)
 
     def __init__(self, *args, **kwargs):
         super(LeaveSlip, self).__init__(*args, **kwargs)
@@ -88,6 +87,20 @@ class LeaveSlip(models.Model):
         super(LeaveSlip, self).save(force_insert, force_update)
         self.old_status = self.status
 
+    # deletes dummy roll under leave slip.
+
+
+    def delete_dummy_rolls(self, roll):
+        if Roll.objects.filter(leaveslips__id=self.id, id=roll.id).exist() and roll.status == 'P':
+            Roll.objects.filter(id=roll.id).delete() 
+
+    @property
+    def events(self):
+        evs = []
+        for roll in self.rolls.all():
+            roll.event.date = roll.date
+            evs.append(roll.event)
+        return evs
 
     def __unicode__(self):
         return "[%s] %s - %s" % (self.submitted.strftime('%m/%d'), self.type, self.trainee)
@@ -95,36 +108,32 @@ class LeaveSlip(models.Model):
     class Meta:
         abstract = True
 
-
 class IndividualSlip(LeaveSlip):
 
+    rolls = models.ManyToManyField(Roll, related_name='leaveslips')
 
-    events = models.ManyToManyField(Event, related_name='leaveslip')
+    @receiver(pre_delete)
+    def delete_individualslip(sender, instance, **kwargs):
+        if isinstance(instance, IndividualSlip):
+            for roll in instance.rolls.all():
+                if roll.status == 'P':
+                    Roll.objects.filter(id=roll.id).delete()
 
     def get_update_url(self):
         return reverse('leaveslips:individual-update', kwargs={'pk': self.id})
 
-    def _late(self):
-        end_date = self.events.all().order_by('-end')[0].end
-        if self.submitted > end_date+timedelta(days=2):
+    @property
+    def late(self):
+        roll = self.rolls.order_by('-date')[0]
+        date = roll.date
+        time = roll.event.end
+        if self.submitted > datetime(date,time) + timedelta(hours=48):
             return True
         else:
             return False
 
-    late = property(_late)  # whether this leave slip was submitted late or not
-
     def get_absolute_url(self):
         return reverse('leaveslips:individual-detail', kwargs={'pk': self.id})
-
-    @property
-    def get_start(self):  # determines the very first date of all the events
-        events=self.events.all()
-        start=datetime.now()
-        for event in events:
-            if event.start < start:
-                start=event.start
-        return start
-
 
 class GroupSlip(LeaveSlip):
 
@@ -143,16 +152,3 @@ class GroupSlip(LeaveSlip):
         return Event.objects.filter(start__gte=self.start).filter(end__lte=self.end)
 
     events = property(_events)
-
-
-# form classes
-class IndividualSlipForm(forms.ModelForm):
-    class Meta:
-        model = IndividualSlip
-        fields = ['type', 'description', 'comments', 'texted', 'informed', 'events']
-
-
-class GroupSlipForm(forms.ModelForm):
-    class Meta:
-        model = GroupSlip
-        fields = ['type', 'trainees', 'description', 'comments', 'texted', 'informed', 'start', 'end']

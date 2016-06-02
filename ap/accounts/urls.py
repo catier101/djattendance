@@ -7,6 +7,7 @@ from . import views
 urlpatterns = patterns(
     '',
     url(regex=r'^(?P<pk>\d+)$', view=views.UserDetailView.as_view(), name='user_detail'),
+    url(regex=r'^events$', view=views.EventsListView.as_view(), name='events_list'),
     url(regex=r'^update/(?P<pk>\d+)$', view=views.UserUpdateView.as_view(), name='user_update'),
     url(regex=r'^email/update/(?P<pk>\d+)$', view=views.EmailUpdateView.as_view(), name='email_change'),
     url(regex=r'^password/change$', view=auth_views.password_change,

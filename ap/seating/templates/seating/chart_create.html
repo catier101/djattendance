@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static "js/jquery.seat-charts.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/jquery.autocomplete.js" %}"></script>
+{% endblock %}
+{% block references %}
+  <link rel="stylesheet" type="text/css" href="{% static 'seating/css/seating.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'seating/css/jquery.seat-charts.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'seating/css/jquery.autocomplete.css' %}" />
+{% endblock %}
+
+
+{% block content %}
+<a class="go-back" href="{% url 'seating:chart_list' %}">Back to List</a>
+<h2>Create Seating Chart</h2>
+<div class="alert alert-success" id="chart-submit-success" role="alert">Successfully created seating chart</div>
+<div class="alert alert-danger" id="chart-submit-error" role="alert"></div>
+<div>
+  <div class="form-inline">
+    <form id="width-height-form">
+      <label for="width">Width</label>
+      <input type="number" class="form-control" id="width" min="1"/>
+      <label for="height">Height</label>
+      <input type="number" class="form-control" id="height" min="1"/>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <form id="submit-chart-form">
+      <label for="chart-name">Name</label>
+      <input type="text" class="form-control" id="chart-name" maxlength="100"/>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+</div>
+<div id="seat-map"></div>
+
+<script type="text/javascript" src="{% static "seating/js/grid.js" %}"></script>
+<script>
+  var trainees = JSON.parse('{{trainees_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
+  var traineeNames = {};
+  for (var i = 0; i < trainees.length; i++) {
+    var name = trainees[i].firstname + ' ' + trainees[i].lastname;
+    traineeNames[name] = trainees[i].id;
+  }
+  //destroy trainee personal information
+  trainees = null;
+
+  var sc;
+
+  $(document).ready(function() {
+    var seats = null;
+
+    //to hide edit seat form
+    $(document).mouseup(function (e) {
+        var container = $(".seatCharts-cell");
+        var form = $("#edit-seat")
+
+        // if the target of the click isn't the container nor a descendant of the container or the form
+        if ((!container.is(e.target) && container.has(e.target).length === 0) &&
+              (!form.is(e.target) && form.has(e.target).length === 0))
+        {
+          $("#edit-seat").remove();
+        }
+    });
+
+    $("#width-height-form").submit(function (event) {
+      event.preventDefault();
+
+      $('#seat-map').empty();
+      $("#submit-chart-form").show();
+
+      var w = parseInt($("#width").val());
+      var h = parseInt($("#height").val());
+      $("#seat-map").css("width", ((w+2)*60).toString() + "px");
+
+      if (seats) {
+        seats.setDimensions(w, h);
+      } else {
+        seats = new Grid(w, h);
+      }
+
+      var map = [];
+      for (var i = 0; i < h; i++) {
+        map.push('a'.repeat(w));
+      }
+
+      sc = $('#seat-map').seatCharts({
+        map: map,
+        seats: {},
+        naming: {
+          top: true,
+          left: true,
+        },
+        click: function (event) {
+          if (this.status() == 'available') {
+            $("#edit-seat").remove();
+
+            var seatId = "#" + this.settings.id;
+            var positioningStyle = "top:" + this.settings.$node[0].offsetTop + "px; left:" + this.settings.$node[0].offsetLeft + "px;";
+            $(seatId).after('<form class="form-inline" id="edit-seat" style="' + positioningStyle + '">');
+            $("#edit-seat").append('<input class="form-control" id="trainee-name"/>');
+            $("#edit-seat").append('<button id="" type="submit" class="btn btn-xs btn-default">Submit</button>');
+
+            $("#trainee-name").focus();
+
+            $("#trainee-name").autocomplete({
+                lookup: Object.keys(traineeNames),
+                autoSelectFirst: true,
+            });
+            var row = this.settings.row;
+            var column = this.settings.column;
+            $("#edit-seat").submit(function(event) {
+              event.preventDefault();
+              var tn = $("#trainee-name").val();
+              $(seatId).text(tn);
+              seats.grid[row][column].pk = traineeNames[tn] ? traineeNames[tn] : tn;
+              seats.grid[row][column].name = tn;
+              $("#edit-seat").remove();
+              $(".selected").focus();
+              if (tn == '') {
+                $(".selected").removeClass("selected");
+                return 'selected';
+              }
+            });
+
+            $(".selected").removeClass("selected");
+                  
+            return 'selected';
+          } else if (this.status() == 'selected') {
+            //seat has been vacated
+            return 'available';
+          } else if (this.status() == 'unavailable') {
+            //seat has been filled
+            return 'unavailable';
+          } else {
+            return this.style();
+          }
+        }
+      });
+
+      for (var i = 0; i < h; i++) {
+        for (var j = 0; j < w; j++) {
+          var id = (i+1) + '_' + (j+1);
+          if (i <= seats.grid.length) {
+            if (j <= seats.grid[i].length && seats.grid[i][j].name != '') {
+              sc.get(id).node().text(seats.grid[i][j].name);
+            }
+          }
+        }
+      }
+    });
+
+    $("#submit-chart-form").submit(function (event) {
+      event.preventDefault();
+      if (seats.grid.length > 0) {
+        var chart = {
+          name: $("#chart-name").val(),
+          desc: '',
+          width: $("#width").val(),
+          height: $("#height").val(),
+          trainees: seats.grid,
+        }
+
+        $.ajax({
+          url: '/api/charts/',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(chart),
+          success: function (data, status, jqXHR) {
+            $("#chart-submit-error").hide();
+            $("#chart-submit-success").show();
+            window.location.href = "{% url 'seating:chart_list' %}";
+            setTimeout(function() {
+              $("#chart-submit-success").slideUp(1000)
+            }, 5000);
+
+          },
+          error: function (jqXHR, textStatus, errorThrown ) {
+            console.log('Chart post error!');
+            console.log(jqXHR, textStatus, errorThrown);
+            $("#chart-submit-error").show();
+            $("#chart-submit-error").empty();
+            $("#chart-submit-error").append('Error! ' + errorThrown);
+          }
+        })
+      }
+    });
+
+  });
+</script>
+
+{% endblock %}

@@ -3,6 +3,9 @@ from .base import *
 DEBUG = False
 TEMPLATE_DEBUG = False
 
+# TODO: SMTP currently broken, will add functionality later
+ADMINS = ()
+
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 '''
@@ -10,6 +13,8 @@ import dj_database_url
   export DATABASE_URL='postgres://{{username}}:{{password}}@localhost:5432/{{database}}'
 '''
 DATABASES = {'default' : dj_database_url.config()}
+
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
