@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load bootstrap3 %} 
 {% load common_tags %}
+{% load smart_homepage %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,48 +99,11 @@
 
               {% block sidelinks %}
 
-                {% generate_current_menu as current_menu %}
-                <!-- {% with user_menu as menu %} -->
-                  {% for menu_item in current_menu %}
-                      <h5>{{ menu_item.name }}</h5>
-                      <!-- Visible to everyone -->
-                      {% for sub_item in menu_item.common %}
-                        {% if sub_item.condition != False %}
-                        {% url sub_item.url as the_url %}
-                          <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
-                        {% endif %}
-                      {% endfor %}
-                      <!-- Visible exclusively to TA's -->
-                      {% if user.is_superuser %}
-                        {% for sub_item in menu_item.ta_only %}
-                          {% if sub_item.condition != False %}
-                            {% url sub_item.url as the_url %}
-                            <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                      <!-- Visible exclusively to trainees -->
-                      {% if user|is_trainee %}
-                        {% for sub_item in menu_item.trainee_only %}
-                          {% if sub_item.condition != False %}
-                            {% url sub_item.url as the_url %}
-                            <a class="list-group-item" href="{{ the_url }}">{{ sub_item.name }}</a>
-                          {% endif %}
-                        {% endfor %}
-                      {% endif %}
-                      <!-- Visible to TA's and anyone with a specific permission --> 
-                      {% for specific_perm_item in menu_item.specific %}
-                        {% if specific_perm_item.permission in perms %}
-                          {% if sub_item.condition != False %}
-                            {% url specific_perm_item.url as the_url %}
-                            <a class="list-group-item" href="{{ the_url }}">{{ specific_perm_item.name }}</a>
-                          {% endif %}
-                        {% endif %}
-                      {% endfor %}
-                  {% endfor %}
+                {% generate_menu as menu %}
+                {{ menu |safe }}
 
-                <!-- {% endwith %} -->
               {% endblock %}
+
             </div>
           </div> <!--/SIDEBAR-->
         {% endblock %}

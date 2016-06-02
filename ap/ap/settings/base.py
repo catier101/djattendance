@@ -91,10 +91,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    "aputils.permissions.user_menu",
-    "exams.context_processors.exams_available" #must be after user_menu to overwrite exams_available condition
-    # "aputils.permissions.append_privileges",
-    
+    "exams.context_processors.exams_available"
 )
 
 # List of callables that know how to import templates from various sources.
