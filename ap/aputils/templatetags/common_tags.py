@@ -1,6 +1,5 @@
 from django import template
 from aputils.utils import is_trainee, is_TA
-from django.core.urlresolvers import reverse
 
 register = template.Library()
 
