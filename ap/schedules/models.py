@@ -69,7 +69,7 @@ class Event(models.Model):
     # classs = models.ForeignKey(Class, blank=True, null=True, verbose_name='class')  # class is a reserved keyword :(
 
     # the type of event
-    type = models.CharField(max_length=1, choices=EVENT_TYPES)
+    type = models.CharField(max_length=1, choices=EVENT_TYPES, default='C')
 
     # which type of class this is, e.g. Main, 1st year
     class_type = models.CharField(max_length=4, choices=CLASS_TYPE, blank=True, null=True)
@@ -109,15 +109,6 @@ class Event(models.Model):
     # gets the week from an absolute date of the current term.
     def week_from_date(self, date):
         return Term.current_term().term_week_of_date(date)
-
-
-    # def _week(self):
-    #     self.term.reverseDate(self.start.date)[0]
-    # week = property(_week)
-
-    # def _day(self):
-    #     self.term.reverseDate(self.start.date)[1]
-    # day = property(_day)
 
     def get_absolute_url(self):
         return reverse('schedules:event-detail', kwargs={'pk': self.pk})

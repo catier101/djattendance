@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<h1>Events</h1>
+  <div>
+  {% for event in events %}
+    <h4>{{event.grouper}}</h4>
+    <div class="panel panel-success">
+  {% empty %}
+    <h4><i>You have no leaveslips.</i></h4>
+  {% endfor %}
+ </div>
+
+  <script type="text/javascript">
+    $(document).on('click', ".delete_indiv_button", function() {
+      //console.log('clicked');
+      var slipId = +$(this).val();
+      console.log(slipId)
+      var csrf_token = "{% csrf_token %}";
+      $('#deleteModal .modal-title').html('Delete Leaveslip');
+      $('#deleteModal .modal-body').html('<p>Are you sure you want to delete this leaveslip?</p>');
+      //load form into Modal
+      //$('#deleteModal .modal-form').load('individual/delete/' + slipId);
+      $('#deleteModal .modal-form').html('<form action="individual/delete/'+ slipId+'" method="post">'+ csrf_token +'<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button><input class="btn btn-danger" type="submit" value="Delete"/></form>');
+      $('#deleteModal').modal('show');
+    });
+
+    $(document).on('click', ".delete_group_button", function() {
+      //console.log('clicked');
+      var slipId = +$(this).val();
+      console.log(slipId)
+      var csrf_token = "{% csrf_token %}";
+      $('#deleteModal .modal-title').html('Delete Leaveslip');
+      $('#deleteModal .modal-body').html('<p>Are you sure you want to delete this leaveslip?</p>');
+      //load form into Modal
+      //$('#deleteModal .modal-form').load('individual/delete/' + slipId);
+      $('#deleteModal .modal-form').html('<form action="group/delete/'+ slipId+'" method="post">'+ csrf_token +'<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button><input class="btn btn-danger" type="submit" value="Delete"/></form>');
+      $('#deleteModal').modal('show');
+    });
+
+    // $('#{{leaveslip.id}}').on('hidden.bs.modal', function () {
+      // $(this).removeData('bs.modal');
+    // });
+  </script>
+
+{% endblock %}

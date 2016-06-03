@@ -15,19 +15,22 @@
 
 	<script>
 	    var Events = [
-		    {% for event in trainee.events %}
+		    {% for event in events %}
 		        {
 		            id: "{{ event.id }}",
 		            start: "{{ event.start_datetime | date:'c' }}",
 		            end: "{{ event.end_datetime | date:'c' }}",
-		            name: "{{ event.name }}",
+		            name: "{{ event.name }}".replace(/&#39;/g, "'").replace(/&quot;/g,'"'),
 		            code: "{{ event.code }}",
 		            type: "{{ event.type }}",
 		            slips: [],
 		            status: "",
 		        },
 		    {% endfor %}];
-
+		var Rolls = {{ rolls_bb|safe}};
+		var IndividualSlips = {{ individualslips_bb|safe }};
+		var Trainees = {{ trainee_bb|safe }};
+		var TAs = {{ TAs_bb|safe }};
 		// var Rolls = JSON.parse('{{attendance_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
 		// var Slips = JSON.parse('{{leaveslips_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
 		// var Trainee = JSON.parse('{{trainee_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));

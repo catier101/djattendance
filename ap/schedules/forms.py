@@ -9,31 +9,21 @@ from houses.models import House
 from localities.models import Locality
 from schedules.constants import WEEKDAYS
 
-
 class EventForm(forms.ModelForm):
-    active_trainees = Trainee.objects.select_related().filter(is_active=True)
-    trainees = ModelSelect2MultipleField(queryset=active_trainees, required=False, search_fields=['^first_name', '^last_name'])
+    weekday = forms.ChoiceField(choices=WEEKDAYS, help_text="Which day this event repeats on")
+    day = forms.DateField(help_text="Optional to catch one-off days, only happen once", required=False)
+    # active_trainees = Trainee.objects.filter(is_active=True)
+    # trainees = ModelSelect2MultipleField(queryset=active_trainees, required=False, search_fields=['^first_name', '^last_name'])
 
     class Meta:
         model = Event
-        fields = ('type', 'name', 'code', 'description', 'monitor', 'start', 'end', 'day', 'weekday')
-        widgets = { 'start': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}),
-                    'end': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}) }
-
-    repeat = forms.MultipleChoiceField(choices=WEEKDAYS, help_text="Which days this event repeats on")
-    duration = forms.IntegerField(help_text="How many weeks this event repeats for")
-    active_trainees = Trainee.objects.filter(is_active=True)
-    trainees = ModelSelect2MultipleField(queryset=active_trainees, required=False, search_fields=['^first_name', '^last_name'])
-
-    class Meta:
-        model = Event
-        fields = ('type', 'name', 'code', 'description', 'monitor', 'start', 'end', 'day', 'weekday')
+        fields = ('type', 'name', 'code', 'description', 'class_type', 'monitor', 'start', 'end', 'weekday', 'day')
         help_texts = {
-            'start': 'Set the date to the first occurrence of the event',
-            'end': 'Set the date to the first occurrence of the event',
+            'start': 'Set the start time of the event',
+            'end': 'Set the end time of the event',
         }
-        widgets = { 'start': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}),
-                    'end': DateTimePicker(options={'format': 'MM/DD/YYYY HH:mm'}) }
+        widgets = { 'start': DateTimePicker(options={'format': 'HH:mm:ss', 'pickDate': False }),
+                    'end': DateTimePicker(options={'format': 'HH:mm:ss', 'pickDate': False }) }
 
 class TraineeSelectForm(forms.Form):
     TERM_CHOICES = ((1, '1'),

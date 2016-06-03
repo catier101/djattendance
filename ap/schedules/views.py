@@ -3,7 +3,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.forms.models import modelform_factory
-from django.contrib.admin.widgets import AdminDateWidget
+from django.contrib.admin.widgets import AdminDateWidget  
+from django.shortcuts import render  
 
 from bootstrap3_datetime.widgets import DateTimePicker
 from rest_framework import viewsets, filters
@@ -13,7 +14,7 @@ from .forms import EventForm, TraineeSelectForm
 from .serializers import EventSerializer, ScheduleSerializer, EventFilter, ScheduleFilter
 from terms.models import Term
 from rest_framework_bulk import BulkModelViewSet
-
+from rest_framework.renderers import JSONRenderer
 from aputils.utils import trainee_from_user
 
 class SchedulePersonal(generic.TemplateView):
@@ -45,21 +46,31 @@ class EventCreate(generic.CreateView):
 
     def form_valid(self, form):
         event = form.save()
-        for trainee in form.cleaned_data['trainees']:
-            # add event to trainee's schedule
-            if Schedule.objects.filter(trainees=trainee).filter(term=event.term):
-                schedule = Schedule.objects.filter(trainees=trainee).filter(term=event.term)[0]
-                schedule.events.add(event)
-            else: # if trainee doesn't already have a schedule, create it
-                schedule = Schedule(trainees=trainee, term=event.term)
-                schedule.save()
-                schedule.events.add(event)
         return super(EventCreate, self).form_valid(form)
 
 
 class EventDetail(generic.DetailView):
     model = Event
     context_object_name = "event"
+
+class EventList(generic.ListView):
+    model = Event
+    template_name = 'schedules/event_list.html'
+    context_object_name = 'events'
+
+    def get_queryset(self, **kwargs):
+        user = self.request.user
+        trainee = trainee_from_user(user)
+        return Event.objects.filter(schedules = trainee.schedules.all()).distinct('id')
+
+    # def get_context_data(self, **kwargs):
+
+    #     listJSONRenderer = JSONRenderer()
+    #     ctx = super(EventList, self).get_context_data(**kwargs)
+    #     # context['term'] = Term.decode(self.kwargs['term'])
+    #     ctx['events'] = Event.objects.all()
+    #     ctx['events_bb'] = listJSONRenderer.render(EventSerializer(ctx['events'], many=True).data)
+    #     return ctx
 
 
 class EventUpdate(generic.UpdateView):
@@ -115,7 +126,7 @@ class TermEvents(generic.ListView):
         
 ###  API-ONLY VIEWS  ###
 
-class EventViewSet(viewsets.ModelViewSet):
+class EventViewSet(BulkModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = (filters.DjangoFilterBackend,)
@@ -123,24 +134,24 @@ class EventViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         trainee = trainee_from_user(user)
-        events = Event.objects.filter(schedules = trainee.schedules.all())
+        events = Event.objects.filter(schedules = trainee.schedules.all()).distinct('id')
         return events
     def allow_bulk_destroy(self, qs, filtered):
         return not all(x in filtered for x in qs)
 
-class ScheduleViewSet(viewsets.ModelViewSet):
+class ScheduleViewSet(BulkModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = ScheduleFilter
     def get_queryset(self):
         trainee = trainee_from_user(self.request.user)
-        schedule=Schedule.objects.filter(trainees=trainee)
+        schedule=Schedule.objects.filter(trainees=trainee).distinct('id')
         return schedule
     def allow_bulk_destroy(self, qs, filtered):
         return not all(x in filtered for x in qs)
 
-class AllEventViewSet(viewsets.ModelViewSet):
+class AllEventViewSet(BulkModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = (filters.DjangoFilterBackend,)
@@ -148,7 +159,7 @@ class AllEventViewSet(viewsets.ModelViewSet):
     def allow_bulk_destroy(self, qs, filtered):
         return not all(x in filtered for x in qs)
 
-class AllScheduleViewSet(viewsets.ModelViewSet):
+class AllScheduleViewSet(BulkModelViewSet):
     queryset = Schedule.objects.all()
     serializer_class = ScheduleSerializer
     filter_backends = (filters.DjangoFilterBackend,)

@@ -99,6 +99,7 @@
               <h5>Attendance</h5> {% block attendance_links %}
                 <a class="list-group-item" href="{% url 'schedules:schedule' %}">View Schedule</a>
                 <a class="list-group-item" href="{% url 'schedules:event-create' %}">Create Event</a>
+                <a class="list-group-item" href="{% url 'schedules:event-list' %}">View Events</a>
                 <a class="list-group-item" href="{% url 'attendance:attendance-submit' %}">Personal Attendance</a>
                 <a class="list-group-item" href="/leaveslips">View Leaveslips</a>
                 <a class="list-group-item" href="/leaveslips/individual/create">Submit Individual Leaveslips</a>
