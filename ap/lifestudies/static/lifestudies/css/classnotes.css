@@ -7,13 +7,9 @@
 }
 
 /* NAVBAR */
-
-nav {
-  border-bottom: 1px solid black;
-}
-
-.nav {
-  float:right;
+.navbar-default{
+  color:black;
+  background-color: pink;
 }
 
 /* EMPTY NAV SPACE */
@@ -30,10 +26,9 @@ nav {
 }
 
 .class-notes {
-  height:500px;
+  height:60%;
   border:2px solid grey;
   margin-left:150px;
-  padding:5px;
 }
 
 .class-notes table {
@@ -61,7 +56,6 @@ nav {
 
 .trainee-name{
   font-weight: bold;
-  margin-left:0;
   text-align: left;
 }
 
@@ -73,6 +67,23 @@ nav {
 /* STUDENT NOTES */
 .notes{
   margin-left:10px;
-  height:600px;
+  height:65%;
   border:2px solid grey;
+}
+
+/* BUTTONS */
+.btn {
+  width:300px;
+  height:5%;
+  margin-top:2px;
+}
+
+.btn-group-vertical {
+  /*margin-left:150px;*/
+}
+
+.control {
+  margin-top:5px;
+  float:left;
+  align:left;
 }
