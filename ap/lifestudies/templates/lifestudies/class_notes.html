@@ -15,7 +15,8 @@
     <!-- <link href="../../dist/cssbootstrap.min.css" rel="stylesheet"> -->
 
     <!-- Custom styles for this template -->
-    <link href="../static/css/classnotes.css" rel="stylesheet">
+    <link href="../../static/lifestudies/css/classnotes.css" rel="stylesheet">
+    <link href="../../static/lifestudies/css/lifestudies.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700|Raleway:400,700' rel='stylesheet' type='text/css'>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -52,12 +53,16 @@
           <a class="navbar-brand" href="#">Full-time Training in Anaheim</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav navbar-right">
             <!-- <li class="active"><a href="#">Home</a></li> -->
             <li><a href="#">ATTENDANCE</a></li>
             <li><a href="#">CLASSES</a></li>
             <li><a href="#">REQUESTS</a></li>
             <li><a href="#">OTHER</a></li>
+            <li><a href="#">
+              <span class="glyphicon glyphicon-align-left glyphicon-bell" aria-hidden="true"></span>
+              Hi, Ruiyu! (logout)
+            </a></li>
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -85,7 +90,7 @@
           <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
         </p>
       </div> -->
-
+      <div class="container-fluid cover">
       <div class = "container-fluid">
         <div class ="col-sm-4 cn-h1">
         <h2>Class notes</h2>
@@ -94,7 +99,7 @@
 
       <div class="container-fluid">
         <div class="row">
-        <div class="class-notes col-sm-3">
+        <div class="class-notes col-sm-3 vert">
       <table class = "table assignments table-borderless table-condensed active">
             <tr>
               <td class="trainee-name">NAME</td>
@@ -136,45 +141,49 @@
                   </tr>
               </table>
       </div>
-      <div class="container">
-      <div class="notes col-sm-7 row">
-        <h1></h1>
-      </div>
-      </div>
-    </div>
-      <div class="container">
-        <div class="row">
+      <div class="control">
       <div class="btn-group-vertical" role="group" aria-label="...">
-      <div class="col-md-3 approved">
-        <a class="btn btn-default" href="#" role="button">MARKED FOR FELLOWSHIP</a>
-        <a class="btn btn-default" href="#" role="button">APPROVED ASSIGNMENTS</a>
+        <button type = "button" class="btn" href="#">MARKED FOR FELLOWSHIP</button>
+        <button type = "button" class="btn" href="#">APPROVED ASSIGNMENTS</button>
       </div>
     </div>
-      </div>
 
-    <!-- <hr> -->
-    <div class = "container">
+      <div class="container">
       <div class = "row">
-        <div class="button-line">
-          <!-- <div class = "btn-group"> -->
-        <div class="btn-group-vertical" role="group" aria-label="...">
-        <div class="col-md-4 approved">
-          <a class="btn btn-default" href="#" role="button">MARKED FOR FELLOWSHIP</a>
-          <a class="btn btn-default" href="#" role="button">APPROVED ASSIGNMENTS</a>
+      <div class="notes col-sm-7">
+          <h1></h1>
+          <div class="appdeny">
+            <div class="btn-group" role="group" aria-label="...">
+              <button type = "button" class="btn approve" href="#">APPROVE</button>
+              <button type = "button" class="btn fellowship" data-toggle="modal" data-target="#fcomments">FELLOWSHIP</button>
+            </div>
         </div>
         </div>
-        <div class="col-md-8 control">
-          <div class="btn-group">
-            <a class="btn" href="#" role="button">APPROVE</a>
-            <a class="btn" href="#" role="button">FELLOWSHIP</a>
+
+        <!-- Modal -->
+      <div class="modal fade" id="fcomments" tabindex="-1" role="dialog" aria-labelledby="commentbox">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="commentbox">Modal title</h4>
+            </div>
+            <div class="modal-body">
+              :)
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
-        </div>
       </div>
       </div>
-    </div>
+      </div>
 
-    <!-- </div> -->
+    </div>
+  </div>
+
 
 
     <!-- Bootstrap core JavaScript

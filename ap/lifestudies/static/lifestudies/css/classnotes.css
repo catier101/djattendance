@@ -2,6 +2,10 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.cover {
+  min-height:100%;
+}
+
 .navbar-static-top {
   margin-bottom: 19px;
 }
@@ -26,8 +30,8 @@
 }
 
 .class-notes {
-  height:60%;
-  border:2px solid grey;
+  height:68%;
+  border:2px solid rgb(172, 172, 172);
   margin-left:150px;
 }
 
@@ -66,24 +70,48 @@
 
 /* STUDENT NOTES */
 .notes{
+  height:80%;
   margin-left:10px;
-  height:65%;
-  border:2px solid grey;
+  padding-left:5px;
+  border-left:2px solid rgb(172, 172, 172);
 }
 
 /* BUTTONS */
 .btn {
-  width:300px;
-  height:5%;
-  margin-top:2px;
+  width:250px;
+  text-align: center;
 }
 
-.btn-group-vertical {
-  /*margin-left:150px;*/
+.approve {
+  background-color: rgb(58, 207, 91);
+  border: 1px solid rgb(23, 145, 50);
+}
+
+.fellowship {
+  background-color: rgb(51, 180, 214);
+}
+
+.appdeny {
+  position:absolute;
+  left:5;
+  bottom:0;
+}
+
+.appdeny .btn {
+  margin:10px;
 }
 
 .control {
-  margin-top:5px;
-  float:left;
-  align:left;
+  position:absolute;
+  width:300px;
+  bottom:12;
+  margin-left:150px;
+}
+
+.control .btn {
+  height:10%;
+  margin-bottom:5px;
+  border:1px solid grey;
+  min-width:300px;
+  background-color:rgb(213, 213, 213);
 }
