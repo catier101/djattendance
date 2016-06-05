@@ -6,15 +6,17 @@
 {% bootstrap_messages %}
 
 {% block content %}
-<h2>Update Event</h2>
+    <h2>Editing Event</h2>
+    <div class="event-form">
+	    <form action="" method="post">{% csrf_token %}
+	        {% bootstrap_form form %}
 
-    <form action="" method="post">{% csrf_token %}
-        {% bootstrap_form form %}  
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">
-               Update
-            </button>
-        {% endbuttons %}
-    </form>
+	        {% buttons %}
+	            <button type="submit" class="btn btn-primary">
+	                Submit
+	            </button>
+	        {% endbuttons %}
+		</form>
+	</div>
 
 {% endblock %}

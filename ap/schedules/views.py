@@ -36,18 +36,30 @@ class ScheduleDetail(generic.DetailView):
         return Schedule.objects.filter(trainee=trainee).filter(term=Term.current_term())
 
 class EventCreate(generic.CreateView):
+    model = Event
     template_name = 'schedules/event_create.html'
     form_class = EventForm
-
-    def get_context_data(self, **kwargs):
-        context = super(EventCreate, self).get_context_data(**kwargs)
-        context['trainee_select_form'] = TraineeSelectForm()
-        return context
 
     def form_valid(self, form):
         event = form.save()
         return super(EventCreate, self).form_valid(form)
-
+    # def post(request, pk):
+    # post = get_object_or_404(Event, pk=pk)
+    # if request.method == 'GET':
+    #     form = EventForm()
+    # else:
+    #     form = EventForm(request.POST, instance = post)
+    #     if form.is_valid():
+    #         post = form.save(commit=False)
+    #         schedules = form.cleaned_data.get('schedules')
+    #         for schedule in schedules:
+    #             schedule.events.add()
+    #         post.save()
+    #         return redirect('post_detail', pk=post.pk)
+ 
+    # return render(request, 'post/post_form_upload.html', {
+    #     'form': form,
+    # })
 
 class EventDetail(generic.DetailView):
     model = Event
@@ -57,20 +69,18 @@ class EventList(generic.ListView):
     model = Event
     template_name = 'schedules/event_list.html'
     context_object_name = 'events'
-
-    def get_queryset(self, **kwargs):
+    def get_context_data(self, **kwargs):
+        listJSONRenderer = JSONRenderer()
         user = self.request.user
         trainee = trainee_from_user(user)
-        return Event.objects.filter(schedules = trainee.schedules.all()).distinct('id')
-
-    # def get_context_data(self, **kwargs):
-
-    #     listJSONRenderer = JSONRenderer()
-    #     ctx = super(EventList, self).get_context_data(**kwargs)
-    #     # context['term'] = Term.decode(self.kwargs['term'])
-    #     ctx['events'] = Event.objects.all()
-    #     ctx['events_bb'] = listJSONRenderer.render(EventSerializer(ctx['events'], many=True).data)
-    #     return ctx
+        ctx = super(EventList, self).get_context_data(**kwargs)
+        events = Event.objects.filter(schedules = trainee.schedules.all()).distinct().order_by('name')
+        ctx['all_events'] = events.order_by('day')
+        ctx['events_with_day'] = events.filter(weekday__isnull=True)
+        ctx['events_with_weekday'] = events.exclude(weekday__isnull=True)
+        ctx['events_with_day_bb'] = listJSONRenderer.render(EventSerializer(ctx['events_with_day'], many=True).data)
+        ctx['events_with_weekday_bb'] = listJSONRenderer.render(EventSerializer(ctx['events_with_weekday'], many=True).data)
+        return ctx
 
 
 class EventUpdate(generic.UpdateView):
@@ -78,37 +88,37 @@ class EventUpdate(generic.UpdateView):
     template_name = 'schedules/event_update.html'
     form_class = EventForm
 
-    def get_initial(self):
-        trainees = []
-        for schedule in self.object.schedule_set.all():
-            trainees.append(schedule.trainees)
-        return {'trainees': trainees}
+    # def get_initial(self):
+    #     trainees = []
+    #     for schedule in self.object.schedule_set.all():
+    #         trainees.append(schedule.trainees)
+    #     return {'trainees': trainees}
 
-    def form_valid(self, form):
-        event = form.save()
+    # def form_valid(self, form):
+    #     event = form.save()
 
-        # remove event from schedules of trainees no longer assigned to this event
-        for schedule in event.schedule_set.all():
-            if schedule.trainees not in form.cleaned_data['trainees']:
-                schedule.events.remove(event)
+    #     # remove event from schedules of trainees no longer assigned to this event
+    #     for schedule in event.schedule_set.all():
+    #         if schedule.trainees not in form.cleaned_data['trainees']:
+    #             schedule.events.remove(event)
 
-        for trainee in form.cleaned_data['trainees']:
-            # make sure event is in each trainee's schedule
-            if Schedule.objects.filter(trainee=trainee).filter(term=event.term):
-                schedule = Schedule.objects.filter(trainee=trainee).filter(term=event.term)[0]
-                if event not in schedule.events.all():
-                    schedule.events.add(event)
-            else:
-                schedule = Schedule(trainee=trainee, term=event.term)
-                schedule.save()
-                schedule.events.add(event)
+    #     for trainee in form.cleaned_data['trainees']:
+    #         # make sure event is in each trainee's schedule
+    #         if Schedule.objects.filter(trainee=trainee).filter(term=event.term):
+    #             schedule = Schedule.objects.filter(trainee=trainee).filter(term=event.term)[0]
+    #             if event not in schedule.events.all():
+    #                 schedule.events.add(event)
+    #         else:
+    #             schedule = Schedule(trainee=trainee, term=event.term)
+    #             schedule.save()
+    #             schedule.events.add(event)
 
-        return super(EventUpdate, self).form_valid(form)
+    #     return super(EventUpdate, self).form_valid(form)
 
 
 class EventDelete(generic.DeleteView):
     model = Event
-    success_url = reverse_lazy('schedules:event-create')
+    success_url = '/schedules/event/list/'
 
 
 class TermEvents(generic.ListView):
@@ -134,7 +144,7 @@ class EventViewSet(BulkModelViewSet):
     def get_queryset(self):
         user = self.request.user
         trainee = trainee_from_user(user)
-        events = Event.objects.filter(schedules = trainee.schedules.all()).distinct('id')
+        events = Event.objects.filter(schedules = trainee.schedules.all()).distinct()
         return events
     def allow_bulk_destroy(self, qs, filtered):
         return not all(x in filtered for x in qs)
@@ -146,7 +156,7 @@ class ScheduleViewSet(BulkModelViewSet):
     filter_class = ScheduleFilter
     def get_queryset(self):
         trainee = trainee_from_user(self.request.user)
-        schedule=Schedule.objects.filter(trainees=trainee).distinct('id')
+        schedule=Schedule.objects.filter(trainees=trainee).distinct()
         return schedule
     def allow_bulk_destroy(self, qs, filtered):
         return not all(x in filtered for x in qs)

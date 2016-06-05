@@ -1,5 +1,6 @@
 # according to datetime.date.today()
 WEEKDAYS = (
+	(7, '---------'),
     (0, 'Monday'),
     (1, 'Tuesday'),
     (2, 'Wednesday'),

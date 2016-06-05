@@ -4,38 +4,111 @@
 {% block content %}
 <h1>Events</h1>
   <div>
-  {% for event in events %}
-    <h4>{{event.grouper}}</h4>
+  <h4>Single Day Events</h4>
+  {% for event in events_with_day %}
+  <div>
     <div class="panel panel-success">
-  {% empty %}
-    <h4><i>You have no leaveslips.</i></h4>
+    <div class="panel-heading">
+    <h4 class = "panel-title">{{event.name}}</h4>
+    </div>
+        <div class="panel-body">
+            Code: {{event.code}}
+            <div class="pull-right">
+            <a href ="{{event.get_update_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button></a>
+            <button value="{{event.id}}" class="btn btn-default delete_event_button"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+            <br>Description: {{event.description}}
+            <br>Type: {{event.type}}
+            <br>Class Type: {{event.class_type}}
+            <br>Monitor: {{event.monitor}}
+            <br>Start: {{event.start}}
+            <br>End: {{event.end}}
+            {%if event.day %}
+                <br>Day: {{event.day}}
+            {% else %}
+                <br>Weekday: {{event.get_weekday}}
+            {% endif %}
+            <br>Schedules: {{event.get_schedules}}
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete Event" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3 class="modal-title">Title</h3>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <div class="modal-form"></div>
+          
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  {% endfor %}
+  <h4>Repeating Weekday Events</h4>
+  {% for event in events_with_weekday %}
+  <div>
+    <div class="panel panel-success">
+    <div class="panel-heading">
+    <h4 class = "panel-title">{{event.name}}</h4>
+    </div>
+        <div class="panel-body">
+            Code: {{event.code}}
+            <div class="pull-right">
+            <a href ="{{event.get_update_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button></a>
+            <button value="{{event.id}}" class="btn btn-default delete_event_button"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+            <br>Description: {{event.description}}
+            <br>Type: {{event.type}}
+            <br>Class Type: {{event.class_type}}
+            <br>Monitor: {{event.monitor}}
+            <br>Start: {{event.start}}
+            <br>End: {{event.end}}
+            {%if event.day %}
+                <br>Day: {{event.day}}
+            {% else %}
+                <br>Weekday: {{event.get_weekday}}
+            {% endif %}
+            <br>Schedules: {{event.get_schedules}}
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete Event" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3 class="modal-title">Title</h3>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <div class="modal-form"></div>
+          
+        </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
   {% endfor %}
  </div>
 
   <script type="text/javascript">
-    $(document).on('click', ".delete_indiv_button", function() {
+    $(document).on('click', ".delete_event_button", function() {
       //console.log('clicked');
-      var slipId = +$(this).val();
-      console.log(slipId)
+      var eventId = +$(this).val();
+      console.log(eventId)
       var csrf_token = "{% csrf_token %}";
-      $('#deleteModal .modal-title').html('Delete Leaveslip');
-      $('#deleteModal .modal-body').html('<p>Are you sure you want to delete this leaveslip?</p>');
+      $('#deleteModal .modal-title').html('Delete Event');
+      $('#deleteModal .modal-body').html('<p>Are you sure you want to delete this event?</p>');
       //load form into Modal
       //$('#deleteModal .modal-form').load('individual/delete/' + slipId);
-      $('#deleteModal .modal-form').html('<form action="individual/delete/'+ slipId+'" method="post">'+ csrf_token +'<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button><input class="btn btn-danger" type="submit" value="Delete"/></form>');
-      $('#deleteModal').modal('show');
-    });
-
-    $(document).on('click', ".delete_group_button", function() {
-      //console.log('clicked');
-      var slipId = +$(this).val();
-      console.log(slipId)
-      var csrf_token = "{% csrf_token %}";
-      $('#deleteModal .modal-title').html('Delete Leaveslip');
-      $('#deleteModal .modal-body').html('<p>Are you sure you want to delete this leaveslip?</p>');
-      //load form into Modal
-      //$('#deleteModal .modal-form').load('individual/delete/' + slipId);
-      $('#deleteModal .modal-form').html('<form action="group/delete/'+ slipId+'" method="post">'+ csrf_token +'<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button><input class="btn btn-danger" type="submit" value="Delete"/></form>');
+      $('#deleteModal .modal-form').html('<form action="delete/'+ eventId + '" method="post">'+ csrf_token +'<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button><input class="btn btn-danger" type="submit" value="Delete"/></form>');
       $('#deleteModal').modal('show');
     });
 

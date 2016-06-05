@@ -18,18 +18,16 @@
 {% block content %}
 
     <h2>Create Event</h2>
+    <div class="event-form">
+        <form action="" method="post">{% csrf_token %}
+            {% bootstrap_form form %}
 
-    <form id="eventForm" action="" method="post">{% csrf_token %}
-        {% bootstrap_form form %}
-        <!-- <button type="button" data-toggle="modal" data-target="#trainee_select">Add Trainee Group</button> -->
-        {% buttons %}
-            <button type="submit" class="btn btn-primary" form="eventForm">
-                Create
-            </button>
-        {% endbuttons %}
-    </form>
-
-    {% include 'schedules/trainee_select_modal.html' %}
-    
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Create
+                </button>
+            {% endbuttons %}
+        </form>
+    </div>    
 
 {% endblock %}

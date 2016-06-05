@@ -2,27 +2,50 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h2>{{ event.name }} <br>
-    <small>{{ event.description }}</small>
-    </h2>
+<div>
+    <div class="panel panel-success">
+    <div class="panel-heading">
+    <h4 class = "panel-title">{{event.name}}</h4>
+    </div>
+        <div class="panel-body">
+            Code: {{event.code}}
+            <div class="pull-right">
+            <a href ="{{event.get_update_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button></a>
+            <button value="{{event.id}}" class="btn btn-default delete_event_button"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+            <br>Description: {{event.description}}
+            <br>Type: {{event.type}}
+            <br>Class Type: {{event.class_type}}
+            <br>Monitor: {{event.monitor}}
+            <br>Start: {{event.start}}
+            <br>End: {{event.end}}
+            {%if event.day %}
+                <br>Day: {{event.day}}
+            {% else %}
+                <br>Weekday: {{event.get_weekday}}
+            {% endif %}
+            <br>Schedules: {{event.get_schedules}}
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete Event" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
 
-    <table class="table">
-        <tr><td>Date:</td>
-            <td>{{ event.date }}</td></tr>
-        <tr><td>Start Time:</td>
-            <td>{{ event.start }}</td></tr>
-        <tr>
-            <td>End Time:</td>
-            <td>{{ event.end }}</td></tr>
-    </table>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+          <h3 class="modal-title">Title</h3>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <div class="modal-form"></div>
+          
+        </div>
+        </div>
+        </div>
+      </div>
 
-    <h4>Trainees</h4>
-    {% if event.schedule_set.all %}
-        {% for schedule in event.schedule_set.all %}
-            {{ schedule.trainee.full_name }}<br>
-        {% endfor %}
-    {% else %}
-        None
-    {% endif %}
+        
+      </div>
+    </div>
+    </div>
 
 {% endblock %}

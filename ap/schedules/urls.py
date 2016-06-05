@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'event/list/$', views.EventList.as_view(), name='event-list'),
     url(r'event/(?P<pk>\d+)/$', views.EventDetail.as_view(), name='event-detail'),
     url(r'event/(?P<pk>\d+)/update/$', views.EventUpdate.as_view(), name='event-update'),
-    url(r'event/(?P<pk>\d+)/delete/$', views.EventDelete.as_view(), name='event-delete'),
+    url(r'event/list/delete/(?P<pk>\d+)$', views.EventDelete.as_view(), name='event-delete'),
     url(r'event/(?P<term>(Fa|Sp)\d{2})/$', views.TermEvents.as_view(), name='term-events'),
 )

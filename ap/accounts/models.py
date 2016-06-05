@@ -268,7 +268,10 @@ class Trainee(User):
     event_list=[]
     for (w, d), evs in w_tb.items():
       for ev in evs:
-        date = ev.date_for_week(w)
+        if ev.day:
+          date = ev.day
+        else:
+          date = ev.date_for_week(w)
         # calc date from w
         ev.start_datetime = datetime.combine(date, ev.start)
         ev.end_datetime = datetime.combine(date, ev.end)

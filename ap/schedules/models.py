@@ -87,8 +87,16 @@ class Event(models.Model):
     # Optional to catch one-off days, only happen once
     day = models.DateField(blank=True, null=True)
 
-    weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS, verbose_name='Day of the week')
-        
+    weekday = models.PositiveSmallIntegerField(choices=WEEKDAYS, verbose_name='Day of the week', null=True, blank=True)
+
+    @property
+    def get_schedules(self):
+        return self.schedules.all()
+
+    @property
+    def get_weekday(self):
+        return WEEKDAYS[self.weekday][1]
+
     # returns the date of the event for the current week, e.g. 04-20-16
     @property
     def current_week_date(self):
@@ -98,8 +106,11 @@ class Event(models.Model):
 
     # the date of the event for a given week
     def date_for_week(self, week):
+        print week
+        print self.weekday
         start_date = Term.current_term().start
         event_week = start_date + timedelta(weeks=week-1)
+        print event_week
         return event_week + timedelta(days = self.weekday)
 
     # checks for time conflicts between events. Returns True if conflict exists.
@@ -112,6 +123,9 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse('schedules:event-detail', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('schedules:event-update', kwargs={'pk': self.id})
 
     def __unicode__(self):
         return "[%s] %s" % (self.start.strftime('%m/%d'), self.name)

@@ -1,14 +1,12 @@
 import django_filters
 from rest_framework.serializers import ModelSerializer
 from .models import Event, Schedule
-from rest_framework import serializers
 from rest_framework import serializers, filters
 from rest_framework_bulk import (
   BulkListSerializer,
   BulkSerializerMixin,
   ListBulkCreateUpdateDestroyAPIView,
 )
-
 
 class EventSerializer(BulkSerializerMixin, ModelSerializer):
   class Meta:
@@ -52,3 +50,15 @@ class ScheduleFilter(filters.FilterSet):
   class Meta:
     model = Schedule
     fields = ['id','trainees','weeks','events']
+
+# class EventWithSchedulesSerializer(BulkSerializerMixin, ModelSerializer):
+#   schedules = ScheduleSerializer(many=True,)
+#   class Meta:
+#     model = Event
+#     list_serializer_class = BulkListSerializer
+#     fields = '__all__'
+#   def create(self, validated_data):
+#     schedules = validated_data.pop('schedules')
+#     event = Event.objects.create(**validated_data)
+#     for schedule in schedules:
+#       schedule.events.add(event)
