@@ -4,8 +4,8 @@ import WeekBar from '../components/WeekBar'
 import { TERM_START } from '../constants'
 
 const mapStateToProps = (state) => {
-  var startDate = dateFns.addDays(dateFns.startOfWeek(state.reducer.date), 1),
-      endDate = dateFns.addDays(dateFns.endOfWeek(state.reducer.date), 1)
+  var startDate = dateFns.startOfWeek(state.reducer.date, {weekStartsOn: 1}),
+      endDate = dateFns.endOfWeek(state.reducer.date, {weekStartsOn: 1})
 
   var difference = dateFns.differenceInWeeks(startDate, TERM_START);
   var period = Math.floor(difference/2);
@@ -32,10 +32,10 @@ const mapStateToProps = (state) => {
 
   return {
     isFirst: isFirst,
-    firstStart: dateFns.format(firstStart, 'MMM D'),
-    firstEnd: dateFns.format(firstEnd, 'MMM D'),
-    secondStart: dateFns.format(secondStart, 'MMM D'),
-    secondEnd: dateFns.format(secondEnd, 'MMM D'),
+    firstStart: dateFns.format(firstStart, 'M/D'),
+    firstEnd: dateFns.format(firstEnd, 'M/D'),
+    secondStart: dateFns.format(secondStart, 'M/D'),
+    secondEnd: dateFns.format(secondEnd, 'M/D'),
     period: period
   }
 }

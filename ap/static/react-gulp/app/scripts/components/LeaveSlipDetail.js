@@ -4,11 +4,14 @@ import DropdownArrow from './DropdownArrow'
 import RollSlipForm from './RollSlipForm'
 import SelectedEvent from './SelectedEvent'
 
-import { SLIP_STATUS_LOOKUP, SLIP_TYPE_LOOKUP } from '../constants'
+import { SLIP_STATUS_LOOKUP, SLIP_TYPE_LOOKUP, FA_ICON_LOOKUP } from '../constants'
 
-const LeaveSlipDetail = ({ id, type, status, TA, trainee, submitted, comments, texted, informed, events, postRollSlip, deleteSlip,
-                            leaveSlipDetailsShow, onClick, otherReasonsShow, toggleOtherReasons, selectedEvents, tas }) => {
+const LeaveSlipDetail = ({ id, type, status, TA, trainee, submitted, comments, texted, informed, events, leaveSlipDetailsShow, onClick,
+                            removeAllSelectedEvents, removeSelectedEvent, postRollSlip, deleteSlip, otherReasonsShow, toggleOtherReasons, 
+                            selectedEvents, tas }) => {
   var classes = "row leaveslip-detail " + SLIP_STATUS_LOOKUP[status];
+
+  var faClasses = "fa fa-" + FA_ICON_LOOKUP[SLIP_STATUS_LOOKUP[status]];
 
   var disabledClass = 'remove-all';
   if (selectedEvents.length == 0) {
@@ -23,6 +26,7 @@ const LeaveSlipDetail = ({ id, type, status, TA, trainee, submitted, comments, t
         </div>
         <div className="leaveslip-comments">{comments}</div>
         <span className="center-arrow"> 
+          <i className={faClasses} aria-hidden="true"></i>
           <DropdownArrow
             directionBoolean={leaveSlipDetailsShow[id]}
           />
@@ -34,12 +38,13 @@ const LeaveSlipDetail = ({ id, type, status, TA, trainee, submitted, comments, t
             <div className="form-section">
               <div className="toggle-title">
                 Sessions Selected
-                <Button bsSize="small" className={disabledClass} >Remove All</Button>
+                <Button bsSize="small" className={disabledClass} onClick={removeAllSelectedEvents}>Remove All</Button>
               </div>
               <div>
                 {selectedEvents.map(function(ev) {
                   return <SelectedEvent
                             {...ev}
+                            onClick={() => removeSelectedEvent(ev)}
                             selectedEvents={selectedEvents}
                           />
                 })}
@@ -55,6 +60,8 @@ const LeaveSlipDetail = ({ id, type, status, TA, trainee, submitted, comments, t
             otherReasonsShow={otherReasonsShow}
             tas={tas}
             status={status}
+            selectedEvents={selectedEvents}
+            isSlipDetail={true}
           />
         </div>
       </Collapse>

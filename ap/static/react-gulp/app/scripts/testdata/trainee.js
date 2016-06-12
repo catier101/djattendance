@@ -18,7 +18,7 @@ var Trainee =
         "spouse": null, 
         "address": null, 
         "self_attendance": false, 
-        "term": [
+        "terms_attended": [
             1, 2, 3
         ], 
         "locality": []

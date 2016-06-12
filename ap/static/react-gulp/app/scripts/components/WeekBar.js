@@ -6,14 +6,14 @@ const WeekBar = ({isFirst, firstStart, firstEnd, secondStart, secondEnd, period,
   <div className="week-bar-container">
     <div className="btn-toolbar week-bar" role="toolbar">
       <div className="controls btn-group">
-        <button className="btn btn-default clndr-previous-button no-margin" onClick={onPrevPeriod}>&lt;</button>
-        <button className="daterange btn btn-default no-margin" disabled={isFirst} onClick={onPrevWeek}>
+        <button className="btn btn-default clndr-previous-button no-margin" disabled={period == 0} onClick={onPrevPeriod}>&lt;</button>
+        <button className="date-range btn btn-default no-margin" disabled={isFirst} onClick={onPrevWeek}>
           {firstStart} - {firstEnd}
         </button>
-        <button className="daterange btn btn-default no-margin" disabled={!isFirst} onClick={onNextWeek}>
+        <button className="date-range btn btn-default no-margin" disabled={!isFirst} onClick={onNextWeek}>
           {secondStart} - {secondEnd}
         </button>
-        <button className="btn btn-default clndr-next-button" onClick={onNextPeriod}>&gt;</button>
+        <button className="btn btn-default clndr-next-button" disabled={period == 9} onClick={onNextPeriod}>&gt;</button>
       </div>
     </div>
     <div className="period">

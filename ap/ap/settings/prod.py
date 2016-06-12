@@ -3,8 +3,23 @@ from .base import *
 DEBUG = False
 TEMPLATE_DEBUG = False
 
-# TODO: SMTP currently broken, will add functionality later
-ADMINS = ()
+ADMINS = (
+    ('Attendance Project', 'attendanceproj@gmail.com'),
+)
+MANAGERS = ADMINS
+
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'AP <ap@ftta.com>'
+SERVER_EMAIL = 'AP Server <server@ftta.com>'
+
+# Set unlimited persistent connections
+CONN_MAX_AGE = 'None'
 
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
@@ -23,9 +38,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
-import os
-SITE_ROOT = os.path.dirname(os.path.abspath(__name__))
-STATIC_ROOT = os.path.join(SITE_ROOT, 'static/')
+STATIC_ROOT = os.path.join(SITE_ROOT, 'static')
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (

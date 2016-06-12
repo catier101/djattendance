@@ -18,8 +18,8 @@ EventColumn -----esr-----> EventView
 */
 
 const mapStateToProps = (state) => {
-  var weekStart = dateFns.format(dateFns.startOfWeek(state.reducer.date, {weekStartsAt: 1}), 'M/D/YY'),
-      weekEnd = dateFns.format(dateFns.endOfWeek(state.reducer.date, {weekStartsAt: 1}), 'M/D/YY');
+  var weekStart = dateFns.format(dateFns.startOfWeek(state.reducer.date, {weekStartsOn: 1}), 'M/D/YY'),
+      weekEnd = dateFns.format(dateFns.endOfWeek(state.reducer.date, {weekStartsOn: 1}), 'M/D/YY');
 
   //get just this week's events
   var weekEventsSlipsRolls = _.filter(state.reducer.eventsSlipsRolls, function(esr) {

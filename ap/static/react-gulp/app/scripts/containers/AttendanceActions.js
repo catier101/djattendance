@@ -9,17 +9,27 @@ const mapStateToProps = (state) => {
   for (var i = 0; i < state.reducer.tas.length; i++) {
     ta_names.push(state.reducer.tas[i].firstname + ' ' + state.reducer.tas[i].lastname);
   }
+
+  var lsdShow = false;
+  for (var key in state.reducer.leaveSlipDetailsShow) {
+    if (state.reducer.leaveSlipDetailsShow.hasOwnProperty(key) 
+          && state.reducer.leaveSlipDetailsShow[key]) {
+      lsdShow = true;
+      break;
+    }
+  }
   return {
     submitRollShow: state.reducer.submitRollShow,
     submitLeaveSlipShow: state.reducer.submitLeaveSlipShow,
     submitGroupLeaveSlipShow: state.reducer.submitGroupLeaveSlipShow,
     otherReasonsShow: state.reducer.otherReasonsShow,
-    leaveSlipDetailsShow: state.reducer.leaveSlipDetailsShow,
     selectedEvents: state.reducer.selectedEvents,
     submitting: state.reducer.submitting,
     formSuccess: state.reducer.formSuccess,
     trainee: state.reducer.trainee,
+    isSecondYear: state.reducer.isSecondYear,
     tas: ta_names,
+    lsdShow: lsdShow
   }
 }
 

@@ -6,6 +6,11 @@ from rest_framework_bulk import (
     BulkSerializerMixin
 )
 
+class BasicUserSerializer(BulkSerializerMixin, ModelSerializer):
+    list_serializer_class = BulkListSerializer
+    class Meta:
+        model = User
+        fields = ['id', 'firstname', 'lastname', 'full_name']
 
 class UserSerializer(BulkSerializerMixin, ModelSerializer):
     list_serializer_class = BulkListSerializer

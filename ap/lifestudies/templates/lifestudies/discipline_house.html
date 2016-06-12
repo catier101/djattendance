@@ -3,6 +3,12 @@
 
 {% block tab3 %}class="active"{% endblock %}
 
+{% block media %}
+    {{ block.super }}
+    {{ form.media }}
+    <link href="{% static 'css/select2-bootstrap.css' %}" type="text/css" media="screen" rel="stylesheet">
+{% endblock %}
+
 {% block lifestudies_content %}
 
 <h3>Assign Life Study to House</h3>

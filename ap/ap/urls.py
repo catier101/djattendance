@@ -1,7 +1,8 @@
 # coding: utf-8
 from django.conf import settings
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import login, logout_then_login
+from django.contrib.auth.views import logout_then_login
+from django.contrib.auth.views import login as auth_login
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
@@ -16,6 +17,8 @@ from leaveslips.views import IndividualSlipViewSet, GroupSlipViewSet, AllIndivid
 from books.views import BooksViewSet
 from lifestudies.views import DisciplineSummariesViewSet
 from attendance.views import AttendanceViewSet, AllAttendanceViewSet
+from seating.views import ChartViewSet, SeatViewSet
+from terms.views import TermViewSet
 
 from rest_framework_nested import routers
 from rest_framework_bulk.routes import BulkRouter
@@ -24,7 +27,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'ap.views.home', name='home'),
-    url(r'^accounts/login/$', login, name='login'),
+    url(r'^accounts/login/$', auth_login, name='login'),
 	url(r'^accounts/logout/$', logout_then_login, name='logout'),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^dailybread/', include('dailybread.urls', namespace="dailybread")),
@@ -37,8 +40,11 @@ urlpatterns = patterns('',
     url(r'^absent_trainee_roster/', include('absent_trainee_roster.urls', namespace="absent_trainee_roster")),
     url(r'^syllabus/', include('syllabus.urls', namespace="syllabus")),
     url(r'^lifestudies/', include('lifestudies.urls', namespace="lifestudies")),
+    url(r'^seating/', include('seating.urls', namespace='seating')),
     url(r'^exams/', include('exams.urls', namespace="exams")),
     url(r'^web_access/', include('web_access.urls', namespace="web_access")),
+    url(r'^bible_tracker/', include('bible_tracker.urls', namespace='bible_tracker')),
+
     # admin urls
     url(r'^adminactions/', include('adminactions.urls')), #django-adminactions pluggable app
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -63,6 +69,9 @@ router.register(r'books', BooksViewSet)
 router.register(r'summaries', DisciplineSummariesViewSet)
 router.register(r'attendance', AttendanceViewSet)
 router.register(r'allattendance', AllAttendanceViewSet, base_name='allattendance')
+router.register(r'charts', ChartViewSet)
+router.register(r'seats', SeatViewSet)
+router.register(r'terms', TermViewSet)
 
 attendance_router = routers.NestedSimpleRouter(router, r'attendance', lookup='attendance')
 attendance_router.register(r'rolls', RollViewSet, base_name='rolls')

@@ -19,7 +19,7 @@ const combined = combineReducers(reducers);
 
 const store = createStore(combined, initialState, compose(
   applyMiddleware(thunkMiddleware),
-  // window.devToolsExtension ? window.devToolsExtension() : f => f //redux chrome dev tools
+  window.devToolsExtension ? window.devToolsExtension() : f => f //redux chrome dev tools
 ));
 
 let rootElement = document.getElementById('root');

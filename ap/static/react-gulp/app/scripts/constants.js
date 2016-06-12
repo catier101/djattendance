@@ -85,6 +85,12 @@ export const EVENT_CODE_LOOKUP = {
     'LP': 'LT & PM'
 }
 
+export const FA_ICON_LOOKUP = {
+    "pending": "refresh", 
+    "denied": "minus-square", 
+    "approved": "check-square-o"
+}
+
 export const TERM_START = new Date('2016-02-22')
 
 export function sortEsr(e1,e2) {

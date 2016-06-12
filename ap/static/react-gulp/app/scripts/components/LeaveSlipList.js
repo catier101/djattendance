@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react'
 import { Collapse } from 'react-bootstrap'
 import LeaveSlipDetail from './LeaveSlipDetail'
 
-const LeaveSlipList = ({ slips, leaveSlipsShow, leaveSlipDetailsShow, onDetailClick, postRollSlip, deleteSlip,
+const LeaveSlipList = ({ slips, leaveSlipsShow, leaveSlipDetailsShow, onDetailClick, 
+                          removeAllSelectedEvents, removeSelectedEvent, postRollSlip, deleteSlip,
                           otherReasonsShow, toggleOtherReasons, selectedEvents, tas }) => {
   return (
     <Collapse in={leaveSlipsShow}>
@@ -16,13 +17,15 @@ const LeaveSlipList = ({ slips, leaveSlipsShow, leaveSlipDetailsShow, onDetailCl
               return <LeaveSlipDetail
                         {...slip}
                         leaveSlipDetailsShow={leaveSlipDetailsShow}
-                        onClick={() => onDetailClick(slip.id, slip.events, slip.type, tas[slip.TA], slip.comments, slip.informed)}
-                        otherReasonsShow={otherReasonsShow}
-                        toggleOtherReasons={() => toggleOtherReasons()}
-                        selectedEvents={selectedEvents}
-                        tas={tas}
+                        onClick={() => onDetailClick(slip.id, slip.events, slip.type, slip.TA, slip.comments, slip.informed)}
+                        removeAllSelectedEvents={() => removeAllSelectedEvents()}
+                        removeSelectedEvent={(ev) => removeSelectedEvent(ev)}
                         postRollSlip={(rollSlip, selectedEvents, slipId) => postRollSlip(rollSlip, selectedEvents, slipId)}
                         deleteSlip={(slipId) => deleteSlip(slipId)}
+                        toggleOtherReasons={() => toggleOtherReasons()}
+                        otherReasonsShow={otherReasonsShow}
+                        selectedEvents={selectedEvents}
+                        tas={tas}
                       />
             })}
           </div>
@@ -37,12 +40,14 @@ const LeaveSlipList = ({ slips, leaveSlipsShow, leaveSlipDetailsShow, onDetailCl
                         {...slip}
                         leaveSlipDetailsShow={leaveSlipDetailsShow}
                         onClick={() => onDetailClick(slip.id, slip.events, slip.type, tas[slip.TA], slip.comments, slip.informed)}
-                        otherReasonsShow={otherReasonsShow}
-                        toggleOtherReasons={() => toggleOtherReasons()}
-                        selectedEvents={selectedEvents}
-                        tas={tas}
+                        removeAllSelectedEvents={() => removeAllSelectedEvents()}
+                        removeSelectedEvent={(ev) => removeSelectedEvent(ev)}
                         postRollSlip={(rollSlip, selectedEvents, slipId) => postRollSlip(rollSlip, selectedEvents, slipId)}
                         deleteSlip={(slipId) => deleteSlip(slipId)}
+                        toggleOtherReasons={() => toggleOtherReasons()}
+                        otherReasonsShow={otherReasonsShow}
+                        selectedEvents={selectedEvents}
+                        tas={tas}
                       />
             })}
           </div>
@@ -57,12 +62,14 @@ const LeaveSlipList = ({ slips, leaveSlipsShow, leaveSlipDetailsShow, onDetailCl
                         {...slip}
                         leaveSlipDetailsShow={leaveSlipDetailsShow}
                         onClick={() => onDetailClick(slip.id, slip.events, slip.type, tas[slip.TA], slip.comments, slip.informed)}
-                        otherReasonsShow={otherReasonsShow}
-                        toggleOtherReasons={() => toggleOtherReasons()}
-                        selectedEvents={selectedEvents}
-                        tas={tas}
+                        removeAllSelectedEvents={() => removeAllSelectedEvents()}
+                        removeSelectedEvent={(ev) => removeSelectedEvent(ev)}
                         postRollSlip={(rollSlip, selectedEvents, slipId) => postRollSlip(rollSlip, selectedEvents, slipId)}
                         deleteSlip={(slipId) => deleteSlip(slipId)}
+                        toggleOtherReasons={() => toggleOtherReasons()}
+                        otherReasonsShow={otherReasonsShow}
+                        selectedEvents={selectedEvents}
+                        tas={tas}
                       />
             })}
           </div>

@@ -6,7 +6,11 @@ var slips = require("./testdata/slips");
 
 //see attendance_react.html
 if (typeof Trainee !== 'undefined') {
-  trainee = Trainee;
+  if (Trainee.constructor === Array) {
+    trainee = Trainee[0];
+  } else {
+    trainee = Trainee;
+  } 
 }
 if (typeof TAs !== 'undefined') {
   tas = TAs;
@@ -21,6 +25,11 @@ if (typeof Slips !== 'undefined') {
   slips = Slips;
 }
 
+var isSecondYear = true
+if (trainee.terms_attended[trainee.terms_attended.length-1] <= 2) {
+  var isSecondYear = false;
+}
+
 //combine events and slips
 var events_slips = [];
 for (var i = 0; i < events.length; i++) {
@@ -30,7 +39,7 @@ for (var i = 0; i < events.length; i++) {
   for (var j = 0; j < slips.length; j++) {
     var sl = slips[j];
     for (var k = 0; k < sl.events.length; k++) {
-      if (ev.id == sl.events[k]) {
+      if (ev.id == sl.events[k].id && dateFns.format(ev.start, 'YYYY-MM-DD') == sl.events[k].date) {
         event_slip.slip = sl;
         break;
       }
@@ -53,7 +62,7 @@ for (var i = 0; i < events_slips.length; i++) {
                           slip  : sl,
                           roll  : null }
   for (var j = 0; j < rolls.length; j++) {
-    if (ev.id == rolls[j].event) {
+    if (ev.id == rolls[j].event && dateFns.format(ev.start, 'YYYY-MM-DD') == rolls[j].date) {
       event_slip_roll.roll = rolls[j];
       break;
     }
@@ -74,6 +83,7 @@ var initialState = {
     },
     reducer: {
       trainee: trainee,
+      isSecondYear: isSecondYear, 
       tas: tas,
       events: events,
       rolls: rolls,

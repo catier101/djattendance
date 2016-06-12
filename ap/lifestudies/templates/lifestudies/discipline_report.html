@@ -51,7 +51,13 @@
           <td>
             {% for summary in discipline.summary_set.all %}
             <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
-              <span class="glyphicon glyphicon-file"></span>
+              {% if summary.fellowship %}
+                <span class="glyphicon glyphicon-file text-warning"></span>
+              {% elif summary.approved %}
+                <span class="glyphicon glyphicon-file text-success"></span>
+              {% else %}
+                <span class="glyphicon glyphicon-file"></span>
+              {% endif %}
             </a>
             {% endfor %}
           </td>

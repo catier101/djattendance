@@ -27,7 +27,14 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2 class="panel-title">
-        Discipline assigned for {{discipline.infraction}}. Summaries left: <b>{{discipline.get_num_summary_due}}</b> 
+        Discipline assigned for {{discipline.get_infraction_display}}. Summaries left: <b>{{discipline.get_num_summary_due}}</b>.
+        {% if discipline.offense == 'MO' %}
+          Offense type: <b><span class="text-danger">{{discipline.get_offense_display}}</span></b>.
+        {% else %}
+          Offense type: <b>{{discipline.get_offense_display}}</b>.
+        {% endif %}
+        {# TODO - Change font color if due date is past #}
+        Due by: <b>{{discipline.due}}</b>
       </h2>
 
       <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
@@ -36,13 +43,12 @@
       <ul class="list-group">
         {% for summary in discipline.summary_set.all %}
           {% if summary.approved == False %}
-            <a href="{% url 'lifestudies:summary_detail' summary.pk %}" class="list-group-item col-md-12">
-          {% else %}
-            <a class="list-group-item disabled col-md-12">
-          {% endif %}
+            <a href="{% url 'lifestudies:summary_detail' summary.pk %}" class="list-group-item col-md-6">
               <div class="spacer5"></div>
-              <button class="pull-right btn btn-xs btn-default icon-btn delete" id="delete-{{ summary.id }}"><span class="glyphicon glyphicon-remove text-danger"></span></button>
-              <h3 class="no-top-margin">{{summary.book.name}}</h3>
+              {% if summary.approved == True %}
+                <button class="pull-right btn btn-xs btn-default icon-btn delete" id="delete-{{ summary.id }}"><span class="glyphicon glyphicon-remove text-danger"></span></button>
+              {% endif %}
+              <h3 class="no-top-margin">{{summary.book.name}} &mdash; {{summary.chapter}}</h3>
               <p>{{summary.content|truncatechars:300 }}</p>
               <div>
                 <span class="badge alert-info">{{summary.date_submitted}}</span>
@@ -50,6 +56,9 @@
                   <span class="badge alert-success">approved</span>
                 {% else %}
                   <span class="badge alert-danger">not approved</span>
+                {% endif %}
+                {% if summary.fellowship %}
+                  <span class="badge alert-warning">marked for fellowship</span>
                 {% endif %}
                 <div class="pull-right">
                   {% if summary.approved == False %}
@@ -60,7 +69,8 @@
                   {% endif %}        
                 </div>
               </div>
-          </a>
+            </a>
+          {% endif %}
         {% empty %}
         <div class="alert alert-warning"><i>You have not completed any life studies for this discipline.</i></div>
         {% endfor %}
@@ -99,7 +109,8 @@
           <th> Still Due </th>
           <th> Date Assigned </th>
           <th> Due Date </th>  
-          <th> Unapproved Submission</th>
+          <th> Unapproved</th>
+          <th> Approved</th>
         </tr>
       </thead>
 
@@ -124,7 +135,20 @@
               {% for summary in discipline.summary_set.all %}
               {% if summary.approved == False %}
               <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
-                <span class="glyphicon glyphicon-file"></span>
+                {% if summary.fellowship %}
+                  <span class="glyphicon glyphicon-file text-warning"></span>
+                {% else %}
+                  <span class="glyphicon glyphicon-file"></span>
+                {% endif %}
+              </a>
+              {% endif %}
+              {% endfor %}
+            </td>
+            <td>
+              {% for summary in discipline.summary_set.all %}
+              {% if summary.approved == True %}
+              <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
+                  <span class="glyphicon glyphicon-file text-success"></span>
               </a>
               {% endif %}
               {% endfor %}
@@ -140,6 +164,7 @@
       </p>
       <div class="pull-right">
         <button type="submit" name="approve" class="btn btn-success">Approve Selected</button>
+        <button type="submit" name="fellowship" class="btn btn-warning">Mark for Fellowship Selected</button>
         <button type="submit" name="delete" class="btn btn-danger">Delete Selected</button>
       </div>
     </form>

@@ -72,7 +72,7 @@ class IndividualSlipSerializer(BulkSerializerMixin, ModelSerializer):
     # create rolls for given days and events
     for ev in events:
       date = datetime.strptime(ev['date'], "%Y-%m-%d").date()
-      key = (date, ev['id'])
+      key = (date, int(ev['id']))
       if key not in ev_db:
         # create roll
         # Create dummy roll if it doesn't exist

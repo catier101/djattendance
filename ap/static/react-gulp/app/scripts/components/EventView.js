@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap'
 
-import { ATTENDANCE_STATUS_LOOKUP, SLIP_STATUS_LOOKUP, EVENT_CODE_LOOKUP, joinValidClasses } from '../constants'
+import { ATTENDANCE_STATUS_LOOKUP, SLIP_STATUS_LOOKUP, EVENT_CODE_LOOKUP, FA_ICON_LOOKUP, joinValidClasses } from '../constants'
 
 const EventView = ({ event, roll, slip, onClick, selectedEvents }) => {
   var slipStatus = slip ? slip['status'] : '';
@@ -35,13 +35,15 @@ const EventView = ({ event, roll, slip, onClick, selectedEvents }) => {
 
   var rollPopover = rollStatus ? 'Roll: ' + rollStatus : '';
   var slipPopover = slipStatus ? 'Slip: ' + SLIP_STATUS_LOOKUP[slipStatus] : '';
+  var faClasses = "fa fa-" + FA_ICON_LOOKUP[SLIP_STATUS_LOOKUP[slipStatus]];
+
 
   if (roll && slip) {
     return (
       <OverlayTrigger placement="bottom" overlay={<Popover style={{display: "inline-block"}}>{rollPopover}<br></br> {slipPopover}</Popover>}>
         <div className={rollClasses} style={divStyle} onClick={onClick}>
             {EVENT_CODE_LOOKUP[event['code']]}
-          <div className={slipClasses}>{slipStatus}</div>
+          <div className={slipClasses}><i className={faClasses} aria-hidden="true"></i></div>
         </div>
       </OverlayTrigger>
     )
@@ -52,7 +54,7 @@ const EventView = ({ event, roll, slip, onClick, selectedEvents }) => {
       <OverlayTrigger placement="bottom" overlay={<Popover style={{display: "inline-block"}}>{slipPopover}</Popover>}>
         <div className={rollClasses} style={divStyle} onClick={onClick}>
             {EVENT_CODE_LOOKUP[event['code']]}
-          <div className={slipClasses}>{slipStatus}</div>
+          <div className={slipClasses}><i className={faClasses} aria-hidden="true"></i></div>
         </div>
       </OverlayTrigger>
     )
@@ -61,7 +63,7 @@ const EventView = ({ event, roll, slip, onClick, selectedEvents }) => {
   return (
     <div className={rollClasses} style={divStyle} onClick={onClick}>
         {EVENT_CODE_LOOKUP[event['code']]}
-      <div className={slipClasses}>{slipStatus}</div>
+      <div className={slipClasses}><i className={faClasses} aria-hidden="true"></i></div>
     </div>
   )
 }

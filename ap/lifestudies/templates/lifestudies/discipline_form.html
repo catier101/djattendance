@@ -1,8 +1,16 @@
 {% extends "lifestudies/base_lifestudies.html" %}
-
+{% load staticfiles %}
 {% load bootstrap3 %}
 
 {% block tab3 %}class="active"{% endblock %}
+
+{% block media %}
+
+    {{ block.super }}
+    {{ form.media }}
+    <link href="{% static 'css/select2-bootstrap.css' %}" type="text/css" media="screen" rel="stylesheet">
+    
+{% endblock %}
 
 {% block lifestudies_content %}
 

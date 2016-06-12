@@ -6271,8 +6271,9 @@ body {
 .toggle-title {
   font-size: 17px;
   margin-bottom: 8px; }
-  .toggle-title > span {
-    margin-right: 5px; }
+
+.toggle-title-text {
+  margin-right: 5px; }
 
 .toggle-title-mid {
   font-size: 15px; }
@@ -6484,19 +6485,19 @@ body {
   padding: 10px;
   font-size: 0.77em; }
   .leaveslip-detail.pending {
-    background-color: rgba(240, 173, 78, 0.75); }
+    background-color: #d2d7d3; }
   .leaveslip-detail.fellowship {
-    background-color: rgba(240, 173, 78, 0.75);
-    border: solid thin #f65e5d; }
+    background-color: #2980b9; }
   .leaveslip-detail.denied {
-    background-color: rgba(217, 83, 79, 0.75);
-    color: black; }
+    border: solid thin black; }
   .leaveslip-detail.approved {
     background-color: #87d37c; }
   .leaveslip-detail .center-arrow {
     position: absolute;
     right: 10px;
     top: 25%; }
+    .leaveslip-detail .center-arrow .fa {
+      margin-right: 7px; }
 
 .leaveslip-comments {
   width: 90%; }
@@ -6505,3 +6506,21 @@ body {
   position: absolute;
   bottom: 7px;
   left: 6px; }
+
+/* Attendance CSS customizations */
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  cursor: auto;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  box-shadow: none;
+}
+
+button.date-range {
+    width: 110px;
+}
+
+.date-range[disabled], .date-range[disabled]:hover {
+  background-color: #FFEBCD;
+  cursor: auto;
+}

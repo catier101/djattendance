@@ -29,7 +29,6 @@ SUMMARY
 
 """
 
-
 class Discipline(models.Model):
 
     TYPE_OFFENSE_CHOICES = (
@@ -177,11 +176,24 @@ class Summary(models.Model):
     # if the summary has been approved
     approved = models.BooleanField(default=False)
 
+    # if the summary is marked for fellowship
+    fellowship = models.BooleanField(default=False)
+
+    """ Decided to remove this field. We now auto hide approved submissions"""
+    # if the summary is marked for delete then we hide
+    #deleted = models.BooleanField(default=False)
+
     # which discipline this summary is associated with
     discipline = models.ForeignKey(Discipline)
 
     # automatically generated date when summary is submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
+
+    # minWord Count
+    minimum_words = models.PositiveSmallIntegerField(default=250)
+
+    # hardCopy
+    hard_copy = models.BooleanField(default=False)
 
     #sort summaries by name
     class Meta:
@@ -192,7 +204,41 @@ class Summary(models.Model):
             name=self.discipline.trainee.full_name,
             book=self.book.name, chapter=self.chapter, approved=self.approved)
 
+    # remove fellowship mark if approved
     def approve(self):
         self.approved = True
+        self.fellowship = False
         self.save()
         return self
+
+    def unapprove(self):
+        self.approved = False
+        self.save()
+        return self
+
+    def set_fellowship(self):
+        self.fellowship = True
+        self.save()
+        return self
+
+    def remove_fellowship(self):
+        self.fellowship = False
+        self.save()
+        return self
+
+    def clean(self, *args, **kwargs):
+        """Custom validator for word count"""
+        wc_list = self.content.split()
+        if len(wc_list) < self.minimum_words and self.hard_copy is False:
+            raise ValidationError("Your word count is less than {count}".format(count=self.minimum_words))
+        super(Summary, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Summary, self).save(*args, **kwargs)
+
+    def next(self):
+        return Summary.objects.filter(date_submitted__gt=self.date_submitted, discipline=self.discipline).order_by('date_submitted').first()
+
+    def prev(self):
+        return Summary.objects.filter(date_submitted__lt=self.date_submitted, discipline=self.discipline).order_by('-date_submitted').first()

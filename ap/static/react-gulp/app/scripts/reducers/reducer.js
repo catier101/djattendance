@@ -68,11 +68,19 @@ function reducer(state = initialState, action) {
       }
       var newLeaveSlipDetailsShow = Object.assign({}, state.leaveSlipDetailsShow)
 
+      var taName = "";
+      for (var i = 0; i < state.tas.length; i++) {
+        if (state.tas[i].id == action.TA) {
+          taName = state.tas[i].firstname + " " + state.tas[i].lastname;
+          break;
+        }
+      }
+
       state.leaveSlipDetailFormValues = {
         slipType: action.slipType,
         comments: action.comments,
         informed: action.informed.toString(),
-        TAInformed: action.TA
+        TAInformed: taName
       }
       var newInitialFormValues = Object.assign({}, state.leaveSlipDetailFormValues);
 
@@ -80,7 +88,8 @@ function reducer(state = initialState, action) {
       if (newLeaveSlipDetailsShow[action.key]) {
         for (var i = 0; i < action.evs.length; i++) {
           for (var j = 0; j < state.events.length; j++) {
-            if (action.evs[i] == state.events[j].id) {
+            if (action.evs[i].id == state.events[j].id
+                  && action.evs[i].date == dateFns.format(state.events[j].start, 'YYYY-MM-DD')) {
               slipEvents.push(state.events[j]);
             }
           }
@@ -161,27 +170,43 @@ function reducer(state = initialState, action) {
           state.selectedEvents.splice(i, 1);
         }
       }
+
+      if (state.selectedEvents.length == 0) {
+        return Object.assign({}, state, {
+          submitRollShow: false,
+          submitLeaveSlipShow: false,
+          selectedEvents: []
+        });
+      }
       return Object.assign({}, state, {
         selectedEvents: state.selectedEvents.slice()
       });
     case REMOVE_ALL_SELECTED_EVENTS:
       return Object.assign({}, state, {
+        submitRollShow: false,
+        submitLeaveSlipShow: false,
         selectedEvents: []
       });
     //GridContainer
     case TOGGLE_EVENT:
+      var nSE = null;
       for (var i = 0; i < state.selectedEvents.length; i++) {
         if (action.event == state.selectedEvents[i]) {
           state.selectedEvents.splice(i, 1);
+          nSE = state.selectedEvents.slice();
           return Object.assign({}, state, {
-            selectedEvents: state.selectedEvents.slice()
+            submitRollShow: nSE.length == 0 ? false : true && state.isSecondYear,
+            submitLeaveSlipShow: nSE.length == 0 ? false : true,
+            selectedEvents: nSE
           });
         }
       }
-      var nSE = state.selectedEvents.slice();
+      nSE = state.selectedEvents.slice();
       nSE.push(action.event);
       nSE.sort(sortEvents)
       return Object.assign({}, state, {
+        submitRollShow: nSE.length == 0 ? false : true && state.isSecondYear,
+        submitLeaveSlipShow: nSE.length == 0 ? false : true,
         selectedEvents: nSE
       });
     case TOGGLE_DAYS_EVENTS:
@@ -212,7 +237,8 @@ function reducer(state = initialState, action) {
     case SUBMIT_ROLL:
       if (action.roll.length == 1) {
         for (var i = 0; i < state.eventsSlipsRolls.length; i++) {
-          if (state.eventsSlipsRolls[i].event.id == action.roll[0].event) {
+          if (state.eventsSlipsRolls[i].event.id == action.roll[0].event
+              && dateFns.format(state.eventsSlipsRolls[i].event.start, "YYYY-MM-DD") == action.roll[0].date) {
             state.eventsSlipsRolls[i].roll = action.roll[0];
           }
         }
@@ -230,7 +256,8 @@ function reducer(state = initialState, action) {
       } else {
         for (var i = 0; i < state.eventsSlipsRolls.length; i++) {
           for (var j = 0; j < action.roll.length; j++) {
-            if (state.eventsSlipsRolls[i].event.id == action.roll[j].event) {
+            if (state.eventsSlipsRolls[i].event.id == action.roll[j].event
+                && dateFns.format(state.eventsSlipsRolls[i].event.start, "YYYY-MM-DD") == action.roll[j].date) {
               state.eventsSlipsRolls[i].roll = action.roll[j];
             }
           }
@@ -249,7 +276,8 @@ function reducer(state = initialState, action) {
       }
       for (var i = 0; i < state.eventsSlipsRolls.length; i++) {
         for (var j = 0; j < action.slip.events.length; j++) {
-          if (state.eventsSlipsRolls[i].event.id == action.slip.events[j]) {
+          if (state.eventsSlipsRolls[i].event.id == action.slip.events[j].id
+                && dateFns.format(state.eventsSlipsRolls[i].event.start, 'YYYY-MM-DD') == action.slip.events[j].date) {
             state.eventsSlipsRolls[i].slip = action.slip;
             break;
           }

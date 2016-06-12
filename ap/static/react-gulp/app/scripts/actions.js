@@ -102,20 +102,22 @@ export const toggleDaysEvents = (evs) => {
 // RollSlip has fields {rollStatus, slipType, comments, informed, TAInformed}
 // slipId is determine between POST (new slip, slipId == null) or PUT (update slip, slipId != null)
 export const postRollSlip = (rollSlip, selectedEvents, slipId) => {
-  if (rollSlip.rollStatus !== undefined && rollSlip.slipType === undefined) {
+  if ((rollSlip.rollStatus !== undefined || rollSlip.rollStatus != "") 
+        && (rollSlip.slipType === undefined || rollSlip.slipType == "")) {
     return function (dispatch) { 
       dispatch(postRoll(rollSlip, selectedEvents));
     }
   }
-  else if (rollSlip.rollStatus === undefined && rollSlip.slipType !== undefined) {
+  else if ((rollSlip.rollStatus === undefined || rollSlip.rollStatus == "") 
+            && (rollSlip.slipType !== undefined || rollSlip.slipType != "")) {
     return function (dispatch) { 
       dispatch(postLeaveSlip(rollSlip, selectedEvents, slipId));
     }
   }
-  else if (rollSlip.rollStatus !== undefined && rollSlip.slipType !== undefined) {
+  else if ((rollSlip.rollStatus !== undefined || rollSlip.rollStatus != "") 
+            && (rollSlip.slipType !== undefined || rollSlip.slipType != "")) {
     return function (dispatch) {
-      dispatch(postRoll(rollSlip, selectedEvents));
-      dispatch(postLeaveSlip(rollSlip, selectedEvents, slipId));
+      dispatch(postRoll(rollSlip, selectedEvents, slipId, true));
     }
   }
   else {
@@ -131,7 +133,7 @@ export const submitRoll = (roll) => {
   }
 }
 
-export const postRoll = (rollSlip, selectedEvents) => {
+export const postRoll = (rollSlip, selectedEvents, slipId = null, withSlip = false) => {
   var rolls = [];
   var roll = {
       "id": null, 
@@ -141,7 +143,8 @@ export const postRoll = (rollSlip, selectedEvents) => {
       "finalized": false, 
       "notes": "", 
       "submitted_by": initialState.reducer.trainee.id, 
-      "last_modified": Date.now()
+      "last_modified": Date.now(),
+      "date": null
     }
   if (selectedEvents.length == 0) {
     //need to create an error action
@@ -152,14 +155,12 @@ export const postRoll = (rollSlip, selectedEvents) => {
   else {
     for (var i = 0; i < selectedEvents.length; i++) {
       rolls.push(Object.assign({}, roll, {
-        event: selectedEvents[i].id
+        event: selectedEvents[i].id,
+        date: dateFns.format(selectedEvents[i].start, 'YYYY-MM-DD')
       }));
     }
   }
   return function (dispatch) {
-
-    dispatch(submitRoll(rolls));
-
     var data = null;
     if (rolls.length == 1) {
       data = rolls[0];
@@ -168,15 +169,20 @@ export const postRoll = (rollSlip, selectedEvents) => {
     }
 
     return $.ajax({
-      url: 'http://localhost:8000/api/rolls/',
+      url: '/api/rolls/',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(rolls),
       success: function (data, status, jqXHR) {
-        dispatch(receiveResponse(status));
-        dispatch(reset('rollSlipForm'));
-        dispatch(removeAllSelectedEvents());
-        dispatch(hideAllForms());
+        dispatch(submitRoll(rolls));
+        if (withSlip) {
+          dispatch(postLeaveSlip(rollSlip, selectedEvents, slipId));
+        } else {
+          dispatch(receiveResponse(status));
+          dispatch(reset('rollSlipForm'));
+          dispatch(removeAllSelectedEvents());
+          dispatch(hideAllForms());
+        }
       },
       error: function (jqXHR, textStatus, errorThrown ) {
         console.log('Roll post error!');
@@ -209,9 +215,9 @@ export const postLeaveSlip = (rollSlip, selectedEvents, slipId) => {
     }
   }
 
-  var event_ids = [];
+  var event_details = [];
   for (var i = 0; i < selectedEvents.length; i++) {
-    event_ids.push(selectedEvents[i].id);
+    event_details.push({"id": selectedEvents[i].id, "date": dateFns.format(selectedEvents[i].start, 'YYYY-MM-DD')});
   }
   var texted = false;
   if (rollSlip.informed == "texted") {
@@ -231,19 +237,19 @@ export const postLeaveSlip = (rollSlip, selectedEvents, slipId) => {
         "comments": rollSlip.comments, 
         "texted": texted, 
         "informed": rollSlip.informed, 
-        "events": event_ids
+        "events": event_details
     };
 
   var ajaxType = 'POST';
   var ajaxData = JSON.stringify(slip);
   if (slipId) {
-    ajaxType = 'PUT';
+    ajaxType = 'PATCH';
     ajaxData = JSON.stringify([slip]);
   }
 
   return function (dispatch) {
     return $.ajax({
-      url: 'http://localhost:8000/api/individualleaveslips/',
+      url: '/api/individualslips/',
       type: ajaxType,
       contentType: 'application/json',
       data: ajaxData,
@@ -275,7 +281,7 @@ export const deleteLeaveSlip = (slipId) => {
   return function (dispatch) {
     dispatch(destroyLeaveSlip(slipId));
     return $.ajax({
-      url: 'http://localhost:8000/api/individualleaveslips/' + slipId.toString(),
+      url: '/api/individualslips/' + slipId.toString(),
       type: 'DELETE',
       success: function (data, status, jqXHR) {
         dispatch(receiveResponse(status));

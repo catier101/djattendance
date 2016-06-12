@@ -18,4 +18,5 @@ urlpatterns = patterns(
         kwargs={'template_name': 'accounts/password_change_done.html',
                 'current_app': 'accounts'},
         name='password_change_done'),
+    url(regex=r'^switch$', view=views.SwitchUserView.as_view(), name='switch_user'),
 )

@@ -14,6 +14,8 @@ from rest_framework_bulk import (
     ListBulkCreateUpdateDestroyAPIView,
 )
 
+from datetime import datetime
+
 class RollSerializer(BulkSerializerMixin, ModelSerializer):
     class Meta(object):
         model = Roll

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { toggleUnexcusedAbsences, toggleUnexcusedTardies, toggleExcused, 
           toggleLeaveSlips, toggleLeaveSlipDetail, toggleOtherReasons,
-          postRollSlip, deleteLeaveSlip } from '../actions'
+          postRollSlip, deleteLeaveSlip, removeSelectedEvent, removeAllSelectedEvents } from '../actions'
 import { sortEsr, sortSlips } from '../constants'
 import DetailsBar from '../components/DetailsBar'
 
@@ -111,8 +111,8 @@ const mapDispatchToProps = (dispatch) => {
     removeAllSelectedEvents: () => {
       dispatch(removeAllSelectedEvents())
     },
-    removeSelectedEvent: () => {
-      dispatch(removeSelectedEvent())
+    removeSelectedEvent: (ev) => {
+      dispatch(removeSelectedEvent(ev))
     }
   }
 }

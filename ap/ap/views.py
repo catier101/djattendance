@@ -24,7 +24,7 @@ def home(request):
             pass
         for discipline in trainee.discipline_set.all():
             if discipline.get_num_summary_due() > 0:
-                messages.warning(request, 'Life Study Summary Due for {infraction}. <a href="/lifestudies">Still need: {due}</a>'.format(infraction=discipline.infraction, due=discipline.get_num_summary_due()))
+                messages.warning(request, 'Life Study Summary Due for {infraction}. <a href="/lifestudies">Still need: {due}</a>'.format(infraction=discipline.get_infraction_display(), due=discipline.get_num_summary_due()))
 
     elif is_TA(request.user):
         #do stuff to TA

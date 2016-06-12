@@ -19,6 +19,7 @@ DATABASES = {
         'PORT': '',
     }
 }
+
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -34,6 +35,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
 
 INTERNAL_IPS = ('127.0.0.1',)
 

@@ -14,11 +14,11 @@ const AttendanceDetails = ({ unexcusedAbsences, unexcusedTardies, excused, slips
     <div style={{margin: "15px 0px 40px 10px"}}>
       <div className="toggle-title">
         <span onClick={onAbsencesToggle}>
-          Unexcused Absences ({unexcusedAbsences.length})
+          <span className="toggle-title-text">Unexcused Absences ({unexcusedAbsences.length})</span>
+          <DropdownArrow
+            directionBoolean={unexcusedAbsencesShow}
+          />
         </span>
-        <DropdownArrow
-          directionBoolean={unexcusedAbsencesShow}
-        />
         <Collapse in={unexcusedAbsencesShow}>
           <div>
             {unexcusedAbsences.map(ua =>
@@ -31,11 +31,11 @@ const AttendanceDetails = ({ unexcusedAbsences, unexcusedTardies, excused, slips
       </div>
       <div className="toggle-title">
         <span onClick={onTardiesToggle}>
-          Unexcused Tardies ({unexcusedTardies.length})
+          <span className="toggle-title-text">Unexcused Tardies ({unexcusedTardies.length})</span>
+          <DropdownArrow
+            directionBoolean={unexcusedTardiesShow}
+          />
         </span>
-        <DropdownArrow
-          directionBoolean={unexcusedTardiesShow}
-        />
         <Collapse in={unexcusedTardiesShow}>
           <div>
             {unexcusedTardies.map(ut =>
@@ -48,11 +48,11 @@ const AttendanceDetails = ({ unexcusedAbsences, unexcusedTardies, excused, slips
       </div>
       <div className="toggle-title">
         <span onClick={onExcusedToggle}>
-          Excused ({excused.length})
+          <span className="toggle-title-text">Excused ({excused.length})</span>
+          <DropdownArrow
+            directionBoolean={excusedShow}
+          />
         </span>
-        <DropdownArrow
-          directionBoolean={excusedShow}
-        />
         <Collapse in={excusedShow}>
           <div>
             {excused.map(e =>
@@ -65,24 +65,24 @@ const AttendanceDetails = ({ unexcusedAbsences, unexcusedTardies, excused, slips
       </div>
       <div className="toggle-title">
         <span onClick={toggleLeaveSlips}>
-          Leave Slip History
+          <span className="toggle-title-text">Leave Slip History</span>
+          <DropdownArrow
+            directionBoolean={leaveSlipsShow}
+          />
         </span>
-        <DropdownArrow
-          directionBoolean={leaveSlipsShow}
-        />
         <LeaveSlipList
           slips={slips}
           leaveSlipsShow={leaveSlipsShow}
           leaveSlipDetailsShow={leaveSlipDetailsShow}
           onDetailClick={(id, evs, slipType, TA, comments, informed) => toggleLeaveSlipDetail(id, evs, slipType, TA, comments, informed)}
-          otherReasonsShow={otherReasonsShow}
-          toggleOtherReasons={() => toggleOtherReasons()}
-          selectedEvents={selectedEvents}
-          tas={tas}
           removeAllSelectedEvents={() => removeAllSelectedEvents()}
           removeSelectedEvent={(ev) => removeSelectedEvent(ev)}
           postRollSlip={(rollSlip, selectedEvents, slipId) => postRollSlip(rollSlip, selectedEvents, slipId)}
           deleteSlip={(slipId) => deleteSlip(slipId)}
+          toggleOtherReasons={() => toggleOtherReasons()}
+          otherReasonsShow={otherReasonsShow}
+          selectedEvents={selectedEvents}
+          tas={tas}
         />
       </div>
     </div>

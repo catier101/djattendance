@@ -4,8 +4,8 @@ import SelectedEvent from './SelectedEvent'
 import RollSlipForm from './RollSlipForm'
 import GroupLeaveSlipForm from './GroupLeaveSlipForm'
 
-const ActionBar = ({submitRollShow, submitLeaveSlipShow, submitGroupLeaveSlipShow, otherReasonsShow, leaveSlipDetailsShow,
-                    selectedEvents, formSuccess, trainee, tas,
+const ActionBar = ({submitRollShow, submitLeaveSlipShow, submitGroupLeaveSlipShow, otherReasonsShow,
+                    selectedEvents, formSuccess, trainee, isSecondYear, tas, lsdShow,
                     toggleSubmitRoll, toggleSubmitLeaveSlip, toggleSubmitGroupLeaveSlip, toggleOtherReasons,
                     removeSelectedEvent, removeAllSelectedEvents, postRollSlip, postGroupLeaveSlip }) => {
   var disabledClass = 'remove-all';
@@ -14,22 +14,15 @@ const ActionBar = ({submitRollShow, submitLeaveSlipShow, submitGroupLeaveSlipSho
   }
 
   var hideRoll = {};
-  if (trainee.term[trainee.term.length-1] <= 2) {
+  if (trainee.terms_attended[trainee.terms_attended.length-1] <= 2) {
     hideRoll = {display: "none"};
   }
 
-  var lsdShow = false;
-  for (var key in leaveSlipDetailsShow) {
-    if (leaveSlipDetailsShow.hasOwnProperty(key) && leaveSlipDetailsShow[key]) {
-      lsdShow = true;
-      break;
-    }
-  }
   return (
     <div style={{marginBottom: "10px"}}>
     {/*Form control buttons*/}
       <div>
-        <Button className="action-button" onClick={toggleSubmitRoll} style={hideRoll}>Roll</Button>
+        <Button className="action-button" onClick={toggleSubmitRoll} style={hideRoll} disabled={lsdShow}>Roll</Button>
         <Button className="action-button" onClick={toggleSubmitLeaveSlip}>Leave Slip</Button>
         <Button className="action-button" style={{display: "none"}} onClick={toggleSubmitGroupLeaveSlip}>Group Leave Slip</Button>
       </div>
@@ -65,6 +58,10 @@ const ActionBar = ({submitRollShow, submitLeaveSlipShow, submitGroupLeaveSlipSho
           toggleOtherReasons={() => toggleOtherReasons()}
           otherReasonsShow={otherReasonsShow}
           tas={tas}
+          selectedEvents={selectedEvents}
+          isSecondYear={isSecondYear}
+          isSlipDetail={false}
+          lsdShow={lsdShow}
         />
       </div>
     {/*Group slip form*/}

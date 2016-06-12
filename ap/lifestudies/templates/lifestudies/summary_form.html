@@ -1,6 +1,7 @@
 {% extends "lifestudies/base_lifestudies.html" %}
 
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 {% block lifestudies_content %}
 
@@ -9,8 +10,7 @@
     <form action="" method="post">
         {% bootstrap_form form %}
         {% csrf_token %}
-        <button type="submit" name="attendance_assign" class="btn btn-success">Submit</button>
-
+        <button type="submit" disabled="true" id="summary_submit" name="attendance_assign" class="btn btn-success">Submit</button>
     </form>
 
 <script>
@@ -37,21 +37,12 @@
       chapterSelect.val(1);
     }
   });
-
-
-  $.ajax('/api/books/?format=json').success(function(response, status) {
-    console.log('books', response);
-    // populate books with response
-    for (i in response) {
-      books[response[i].id + ''] = response[i];
-    }
-
-    // Add min, max-limit from rest api    
-    chapterSelect.attr('min', chapterSelect.val());
-    chapterSelect.attr('max', books[bookSelect.val()].chapterSelects);
-
-  });
 </script>
 
 
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/Countable.js' %}"></script>
+    <script src="{% static 'lifestudies/js/summary-wordcount.js' %}"></script>
 {% endblock %}

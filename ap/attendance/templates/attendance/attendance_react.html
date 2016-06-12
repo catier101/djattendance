@@ -1,19 +1,18 @@
-{% extends "base.html" %}
+{% extends "base_24.html" %}
 {% load jsonify %}
 {% load staticfiles %}
 {% load bootstrap3 %}
-{% bootstrap_css %}
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% block references %}
 <link href="{% static "css/font-awesome.min.css" %}" rel="stylesheet">
-<link href="{% static "css/main.css" %}" rel="stylesheet">
+<link href="{% static "css/main.css" %}" rel="stylesheet"> <!-- cutsom bootstrap css in main.css through gulp build -->
 {% endblock %}
 
 {% block content %}
-	<div id="root"></div>
-
+<div id="root"></div>
 	<script>
+        //these variable names are strict do not change them, see initialstate.js
 	    var Events = [
 		    {% for event in events %}
 		        {
@@ -28,12 +27,9 @@
 		        },
 		    {% endfor %}];
 		var Rolls = {{ rolls_bb|safe}};
-		var IndividualSlips = {{ individualslips_bb|safe }};
-		var Trainees = {{ trainee_bb|safe }};
+		var Slips = {{ individualslips_bb|safe }};
+		var Trainee = {{ trainee_bb|safe }};
 		var TAs = {{ TAs_bb|safe }};
-		// var Rolls = JSON.parse('{{attendance_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
-		// var Slips = JSON.parse('{{leaveslips_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
-		// var Trainee = JSON.parse('{{trainee_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
 	</script>
 	<!-- figure out frontend dependencies in bower -->
 	<script type="text/javascript" src="{% static "js/date_fns.min.js" %}"></script>

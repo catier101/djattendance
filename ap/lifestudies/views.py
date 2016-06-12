@@ -36,6 +36,7 @@ logger = logging.getLogger(__name__)
 from rest_framework.decorators import permission_classes
 from .permissions import IsOwner
 
+
 class DisciplineListView(ListView):
     template_name = 'lifestudies/discipline_list.html'
     model = Discipline
@@ -112,6 +113,20 @@ class DisciplineCreateView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('lifestudies:discipline_list')
     success_message = "Discipline Assigned to Single Trainee Successfully!"
 
+def post_summary(summary, request):
+    if 'fellowship' in request.POST:
+        summary.set_fellowship()
+        messages.success(request, "Marked for fellowship")
+    if 'unfellowship' in request.POST:
+        summary.remove_fellowship()
+        messages.success(request, "Remove mark for fellowship")
+    if 'approve' in request.POST:
+        summary.approve()
+        messages.success(request, "Summary Approved!")
+    if 'unapprove' in request.POST:
+        summary.unapprove()
+        messages.success(request, "Summary Un-Approved!")
+
 
 class DisciplineDetailView(DetailView):
     model = Discipline
@@ -121,13 +136,14 @@ class DisciplineDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         if 'summary_pk' in request.POST:
             approve_summary_pk = int(request.POST['summary_pk'])
-            Summary.objects.get(pk=approve_summary_pk).approve()
-            messages.success(request, "Summary Approved!")
+            summary = Summary.objects.get(pk=approve_summary_pk)
+            post_summary(summary, request)
         if 'hard_copy' in request.POST:
             self.get_object().summary_set.create(
                 content='approved hard copy summary',
                 book=Book.objects.get(pk=1),
                 chapter=1,
+                hard_copy = True,
                 approved=True)
             messages.success(request, "Hard Copy Submission Created!")
         if 'increase_penalty' in request.POST:
@@ -141,6 +157,7 @@ class SummaryCreateView(SuccessMessageMixin, CreateView):
     form_class = NewSummaryForm
     success_url = reverse_lazy('lifestudies:discipline_list')
     success_message = "Life Study Summary Created Successfully!"
+    template_name = 'lifestudies/summary_form.html'
 
     def get_context_data(self, **kwargs):
         context = super(SummaryCreateView, self).get_context_data(**kwargs)
@@ -155,11 +172,13 @@ class SummaryCreateView(SuccessMessageMixin, CreateView):
 
         return form_class(**kargs)
 
-    def form_valid(self, form):
+    def form_valid(self, form): 
         summary = form.save(commit=False)
-        summary.discipline = Discipline.objects.get(pk=self.kwargs['pk'])
-        summary.date_submitted = datetime.datetime.now()
-        summary.save()
+        # Check if minimum words are met
+        if form.is_valid:
+            summary.discipline = Discipline.objects.get(pk=self.kwargs['pk'])
+            summary.date_submitted = datetime.datetime.now()
+            summary.save()
         return super(SummaryCreateView, self).form_valid(form)
 
 
@@ -170,10 +189,24 @@ class SummaryApproveView(DetailView):
     context_object_name = 'summary'
     template_name = 'lifestudies/summary_approve.html'
 
+    def get_context_data(self, **kwargs):
+        # get curretn id, self.object
+        ctx = super(SummaryApproveView, self).get_context_data(**kwargs)
+        # context['next'] = # calc here
+        print self.args, self.request, self.kwargs['pk']
+
+        nxt = self.get_object().next()
+        prev = self.get_object().prev()
+
+        ctx['next_summary'] = nxt.id if nxt else -1
+        ctx['prev_summary'] = prev.id if prev else -1
+
+        return ctx
+
     def post(self, request, *args, **kwargs):
-        self.get_object().approve()
-        messages.success(request, "Summary Approved!")
-        return HttpResponseRedirect(reverse_lazy('lifestudies:discipline_list'))
+        summary = self.get_object()
+        post_summary(summary, request)
+        return HttpResponseRedirect('')
 
 
 class SummaryUpdateView(SuccessMessageMixin, UpdateView):
@@ -258,10 +291,10 @@ class AttendanceAssign(ListView):
             period = int(request.POST['select_period'])
             print period, 'period'
             return HttpResponseRedirect(reverse_lazy('lifestudies:attendance_assign', 
-                                                        kargs={'period' : period}))
+                                                        kwargs={'period' : period}))
         else:
             return HttpResponseRedirect(reverse_lazy('lifestudies:attendance_assign', 
-                                                        kargs={'period' : 1}))
+                                                        kwargs={'period' : 1}))
 
 
 class MondayReportView(TemplateView):

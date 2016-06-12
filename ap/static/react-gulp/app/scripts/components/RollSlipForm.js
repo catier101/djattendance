@@ -15,7 +15,6 @@ const validate = (values, props) => {
     errors.TAInformed = 'No TA selected';
   }
   if (props.submitLeaveSlipShow && !values.slipType) {
-    console.log('slipType error');
     errors.slipType = 'No reason selected';
   } 
   return errors
@@ -25,7 +24,7 @@ const validate = (values, props) => {
 //http://redux-form.com/
 const RollSlipForm = ({fields: { rollStatus, slipType, comments, informed, TAInformed }, handleSubmit, resetForm, 
                     submitRollShow, submitLeaveSlipShow, otherReasonsShow, toggleSubmitLeaveSlip, toggleOtherReasons,
-                    submitting, post, deleteSlip, tas, status}) => {
+                    submitting, post, deleteSlip, tas, status, selectedEvents, isSecondYear, isSlipDetail, lsdShow}) => {
   var disable = true;
   if (status == "P" || status === undefined) {
     disable = false;
@@ -39,11 +38,11 @@ const RollSlipForm = ({fields: { rollStatus, slipType, comments, informed, TAInf
   return (
     <form onSubmit={handleSubmit(post)}>
       <div className="position-container">
-        <Collapse in={submitRollShow}>
+        <Collapse in={submitRollShow && isSecondYear && !isSlipDetail}>
           <div className="form-body form-together">
             <div className="form-section">
               <div className="toggle-title">Enter Roll</div>
-              <div style={{width: "100%", paddingBottom: "30px"}} data-toggle="buttons">
+              <div style={{width: "100%", paddingBottom: "30px"}}>
                 <label className="radio-input">
                   <input type="radio" {...rollStatus} value="P" checked={rollStatus.value === "P"} name="status" /> Present
                 </label>
@@ -66,11 +65,11 @@ const RollSlipForm = ({fields: { rollStatus, slipType, comments, informed, TAInf
             </div>
           </div>
         </Collapse>
-        <Collapse in={submitLeaveSlipShow}>
+        <Collapse in={submitLeaveSlipShow && !lsdShow}>
           <div className="form-body form-together bottom-padding-25">
             <div className="form-section">
               <div className="toggle-title">Reason</div>
-              <div data-toggle="buttons">
+              <div>
                 <div className="reason-container">
                   <label className="radio-input">
                     <input type="radio" {...slipType} name="reason" value="SICK" disabled={disable} checked={slipType.value === "SICK"}/> Sickness 
@@ -150,7 +149,7 @@ const RollSlipForm = ({fields: { rollStatus, slipType, comments, informed, TAInf
                     <input type="radio" {...TAInformed} name="ta" value="Jerome Keh" disabled={disable} checked={TAInformed.value === "Jerome Keh"}/> Jerome Keh 
                   </label>
                   <label className="radio-input">
-                    <input type="radio" {...TAInformed} name="ta" value="Joe Prim" disabled={disable} checked={TAInformed.value === "Joe Prim"}/> Joe Prim
+                    <input type="radio" {...TAInformed} name="ta" value="Joseph Bang" disabled={disable} checked={TAInformed.value === "Joseph Bang"}/> Joseph Bang
                   </label>
                   <label className="radio-input">
                     <input type="radio" {...TAInformed} name="ta" value="Paul Deng" disabled={disable} checked={TAInformed.value === "Paul Deng"}/> Paul Deng 
@@ -175,7 +174,7 @@ const RollSlipForm = ({fields: { rollStatus, slipType, comments, informed, TAInf
               <Button type="button" disabled={submitting || disable} onClick={resetForm} bsSize="xsmall" style={{marginRight: "3px"}}>
                 Reset Form
               </Button>
-              <Button type="submit" disabled={submitting || TAInformed.error || slipType.error || disable} bsStyle="primary" bsSize="xsmall">
+              <Button type="submit" disabled={submitting || TAInformed.error ? true : false || slipType.error ? true : false || disable} bsStyle="primary" bsSize="xsmall">
                 {submitting ? <i/> : <i/>} Submit
               </Button>
             </div>

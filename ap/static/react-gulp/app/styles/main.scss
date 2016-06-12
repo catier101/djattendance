@@ -71,9 +71,10 @@ body {
     font-size: 17px;
     margin-bottom: 8px;
 
-    > span {
-        margin-right: 5px;
-    }
+}
+
+.toggle-title-text {
+    margin-right: 5px;
 }
 
 .toggle-title-mid {
@@ -330,18 +331,13 @@ body {
 .leaveslip-detail {
     &.pending {
         // background-color: #f3df80;
-        background-color: rgba(240, 173, 78, 0.75);
+        background-color: rgba(210, 215, 211, 1);
     }
     &.fellowship {
-        // background-color: #f3df80;
-        background-color: rgba(240, 173, 78, 0.75);
-        // border: solid thin #e74c3c;
-        border: solid thin #f65e5d;
+        background-color: rgba(41, 128, 185,1.0);   
     }
     &.denied {
-        // background-color: #f65e5d;
-        background-color: rgba(217,83,79, 0.75);
-        color: black;
+        border: solid thin black;
     }
     &.approved {
         // background-color: #6cda7c;
@@ -351,7 +347,11 @@ body {
     .center-arrow {
         position: absolute;
         right: 10px;
-        top: 25%
+        top: 25%;
+
+        .fa {
+            margin-right: 7px;
+        }
     }
     border: solid thin #ccc;
     padding: 10px;
@@ -366,4 +366,22 @@ body {
     position: absolute;
     bottom: 7px;
     left: 6px;
+}
+
+/* Attendance CSS customizations */
+
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  cursor: auto;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  box-shadow: none;
+}
+
+button.date-range {
+    width: 110px;
+}
+
+.date-range[disabled], .date-range[disabled]:hover {
+  background-color: #FFEBCD;
+  cursor: auto;
 }
