@@ -13,8 +13,9 @@ $(window).ready(function(e) {
     }
     // send ajax request
     $.ajax({
-      url: '/api/summaries/' + btn.attr('id').split('-')[1],
-      type: 'DELETE',
+      url: '/api/summaries/' + btn.attr('id').split('-')[1] + '/',
+      data: {deleted: true},
+      type: 'POST',
       success: function(response, status) {
         // remove element on page
         btn.parent().remove();

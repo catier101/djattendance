@@ -1,5 +1,6 @@
 from datetime import date
 
+from schedules.constants import WEEKDAYS
 from django.db import models
 from schedules.models import Event
 from accounts.models import Trainee
@@ -41,11 +42,39 @@ class Roll(models.Model):
     notes = models.CharField(max_length=200, blank=True)
 
     # the one who submitted this roll
-    monitor = models.ForeignKey(Trainee, null=True, related_name='submitted_rolls')
+    # for first year should be an attendance monitor, house coordinator, team monitor, or YPC monitor
+    # for second year it can either by a second year trainee and/or any of the roles listed above
+    # for second year there can be two roll objects per event, one submitted by the second year trainee and one submitted by a monitor, this is for audits
+
+    submitted_by = models.ForeignKey(Trainee, null=True, related_name='submitted_rolls')
 
     # when the roll was last updated
-    timestamp = models.DateTimeField(auto_now=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    # the date of the event that corresponds with the roll.
+    date = models.DateField()
 
     def __unicode__(self):
         # return status, trainee name, and event
         return "[%s] %s @ %s" % (self.status, self.trainee, self.event)
+
+    @staticmethod
+    def update_or_create(validated_data):
+        '''
+            Creates roll if not existing, else update
+            Reteurn None if event doesn't exist for roll
+        '''
+        
+        event = validated_data['event']
+        date = validated_data['date']
+        submitted_by = validated_data['submitted_by']
+        
+        # checks if event exists for given event and date
+        event_override = Event.objects.filter(name=event.name, weekday=date.weekday())
+
+        if not event_override:
+            return None
+
+        newroll, created = Roll.objects.update_or_create(**validated_data)
+
+        return newroll

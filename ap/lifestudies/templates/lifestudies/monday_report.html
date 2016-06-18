@@ -94,7 +94,7 @@
             {% for discipline in disciplines %}
             {% if discipline.offense == 'MO' %}
             <tr>
-                <td class="table_name">{{discipline.trainee.account.lastname}}, {{discipline.trainee.account.firstname}}</td>
+                <td class="table_name">{{discipline.trainee.lastname}}, {{discipline.trainee.firstname}}</td>
                 <td class="table_offense">{{discipline.get_infraction_display}}</td>
                 <td class="table_number">{{discipline.get_num_summary_due}}</td>
                 <td class="table_notes">{{discipline.note}}</td>
@@ -121,7 +121,7 @@
             {% for discipline in disciplines %}
             {% if discipline.offense == 'RO' %}
             <tr>
-                <td class="table_name">{{discipline.trainee.account.lastname}}, {{discipline.trainee.account.firstname}}</td>
+                <td class="table_name">{{discipline.trainee.lastname}}, {{discipline.trainee.firstname}}</td>
                 <td class="table_offense">{{discipline.get_infraction_display}}</td>
                 <td class="table_number">{{discipline.get_num_summary_due}}</td>
                 <td class="table_notes">{{discipline.note}}</td>

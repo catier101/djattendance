@@ -63,7 +63,7 @@ class DailyBreadTests(unittest.TestCase):
         mock_instance.email = "jonathana@gmail.com" 
         mock_instance.firstname = "Jonathan"
         mock_instance.lastname = "A"
-        self.assertEqual(User.get_full_name(mock_instance), "Jonathan A")
+        self.assertEqual(User.full_name, "Jonathan A")
         self.assertEqual(User.get_short_name(mock_instance), "Jonathan")
         self.assertEqual(User.__unicode__(mock_instance), "jonathana@gmail.com")
 

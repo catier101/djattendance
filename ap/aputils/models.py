@@ -108,7 +108,7 @@ class Address(models.Model):
     # City foreign key
     city = models.ForeignKey(City)
 
-    zip_code = models.PositiveIntegerField()
+    zip_code = models.PositiveIntegerField(null=True, blank=True)
 
     # optional four-digit zip code extension
     zip4 = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -131,23 +131,23 @@ class HomeAddress(Address):
 
 class Vehicle(models.Model):
 
-    color = models.CharField(max_length=20)
+    color = models.CharField(max_length=20, blank=True, null=True)
 
     # e.g. "Honda", "Toyota"
-    make = models.CharField(max_length=30)
+    make = models.CharField(max_length=30, blank=True, null=True)
 
     # e.g. "Accord", "Camry"
-    model = models.CharField(max_length=30)
+    model = models.CharField(max_length=30, blank=True, null=True)
 
-    year = models.PositiveSmallIntegerField()
+    year = models.PositiveSmallIntegerField(blank=True, null=True)
 
-    license_plate = models.CharField(max_length=10)
+    license_plate = models.CharField(max_length=25, blank=True, null=True)
 
-    state = models.CharField(max_length=20)
+    state = models.CharField(max_length=20, blank=True, null=True)
 
     capacity = models.PositiveSmallIntegerField()
 
-    trainee = models.ForeignKey('accounts.Trainee', blank=True, null=True)
+    user = models.ForeignKey('accounts.User', related_name='vehicles', blank=True, null=True)
 
     def __unicode__(self):
         return self.color + ' ' + self.make + ' ' + self.model
@@ -170,3 +170,16 @@ class EmergencyInfo(models.Model):
 
     def __unicode__(self):
         return self.name + '(' + self.relation + ')'
+
+
+class QueryFilter(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True, null=True)
+
+    # Dictionary of all filters applied to query
+    query = models.TextField()
+
+    def __unicode__(self):
+        return self.name
+        q = eval(self.query)
+        return '%s - %s' % (self.name, '(' + ','.join(['%s=%s' %(k, v) for k, v in q.items()]) + ')')

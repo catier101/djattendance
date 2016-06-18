@@ -56,7 +56,7 @@ class VehicleAdmin(admin.ModelAdmin):
 
 class VehicleInline(admin.TabularInline):
     model = Vehicle
-    fk_name = 'trainee'
+    fk_name = 'user'
 
 
 class EmergencyInfoInline(admin.TabularInline):

@@ -12,14 +12,15 @@
     <link rel="shortcut icon" href="">
 
     <title>FTTA | {% block title %}{% endblock %}</title>
-    
+
     {% block media %}
 
       {% load bootstrap3 %}
 
-      <link href="{% static "css/base.css" %}" rel="stylesheet"> 
+      <link href="{% static "css/base.css" %}" rel="stylesheet">
       <link href="{% static "css/offcanvas.css" %}" rel="stylesheet">
       {% bootstrap_css %}
+
       {% block references %}
           <!-- additional css/refs here -->
       {% endblock references %}
@@ -27,7 +28,7 @@
       <script src="{% static "js/jquery-1.11.1.min.js" %}"></script>
       <script src="{% static "js/modernizr-2.6.2-respond-1.1.0.min.js" %}"></script>
       <script src="{% static "js/offcanvas.js" %}"></script>
-      <script src="{% static "js/django-jquery-init.js" %}"></script> 
+      <script src="{% static "js/django-jquery-init.js" %}"></script>
       {% bootstrap_javascript %}
       {% block scripts %}
           <!-- additional js here -->
@@ -67,14 +68,15 @@
             {% block navbar-right %}
               <li class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Hi, {{user.get_full_name}}! <span class="caret"></span>
+                    Hi, {{user.full_name}}! <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation" class="dropdown-header">Account Settings</li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="">Profile</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="">Change Email</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user_detail' user.id %}">Profile</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'email_change' user.id %}">Change Email</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'password_change' %}">Change Password</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="">Update Account</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'user_update' user.id %}">Update Account</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'switch_user' %}">Switch Identity</a></li>
                     <li role="presentation" class="divider"></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'logout' %}">Logout</a></li>
                   </ul>
@@ -84,13 +86,13 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    
+
     <div class="container-fluid">
       <div class="row row-offcanvas row-offcanvas-left">
 
         {% block sidebar %}
           <!--SIDEBAR-->
-          <div id="sidebar" class="col-xs-6 col-sm-2 sidebar-offcanvas" role="navigation">
+          <div id="sidebar" class="col-xs-5 col-sm-3 col-lg-2 sidebar-offcanvas" role="navigation">
             <div class="list-group small">
 
               {% block sidelinks %}
@@ -108,6 +110,14 @@
                 <a class="list-group-item" href="/lifestudies/">Life Studies</a></li>
                 <a class="list-group-item" href="#">Class Notes</a>
 
+              {% if exams_available or user.is_designated_grader %}
+                <h5>Take Exams</h5>
+                  <a class="list-group-item" href="/exams/">List</a></li>
+                  {% if user.is_designated_grader %}
+                    <a class="list-group-item" href="/exams/new">Create New</a>
+                  {% endif %}
+              {% endif %}
+
               <h5>Requests</h5>
                 <a class="list-group-item" href="#">A/V Requests</a>
                 <a class="list-group-item" href="#">Maintenance Requests</a>
@@ -117,23 +127,33 @@
               <h5>Misc.</h5>
                 <a class="list-group-item" href="#">Announcements</a>
                 <a class="list-group-item" href="{% url 'badges:badges_list' %}">Badges</a>
-                <a class="list-group-item" href="#">Bible Reading Tracker</a>
+                <a class="list-group-item" href="{% url 'bible_tracker:index' %}">Bible Reading Tracker</a>
                 <a class="list-group-item" href="{% url 'absent_trainee_roster:absent_trainee_form' %}">Absent Trainee Roster</a>
                 <a class="list-group-item" href="{% url 'meal_seating.views.newseats' %}">Meal Seating</a>
+                <a class="list-group-item" href="{% url 'seating:chart_list' %}">Class Seating</a>
 
               <h6>My Admin</h6>
                 {% include 'suit/menu.html' %}
 
               {% endblock %}
-            </div>
-          </div> <!--/SIDEBAR-->
-        {% endblock %}
+
+            </ul>
+          </div>
+        </div><!--/sidebar-->
+    {% endblock %}
 
         <!--CONTENT-->
-        <div id="content" class="col-xs-12 col-sm-10">
+        <div id="content" class="col-xs-12 col-sm-9 col-lg-10 content">
 
-          {% bootstrap_messages %}
-
+          {% block messages %}
+              <div id="messages">
+                {% if messages %}
+                  {% for message in messages %}
+                    {% bootstrap_messages message %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+          {% endblock %}
           {% block content %}
             {% block content-center %}
             {% endblock %}

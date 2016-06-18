@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% load bootstrap3 %}
+
+{% block title %}Events List{% endblock %}
+
+{% block content %}
+    <h1>events</h1>
+
+    <table>
+    {% for event in events %}
+        <tr>
+            <td>{{ event.name }}</td> 
+            <td>{{ event.date }}</td>
+            <td>{{ event.priority }}</td>
+            <td>{{ event.day }}</td>
+            <td>{{ event.start }}</td>
+            <td>{{ event.end }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    {{ events }}
+    }
+
+{% endblock %}

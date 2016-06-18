@@ -9,13 +9,17 @@
     {% for requestGroups in sorted %}
         {% if requestGroups.grouper == 'Pending' %}
             <h4>{{ requestGroups.grouper }}</h4>
-            <div class="panel panel-default">
         {% elif requestGroups.grouper == 'Marked for Fellowship' %}
             <h4>{{ requestGroups.grouper }}</h4>
             <div class="panel panel-info">
         {% endif %}
 
         {% for request in requestGroups.list|dictsortreversed:"date_assigned" %}
+            {% if requestGroups.grouper == 'Pending' and request.urgent == True %}
+                <div class="panel panel-danger">
+            {% else %}
+                <div class="panel panel-default">
+            {% endif %}
              <a href="{{ request.get_absolute_url }}">
                 <div class="panel-heading">
                     <h4 class="panel-title">

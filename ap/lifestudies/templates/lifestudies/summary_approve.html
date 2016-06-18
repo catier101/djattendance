@@ -5,8 +5,19 @@
 {% block lifestudies_content %} 
 
     <div class="container">
-        <div class="col-md-12">
-            <h2>{{summary.book.name}}</h2>
+        <div class="col-md-8">
+            <h2>
+                {{summary.book.name}} &mdash; {{summary.chapter}}
+                <div class="pull-right">
+                    {% if prev_summary != -1 %}
+                        <a href="{% url 'lifestudies:summary_approve' prev_summary %}" class="btn btn-primary" role="button">Prev</a>
+                    {% endif %}
+                    {% if next_summary != -1 %}
+                        <a href="{% url 'lifestudies:summary_approve' next_summary %}" class="btn btn-primary" role="button">Next</a>
+                    {% endif %}
+                </div>
+                {{summary.get_next_by_discipline}}
+            </h2>
             <p>{{summary.content}}</p>
             <div>
                 <span class="badge alert-info">{{summary.date_submitted}}</span>
@@ -15,11 +26,24 @@
                 {% else %}
                 <span class="badge alert-danger">not approved</span>
                 {% endif %}
+                {% if summary.fellowship %}
+                    <span class="badge alert-warning">fellowship</span>
+                {% endif %}
                 <div class="pull-right">
                     {% if summary.approved == False %}
                         <form action="" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                            {% if not summary.fellowship %}
+                                <button name="fellowship" type="submit" class="btn btn-warning btn-sm">Fellowship</button>
+                            {% else %}
+                                <button name="unfellowship" type="submit" class="btn btn-warning btn-sm">Remove Fellowship</button>
+                            {% endif %}
+                            <button name="approve" type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                    {% else %}
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <button name="unapprove" type="submit" class="btn btn-danger btn-sm">Un-Approve</button>
                         </form>
                     {% endif %}        
                 </div>        

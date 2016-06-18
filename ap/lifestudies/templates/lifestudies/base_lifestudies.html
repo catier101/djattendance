@@ -2,7 +2,7 @@
 
 {% block content %}
     
-    {% if request.user.trainingassistant %}
+    {% if request.user.type == 'T' %}
 
         <ul class="nav nav-tabs" role="tablist">
             <li {% block tab1 %}{%endblock%}><a href="{% url 'lifestudies:discipline_list' %}">Home</a></li>

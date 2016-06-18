@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block references %}
+<link rel="stylesheet" href="{% static "apimport/css/apimport.css" %}" />
+
+{% endblock %}
+
+{% block title %}Process CSV File{% endblock %}
+
+{% block content %}
+
+{% if not import_complete %}
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#localities">Localities</a></li>
+        <li><a data-toggle="tab" href="#teams">Teams</a></li>
+        <li><a data-toggle="tab" href="#houses">Houses</a></li>
+    </ul>
+
+    <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <div class="tab-content">
+            <div id="localities" class="tab-pane fade in active">
+                <br />
+                {% for localityform in cityformset %}
+                    <div id="locality_{{forloop.counter0}}">
+                        {{ localityform.id }}
+                        {{ localityform.as_p }}
+                        <button type="button" onclick="post_locality('{{forloop.counter0}}'); return false;" class="btn btn-primary">Create Locality</button>
+                        <br />
+                        <br />
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="teams" class="tab-pane fade">
+                <br />
+                {% for teamform in teamformset %}
+                    <div id="team_{{forloop.counter0}}">
+                        {{ teamform.id }}
+                        {{ teamform.as_p }}
+                        <button type="button" onclick="post_team('{{forloop.counter0}}'); return false;" class="btn btn-primary">Create Team</button>
+                        <br />
+                        <br />
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="houses" class="tab-pane fade">
+                <br />
+                {% for houseform in houseformset %}
+                    <div id="house_{{forloop.counter0}}">
+                        {{ houseform.id }}
+                        {{ houseform.as_p }}
+                        <button type="button" onclick="post_house('{{forloop.counter0}}'); return false;" class="btn btn-primary">Create House</button>
+                        <br />
+                        <br />
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="input" class="btn btn-success">Refresh</input>
+    </form>
+{% else %}
+    Import completed
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{%static 'apimport/js/csv-processing.js' %}"></script>
+{% endblock %}

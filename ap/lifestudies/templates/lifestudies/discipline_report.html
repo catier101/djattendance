@@ -1,6 +1,7 @@
 {% extends "lifestudies/base_lifestudies.html" %}
 
 {% load staticfiles %}
+{% load common_tags %}
 
 {% block tab2 %} class="active" {% endblock %}
 
@@ -8,10 +9,10 @@
 
 {% block lifestudies_content %}
 
-{% if user.trainee %}
+{% if user|is_trainee %}
 <h2> TA Access Only </h2>
 
-{% elif user.trainingassistant %}
+{% elif user|is_TA %}
 
 <h2> Life Study Report </h2>
 
@@ -40,7 +41,7 @@
       {% for discipline in disciplines %}
       {% if discipline.is_completed == False %}
       <tr>
-        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+        <td>{{discipline.trainee.firstname}} {{discipline.trainee.lastname|slice:"1"}}.</td>
         <td>{{discipline.infraction}}</td>
         <td>{{discipline.offense}}</td>
         <td>{{discipline.quantity}}</td>
@@ -50,7 +51,13 @@
           <td>
             {% for summary in discipline.summary_set.all %}
             <a href="{% url 'lifestudies:summary_approve' summary.pk %}" class="tooltip-submit-date" data-toggle="tooltip" data-placement="top" title="{{summary.date_submitted | date:"m/d/y"}}">
-              <span class="glyphicon glyphicon-file"></span>
+              {% if summary.fellowship %}
+                <span class="glyphicon glyphicon-file text-warning"></span>
+              {% elif summary.approved %}
+                <span class="glyphicon glyphicon-file text-success"></span>
+              {% else %}
+                <span class="glyphicon glyphicon-file"></span>
+              {% endif %}
             </a>
             {% endfor %}
           </td>
@@ -84,7 +91,7 @@
       {% for discipline in disciplines %}
       {% if discipline.is_completed == True %}
       <tr>
-        <td>{{discipline.trainee.account.firstname}} {{discipline.trainee.account.lastname|slice:"1"}}.</td>
+        <td>{{discipline.trainee.firstname}} {{discipline.trainee.lastname|slice:"1"}}.</td>
         <td>{{discipline.infraction}}</td>
         <td>{{discipline.offense}}</td>
         <td>{{discipline.quantity}}</td>

@@ -1,3 +1,5 @@
+python-dateutil==2.5.3
+
 Django==1.8.1
 psycopg2==2.6
 django-braces==1.8.0
@@ -11,7 +13,12 @@ django-sql-explorer==0.6
 django-paintstore==0.2
 django-solo==1.1.0
 django-extensions==1.5.5
+django-filter==0.13.0
+django-rest-swagger==0.3.5
+django-crispy-forms==1.6.0
+djangorestframework-bulk==0.2.1
 django-countries==3.4.1
+
 
 # database extensions
 djorm-ext-core==0.7
@@ -22,16 +29,28 @@ djorm-ext-pgarray==0.10
 xhtml2pdf==0.0.6
 pdfminer==20140328
 
+# PIL (Image Upload)
+Pillow==3.2.0
+
 # static wsgi extensions
 dj-static==0.0.6
 static3==0.5.1
 wsgiref==0.1.2
 
 # celery workers related
+amqp==1.4.9
+anyjson==0.3.3
+billiard==3.3.0.23
+celery==3.1.23
+kombu==3.0.35
+pytz==2016.4
+wheel==0.24.0
+
 librabbitmq==1.6.1
-celery==3.1.19
 django-celery==3.1.17
 flower>=0.8.3
 
+# rest api
+drf-nested-routers==0.11.1
 # web access request
 netaddr==0.7.18
