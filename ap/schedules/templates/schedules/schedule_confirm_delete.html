@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block title %}Delete {{schedule}}?{% endblock %}
+
+{% block content %}
+
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><b>Delete Schedule?</b></h3>
+      </div>
+      <div class="panel-body">
+        <p class="lead">Are you sure you want to delete <b>{{ schedule }}</b>?</p>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Yes, I'm Sure</button>
+        </form>
+      </div>
+    </div>
+
+{% endblock %}

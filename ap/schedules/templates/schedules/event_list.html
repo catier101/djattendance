@@ -23,12 +23,9 @@
             <br>Monitor: {{event.monitor}}
             <br>Start: {{event.start}}
             <br>End: {{event.end}}
-            {%if event.day %}
-                <br>Day: {{event.day}}
-            {% else %}
-                <br>Weekday: {{event.get_weekday}}
-            {% endif %}
-            <br>Schedules: {{event.get_schedules}}
+            <br>Day: {{event.day}}
+            <br>Schedules: {% for schedule in event.schedules.all %} <a href="{% url 'schedules:schedule-detail' pk=schedule.pk %}">{{ schedule.name }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete Event" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -60,6 +57,7 @@
         <div class="panel-body">
             Code: {{event.code}}
             <div class="pull-right">
+            <a href="{{event.get_absolute_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></button></a>
             <a href ="{{event.get_update_url}}"><button class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></button></a>
             <button value="{{event.id}}" class="btn btn-default delete_event_button"><span class="glyphicon glyphicon-trash"></span></button>
             </div>
@@ -69,12 +67,9 @@
             <br>Monitor: {{event.monitor}}
             <br>Start: {{event.start}}
             <br>End: {{event.end}}
-            {%if event.day %}
-                <br>Day: {{event.day}}
-            {% else %}
-                <br>Weekday: {{event.get_weekday}}
-            {% endif %}
-            <br>Schedules: {{event.get_schedules}}
+            <br>Weekday: {{event.get_weekday}}
+            <br>Schedules: {% for schedule in event.schedules.all %} <a href="{% url 'schedules:schedule-detail' pk=schedule.pk %}">{{ schedule.name }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete Event" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">

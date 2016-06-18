@@ -27,6 +27,15 @@ class TraineeSerializer(BulkSerializerMixin, ModelSerializer):
     def get_trainee_name(self, obj):
         return obj.__unicode__()
 
+class BasicTraineeSerializer(BulkSerializerMixin, ModelSerializer):
+    list_serializer_class = BulkListSerializer
+    # name = SerializerMethodField('get_trainee_name')
+    class Meta:
+        model = Trainee
+        fields = ['id', 'full_name', 'lastname']
+    def get_trainee_name(self, obj):
+        return obj.__unicode__()
+
 class TrainingAssistantSerializer(BulkSerializerMixin, ModelSerializer):
     list_serializer_class = BulkListSerializer
     class Meta:

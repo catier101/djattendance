@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block title %}Create Schedule{% endblock %}
+
+{% block media %}
+
+  {{ block.super }}
+  {{ form.media }}
+  <link href="/static/css/select2-bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+  
+{% endblock %}
+
+{% block content %}
+
+<h2>Create Schedule</h2>
+<div class="schedule-form">
+  <form action="" method="post">{% csrf_token %}
+    <style>
+      li[aria-selected=true] {
+        display: none !important;
+      }
+    </style>
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-primary">
+        Create
+      </button>
+    {% endbuttons %}
+  </form>
+</div>    
+<div class="month"> 
+  <ul>
+  <li class="prev">&#10094;</li>
+  <li class="next">&#10095;</li>
+  <li>
+    August<br>
+    <span style="font-size:18px">2016</span>
+  </li>
+  </ul>
+</div>
+
+<ul class="weekdays">
+  <li>Mo</li>
+  <li>Tu</li>
+  <li>We</li>
+  <li>Th</li>
+  <li>Fr</li>
+  <li>Sa</li>
+  <li>Su</li>
+</ul>
+
+<ul class="days"> 
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li>9</li>
+  <li><span class="active">10</span></li>
+  <li>11</li>
+  ...etc
+</ul>
+
+<script>
+  //             var trainees = {{trainees_bb|safe}};
+  // var traineeNames = {};
+  // var traineeList = [];
+  // for (var i = 0; i < trainees.length; i++) {
+  //   traineeList.push({
+  //     value: trainees[i].fullname,
+  //     trainee_id: trainees[i].id,
+  //     id: i
+  //   });
+  // }
+  $(document).ready(function(e) {
+    console.log($.fn)
+    $.fn.select2.amd.require(['select2/selection/search'], function (Search) {
+      var oldRemoveChoice = Search.prototype.searchRemoveChoice;
+    
+      Search.prototype.searchRemoveChoice = function () {
+        oldRemoveChoice.apply(this, arguments);
+        this.$search.val('');
+      };
+      // $("#id_trainees").select2({
+      //   allowClear: true,
+      //   placeholder: 'Select Trainees',
+      // });
+      $("#id_events").select2({
+        allowClear: true,
+        placeholder: 'Select Events',
+        // lookup: traineeList,
+        // autoSelectFirst: true,
+        // onSelect: function(suggestion) {
+        //   console.log(suggestion);
+        //   $('#id_trainees').val(suggestion.id);
+        // }
+      });
+    });
+  });
+
+  // $.fn.select2.amd.require(['select2/selection/search'], function (Search) {
+  // var oldRemoveChoice = Search.prototype.searchRemoveChoice;
+
+  // Search.prototype.searchRemoveChoice = function () {
+  //   oldRemoveChoice.apply(this, arguments);
+  //   this.$search.val('');
+  // };
+
+
+  // var trainees = {{trainees_bb|safe}};
+  // var traineeNames = {};
+  // var traineeList = [];
+  // console.log(trainees);
+  // for (var i = 0; i < trainees.length; i++) {
+  //   traineeList.push({
+  //     text: trainees[i].full_name,
+  //     id: trainees[i].id
+  //   });
+  // }
+  // console.log(traineeList);
+  // $('#id_trainees').select2({
+  //   closeOnSelect: false,
+  //   width: '300px',
+  //   data: traineeList,
+  // });
+  // });
+
+</script>
+{% endblock %}
+{% block references %}
+  <link rel="stylesheet" type="text/css" href="{% static 'schedules/jquery.autocomplete.css' %}" />
+{% endblock %}

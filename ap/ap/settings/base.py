@@ -146,6 +146,8 @@ INSTALLED_APPS = (
     'solo',
     'django_extensions',
     'rest_framework_swagger',
+    'dal',
+    'dal_select2',
 
     # django contrib
     'django.contrib.auth',

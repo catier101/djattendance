@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.admin import Group, User
 from django.utils.translation import ugettext_lazy as _
 from django_select2 import *
+from django_select2.forms import *
 
 from .models import UserMeta, User, Trainee, TrainingAssistant, Locality
 from aputils.admin import VehicleInline, EmergencyInfoInline
@@ -197,13 +198,11 @@ class TraineeAdminForm(forms.ModelForm):
     model = Trainee
     exclude = ['password']
   
-  locality = ModelSelect2MultipleField(queryset=Locality.objects.prefetch_related('city__state'),
+  locality = forms.MultipleChoiceField(
     required=False,
-    search_fields=['^city'],
     widget=PlusSelect2MultipleWidget(
-      select2_options={
-      'width': '220px',
-      }
+      model=Locality,
+      search_fields=['city__icontains'],
     )) # could add state and country
 
 

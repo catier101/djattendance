@@ -106,11 +106,8 @@ class Event(models.Model):
 
     # the date of the event for a given week
     def date_for_week(self, week):
-        print week
-        print self.weekday
         start_date = Term.current_term().start
         event_week = start_date + timedelta(weeks=week-1)
-        print event_week
         return event_week + timedelta(days = self.weekday)
 
     # checks for time conflicts between events. Returns True if conflict exists.
@@ -128,7 +125,7 @@ class Event(models.Model):
         return reverse('schedules:event-update', kwargs={'pk': self.id})
 
     def __unicode__(self):
-        return "[%s] %s" % (self.start.strftime('%m/%d'), self.name)
+        return "%s" % (self.name)
 
 
 
@@ -244,6 +241,9 @@ class Schedule(models.Model):
 
     def get_absolute_url(self):
         return reverse('schedules:schedule-detail', kwargs={'pk': self.pk})
+
+    def get_update_url(self):
+        return reverse('schedules:schedule-update', kwargs={'pk': self.id})
 
     @staticmethod
     def current_term_schedules():

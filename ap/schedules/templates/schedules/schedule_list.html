@@ -2,8 +2,9 @@
 {% load staticfiles %}
 
 {% block content %}
-<h1>Schedule</h1>
+<h1>Schedules</h1>
   <div>
+  {% for schedule in schedules %}
   <div>
     <div class="panel panel-success">
     <div class="panel-heading">
@@ -46,6 +47,7 @@
       </div>
     </div>
     </div>
+  {% endfor %}
  </div>
 
   <script type="text/javascript">

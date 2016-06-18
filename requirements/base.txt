@@ -5,9 +5,9 @@ psycopg2==2.6
 django-braces==1.8.0
 django-adminactions==0.4
 django-suit==0.2.13
-django-bootstrap3==4.8.2
+django-bootstrap3==7.0.1
 django-bootstrap3-datetimepicker==2.2.3
-django-select2==4.3.1
+django-select2==5.8.5
 djangorestframework==3.3.2
 django-sql-explorer==0.6
 django-paintstore==0.2
@@ -18,7 +18,7 @@ django-rest-swagger==0.3.5
 django-crispy-forms==1.6.0
 djangorestframework-bulk==0.2.1
 django-countries==3.4.1
-
+django-autocomplete-light==3.1.6
 
 # database extensions
 djorm-ext-core==0.7

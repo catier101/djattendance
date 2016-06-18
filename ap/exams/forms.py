@@ -1,15 +1,19 @@
 from django.forms import Form, ModelForm, formset_factory
-from django.forms import CharField, Textarea, TextInput
+from django.forms import CharField, Textarea, TextInput, MultipleChoiceField
 from django.forms.models import inlineformset_factory, BaseInlineFormSet
-from django_select2 import ModelSelect2MultipleField
+from django_select2 import *
+from django_select2.forms import *
 
 from .models import Trainee, Exam, Section
 
 class TraineeSelectForm(Form):
-    trainees = ModelSelect2MultipleField(queryset=Trainee.objects, 
-                                         required=False, 
-                                         search_fields=['^first_name', '^last_name'])
-
+    trainees = MultipleChoiceField(
+        required=False,
+        widget=ModelSelect2MultipleWidget(
+            model=Trainee,
+            search_fields=['firstname__icontains', 'lastname__icontains']
+        )
+    )
 class ExamCreateForm(ModelForm):
     class Meta:
         model = Exam

@@ -9,31 +9,97 @@ from django.shortcuts import render
 from bootstrap3_datetime.widgets import DateTimePicker
 from rest_framework import viewsets, filters
 
-from .models import Schedule, Event
-from .forms import EventForm, TraineeSelectForm
+from accounts.serializers import BasicTraineeSerializer
+from .models import Schedule, Event, Trainee
+from .forms import EventForm, ScheduleForm
 from .serializers import EventSerializer, ScheduleSerializer, EventFilter, ScheduleFilter
 from terms.models import Term
 from rest_framework_bulk import BulkModelViewSet
 from rest_framework.renderers import JSONRenderer
 from aputils.utils import trainee_from_user
+from dal import autocomplete
+from django.db.models import Q
 
 class SchedulePersonal(generic.TemplateView):
     template_name = 'schedules/schedule_detail.html'
     context_object_name = 'schedule'
 
     def get_context_data(self, **kwargs):
+        listJSONRenderer = JSONRenderer()
         context = super(SchedulePersonal, self).get_context_data(**kwargs)
         trainee = trainee_from_user(self.request.user)
         context['schedule'] = Schedule.objects.filter(trainees=trainee)
+        context['trainees'] = Trainee.objects.all()
+        context['trainees_bb'] = listJSONRenderer.render(TraineeSerializer(context['trainees'], many=True).data)
         return context
 
 class ScheduleDetail(generic.DetailView):
-    template_name = 'schedules/schedule_detail.html'
+    model = Schedule
+    # template_name = 'schedules/schedule_detail.html'
     context_object_name = 'schedule'
 
-    def get_queryset(self):
+class ScheduleCreate(generic.CreateView):
+    model = Schedule
+    template_name = 'schedules/schedule_create.html'
+    form_class = ScheduleForm
+    def get_context_data(self, **kwargs):
+        listJSONRenderer = JSONRenderer()
+        context = super(ScheduleCreate, self).get_context_data(**kwargs)
         trainee = trainee_from_user(self.request.user)
-        return Schedule.objects.filter(trainee=trainee).filter(term=Term.current_term())
+        context['schedule'] = Schedule.objects.filter(trainees=trainee)
+        context['trainees_bb'] = listJSONRenderer.render(BasicTraineeSerializer(Trainee.objects.order_by('lastname'), many=True).data)
+        return context
+    def form_valid(self, form):
+        schedule = form.save()
+        return super(ScheduleCreate, self).form_valid(form)
+
+class ScheduleList(generic.ListView):
+    model = Schedule
+    template_name = 'schedules/schedule_list.html'
+    context_object_name = 'schedules'
+    def get_queryset(self):
+        return Schedule.objects.filter(is_deleted=False)
+    # def get_context_data(self, **kwargs):
+    #     listJSONRenderer = JSONRenderer()
+    #     user = self.request.user
+    #     trainee = trainee_from_user(user)
+    #     ctx = super(EventList, self).get_context_data(**kwargs)
+    #     events = Event.objects.filter(schedules = trainee.schedules.all()).distinct().order_by('name')
+    #     ctx['events_with_day'] = events.filter(weekday__isnull=True)
+    #     ctx['events_with_weekday'] = events.exclude(weekday__isnull=True)
+    #     return ctx
+
+class ScheduleUpdate(generic.UpdateView):
+    model = Schedule
+    template_name = 'schedules/schedule_update.html'
+    form_class = ScheduleForm
+
+class ScheduleDelete(generic.DeleteView):
+    model = Schedule
+    success_url = '/schedules/schedule/list/'
+
+class ScheduleAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Schedule.objects.order_by('name')
+        if self.q:
+            qs = qs.filter(Q(name__icontains = self.q))
+        return qs
+
+class TraineeAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Trainee.objects.filter(is_active=True).order_by('lastname')
+        if self.q:
+            qs = qs.filter(Q(firstname__icontains = self.q) | Q(lastname__icontains = self.q))
+        return qs
+
+class EventAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        user = self.request.user
+        trainee = trainee_from_user(user)
+        qs = Event.objects.filter(schedules = trainee.schedules.all()).distinct().order_by('name')
+        if self.q:
+            qs = qs.filter(Q(name__icontains = self.q) | Q(code = self.q))
+        return qs
 
 class EventCreate(generic.CreateView):
     model = Event
@@ -43,27 +109,10 @@ class EventCreate(generic.CreateView):
     def form_valid(self, form):
         event = form.save()
         return super(EventCreate, self).form_valid(form)
-    # def post(request, pk):
-    # post = get_object_or_404(Event, pk=pk)
-    # if request.method == 'GET':
-    #     form = EventForm()
-    # else:
-    #     form = EventForm(request.POST, instance = post)
-    #     if form.is_valid():
-    #         post = form.save(commit=False)
-    #         schedules = form.cleaned_data.get('schedules')
-    #         for schedule in schedules:
-    #             schedule.events.add()
-    #         post.save()
-    #         return redirect('post_detail', pk=post.pk)
- 
-    # return render(request, 'post/post_form_upload.html', {
-    #     'form': form,
-    # })
 
 class EventDetail(generic.DetailView):
     model = Event
-    context_object_name = "event"
+    context_object_name = 'event'
 
 class EventList(generic.ListView):
     model = Event
@@ -74,47 +123,15 @@ class EventList(generic.ListView):
         user = self.request.user
         trainee = trainee_from_user(user)
         ctx = super(EventList, self).get_context_data(**kwargs)
-        events = Event.objects.filter(schedules = trainee.schedules.all()).distinct().order_by('name')
-        ctx['all_events'] = events.order_by('day')
+        events = Event.objects.all().order_by('name')
         ctx['events_with_day'] = events.filter(weekday__isnull=True)
         ctx['events_with_weekday'] = events.exclude(weekday__isnull=True)
-        ctx['events_with_day_bb'] = listJSONRenderer.render(EventSerializer(ctx['events_with_day'], many=True).data)
-        ctx['events_with_weekday_bb'] = listJSONRenderer.render(EventSerializer(ctx['events_with_weekday'], many=True).data)
         return ctx
-
 
 class EventUpdate(generic.UpdateView):
     model = Event
     template_name = 'schedules/event_update.html'
     form_class = EventForm
-
-    # def get_initial(self):
-    #     trainees = []
-    #     for schedule in self.object.schedule_set.all():
-    #         trainees.append(schedule.trainees)
-    #     return {'trainees': trainees}
-
-    # def form_valid(self, form):
-    #     event = form.save()
-
-    #     # remove event from schedules of trainees no longer assigned to this event
-    #     for schedule in event.schedule_set.all():
-    #         if schedule.trainees not in form.cleaned_data['trainees']:
-    #             schedule.events.remove(event)
-
-    #     for trainee in form.cleaned_data['trainees']:
-    #         # make sure event is in each trainee's schedule
-    #         if Schedule.objects.filter(trainee=trainee).filter(term=event.term):
-    #             schedule = Schedule.objects.filter(trainee=trainee).filter(term=event.term)[0]
-    #             if event not in schedule.events.all():
-    #                 schedule.events.add(event)
-    #         else:
-    #             schedule = Schedule(trainee=trainee, term=event.term)
-    #             schedule.save()
-    #             schedule.events.add(event)
-
-    #     return super(EventUpdate, self).form_valid(form)
-
 
 class EventDelete(generic.DeleteView):
     model = Event

@@ -5,6 +5,7 @@ from django.contrib.admin.templatetags.admin_static import static
 from django.forms.widgets import DateInput, TimeInput
 from django.forms.widgets import RadioSelect
 from django_select2 import *
+from django_select2.forms import *
 
 
 class DatePicker(DateInput):
@@ -36,7 +37,7 @@ class HorizRadioRenderer(RadioSelect.renderer):
             return mark_safe(u'\n'.join([u'%s\n' % w for w in self]))
 
 
-class PlusSelect2MultipleWidget(Select2MultipleWidget):
+class PlusSelect2MultipleWidget(ModelSelect2MultipleWidget):
   def render(self, name, value, attrs=None, choices=()):
     output = super(PlusSelect2MultipleWidget, self).render(name, value, attrs, choices)
     link = []

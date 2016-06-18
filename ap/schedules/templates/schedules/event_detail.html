@@ -24,7 +24,8 @@
             {% else %}
                 <br>Weekday: {{event.get_weekday}}
             {% endif %}
-            <br>Schedules: {{event.get_schedules}}
+            <br>Schedules: {% for schedule in event.schedules.all %} <a href="{% url 'schedules:schedule-detail' pk=schedule.pk %}">{{ schedule.name }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete Event" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
