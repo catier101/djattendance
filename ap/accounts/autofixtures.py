@@ -4,13 +4,10 @@ from .models import User, TrainingAssistant, Trainee
 from autofixture import generators, register, AutoFixture
 
 """ accounts.autofixtures
-
 Uses django-autofixture to generate random testing data.
 (https://github.com/gregmuellegger/django-autofixture/)
-
 Create test data using the loadtestdata command, for example:
 $ django-admin.py loadtestdata accounts.User:50 accounts.TrainingAssistant:5 accounts.Trainee:50
-
 (note: generate Users before generating TAs and Trainees)
 """
 

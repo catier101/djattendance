@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Profile
+from accounts.models import User
 from houses.models import House, Bunk
 
 """  hospitality models.py 
@@ -7,7 +7,7 @@ This module takes care of all the logistics of LSM hospitality.
 
 """
 
-class HospitalityGuest(Profile):
+class HospitalityGuest(User):
 
     visits = models.ManyToManyField('Visit')
 

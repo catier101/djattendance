@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Profile, Trainee
+from accounts.models import User, Trainee
 from localilties.models import Locality
 from houses.models import House, Bunk
 from terms.models import Term
@@ -8,7 +8,7 @@ from terms.models import Term
 This class represents short-term trainees.
 """
 
-class ShortTermTrainee(Profile):
+class ShortTermTrainee(User):
 
     visits = models.ManyToManyField('Visit')
 

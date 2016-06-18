@@ -15,16 +15,6 @@ class Period(object):
         week, day = self.term.reverse_date(date)  # returns a week and a day
         return self.period_of_week(week)
 
-    @staticmethod
-    def first_period():
-        """ return the first period (0) """
-        return 0
-
-    @staticmethod
-    def last_period():
-        """ return last period """
-        return 9
-
     def start(self, n):
         """ for a period number, return the start date """
         wk = self.duration * (n-1)  # week number for start of this period

@@ -1,0 +1,34 @@
+{% extends "exams/base_exams.html" %}
+
+{% block title %}Exam Grade Reports{% endblock %}
+
+{% block content %}
+<h1>Exam Grade Reports</h1>
+
+<div class="panel panel-default">
+    <div class="panel-heading exam-panel-heading">
+        <div class="btn-group pull-right">
+            <a href="{% url 'exams:list' %}">
+                <button type="button" class="btn btn-default">Back</button></a>
+        </div>
+        <h3 class="panel-title exam-panel-title">{{ exam }}</h3>
+    </div>
+    {% if user.is_designated_grader or user.type == 'T' %}
+    <div class="panel-body">
+
+    <h4>General</h4>
+
+    <table class="table table-striped">
+        <th>Trainee</th>
+        <th>Exam Grade</th>
+
+    </table>
+
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

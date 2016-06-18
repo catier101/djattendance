@@ -18,9 +18,9 @@ def assignDiscipline():
         logger.info("Start task")
         term = Term.current_term()
         period = Period(term).period_of_date(date.today())
-        for trainee in Trainee.objects.filter(active=True).all():
+        for trainee in Trainee.objects.filter(is_active=True).all():
             amount = Discipline.calculate_summary(trainee, period)
-            logger.info(trainee.account.firstname + " " + trainee.account.lastname + " : " + str(amount) + " life studies")
+            logger.info('%s : %d life studies' % (trainee.full_name, amount))
             Discipline.assign_attendance_summaries(trainee, period, amount)
     except Exception, msg:
         logger.error(msg)

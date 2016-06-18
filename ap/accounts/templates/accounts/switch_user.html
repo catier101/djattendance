@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static "js/jquery.autocomplete.js" %}"></script>
+  <script>
+    var users = JSON.parse('{{users_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
+    var userNames = {};
+    var userList = [];
+    for (var i = 0; i < users.length; i++) {
+      userList.push({
+        value: users[i].firstname + ' ' + users[i].lastname,
+        id: users[i].id
+      });
+    }
+
+    $(document).ready(function(e) {
+      $("#userName").autocomplete({
+        lookup: userList,
+        autoSelectFirst: true,
+        onSelect: function(suggestion) {
+          console.log(suggestion);
+          $('#userId').val(suggestion.id);
+        }
+      });
+    })
+
+  </script>
+
+{% endblock %}
+
+{% block references %}
+  <link rel="stylesheet" type="text/css" href="{% static 'seating/css/jquery.autocomplete.css' %}" />
+{% endblock %}
+
+{% block content %}
+<h2>Switch Identities</h2>
+
+<div class="form-inline">
+  <form id="submit-switch-user-form" method="post">
+    {% csrf_token %}
+    <label for="userName">User</label>
+    <input type="text" class="form-control" id="userName" maxlength="100"/>
+    <input type="hidden" name="id" id="userId">
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+
+{% endblock %}

@@ -13,11 +13,12 @@ from absent_trainee_roster.forms import AbsentTraineeForm, NewEntryFormSet
 def absent_trainee_form(request):
 	EntryFormSet = modelformset_factory(Entry, AbsentTraineeForm, formset=NewEntryFormSet, max_num=10, extra=1, can_delete=True)
 	
+	today = date.today()
 	# get today's roster. create it if it doesn't exist.
-	if Roster.objects.filter(date=date.today()).exists():
-		roster = Roster.objects.get(date=date.today())
+	if Roster.objects.filter(date=today).exists():
+		roster = Roster.objects.get(date=today)
 	else:
-		roster = Roster.objects.create_roster(date=date.today())
+		roster = Roster.objects.create_roster(date=today)
 
 	if request.method == 'POST':
 		formset = EntryFormSet(request.POST, request.FILES, user=request.user)
@@ -32,7 +33,7 @@ def absent_trainee_form(request):
 					entry = form.save(commit=False)
 
 					# check for overriding entry for absentee already in database
-					for existing_entry in roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house):
+					for existing_entry in roster.entry_set.filter(absentee__house=request.user.house):
 						if entry.absentee == existing_entry.absentee:
 							existing_entry.delete()
 							
@@ -40,17 +41,17 @@ def absent_trainee_form(request):
 					entry.save()
 			
 			# delete entries for absentees not in newly submitted form
-			entries = roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house)
+			entries = roster.entry_set.filter(absentee__house=request.user.house)
 			for entry in entries:
 				if entry.absentee.id not in new_absentees.keys():
 					entry.delete()
 
-			roster.unreported_houses.remove(request.user.trainee.house)
+			roster.unreported_houses.remove(request.user.house)
 			return redirect('/')
 		
 	else:
 		# shows existing entries from user's house, i.e. if form was already submitted and user revisits the page
-		formset = EntryFormSet(user=request.user, queryset=roster.entry_set.filter(absentee__account__trainee__house=request.user.trainee.house))
+		formset = EntryFormSet(user=request.user, queryset=roster.entry_set.filter(absentee__house=request.user.house))
 
 	c = {'formset': formset, 'user': request.user}
 	c.update(csrf(request))

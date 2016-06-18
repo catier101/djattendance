@@ -1,0 +1,2855 @@
+[{
+  "fields": {
+    "name": "Breakfast cleanups",
+    "description": "Breakfast cleanups"
+  },
+  "model": "services.category",
+  "pk": 1
+}, {
+  "fields": {
+    "name": "Prepare breakfast for all the trainees",
+    "description": "Prepare breakfast for all the trainees"
+  },
+  "model": "services.category",
+  "pk": 2
+}, {
+  "fields": {
+    "name": "Make the chairs straight",
+    "description": "Make the chairs straight"
+  },
+  "model": "services.category",
+  "pk": 3
+}, {
+  "fields": {
+    "name": "Designated services",
+    "description": "Designated services"
+  },
+  "model": "services.category",
+  "pk": 4
+}, {
+  "fields": {
+    "name": "Guard the training center facilities",
+    "description": "Guard the training center facilities"
+  },
+  "model": "services.category",
+  "pk": 5
+}, {
+  "fields": {
+    "name": "Vacuuming the training center",
+    "description": "Vacuuming the training center"
+  },
+  "model": "services.category",
+  "pk": 6
+}, {
+  "fields": {
+    "name": "Lunch cleanups",
+    "description": "Lunch cleanups"
+  },
+  "model": "services.category",
+  "pk": 7
+}, {
+  "fields": {
+    "name": "Prepare lunch for all the trainees",
+    "description": "Prepare lunch for all the trainees"
+  },
+  "model": "services.category",
+  "pk": 8
+}, {
+  "fields": {
+    "name": "Mopping service",
+    "description": "Mopping service"
+  },
+  "model": "services.category",
+  "pk": 9
+}, {
+  "fields": {
+    "name": "Restroom cleaning",
+    "description": "Restroom cleaning"
+  },
+  "model": "services.category",
+  "pk": 10
+}, {
+  "fields": {
+    "name": "Prepare lunches for campus trainees",
+    "description": "Prepare lunches for campus trainees"
+  },
+  "model": "services.category",
+  "pk": 11
+}, {
+  "fields": {
+    "name": "Sack supper",
+    "description": "Sack supper"
+  },
+  "model": "services.category",
+  "pk": 12
+}, {
+  "fields": {
+    "name": "Supper cleanups",
+    "description": "Supper cleanups"
+  },
+  "model": "services.category",
+  "pk": 13
+}, {
+  "fields": {
+    "name": "Prepare supper for all the trainees",
+    "description": "Prepare supper for all the trainees"
+  },
+  "model": "services.category",
+  "pk": 14
+}, {
+  "fields": {
+    "name": "Sweeping and trash",
+    "description": "Sweeping and trash"
+  },
+  "model": "services.category",
+  "pk": 15
+}, {
+  "fields": {
+    "name": "cleaup",
+    "description": "cleaup"
+  },
+  "model": "services.category",
+  "pk": 16
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "FTTA",
+    "isActive": true,
+    "description": "Regular?FTTA?Week"
+  },
+  "model": "services.period",
+  "pk": 3
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "Pre-Training",
+    "isActive": true,
+    "description": "Pre-Training?Week"
+  },
+  "model": "services.period",
+  "pk": 6
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "Semi-Annual",
+    "isActive": true,
+    "description": "Semi-Annual?Week"
+  },
+  "model": "services.period",
+  "pk": 7
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "Memorial Day",
+    "isActive": true,
+    "description": "Memorial?Day?Conference?Week"
+  },
+  "model": "services.period",
+  "pk": 8
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "Service Week",
+    "isActive": true,
+    "description": "Service?Week"
+  },
+  "model": "services.period",
+  "pk": 12
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "Thanksgiving",
+    "isActive": true,
+    "description": "Thanksgiving?Day?Conference?Week"
+  },
+  "model": "services.period",
+  "pk": 14
+}, {
+  "fields": {
+    "category": null,
+    "workload": 1,
+    "name": "Labor Day",
+    "isActive": true,
+    "description": "Labor Day Conference Week"
+  },
+  "model": "services.period",
+  "pk": 16
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 16
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 17
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 18
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 19
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 20
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 21
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 22
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 23
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 24
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 25
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 26
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 27
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 28
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 29
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 30
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 31
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 32
+}, {
+  "fields": {
+    "category": 1,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 33
+}, {
+  "fields": {
+    "category": 2,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 34
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 35
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 36
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 37
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 38
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 39
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 40
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 41
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 42
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 43
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 44
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 45
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 46
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 47
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 48
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 49
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 50
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 51
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 52
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 53
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 54
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 55
+}, {
+  "fields": {
+    "category": 1,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 56
+}, {
+  "fields": {
+    "category": 2,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 57
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 58
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 59
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 60
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 61
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 62
+}, {
+  "fields": {
+    "category": 8,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 63
+}, {
+  "fields": {
+    "category": 9,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 64
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 65
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 66
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 67
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 68
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 69
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 70
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 71
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 72
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 73
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 74
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 75
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 76
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 77
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 78
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 79
+}, {
+  "fields": {
+    "category": 3,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 80
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 81
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 82
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 83
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 84
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 85
+}, {
+  "fields": {
+    "category": 8,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 86
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 87
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 88
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 89
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 90
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 91
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 92
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 93
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 94
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 95
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 96
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 97
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 98
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 99
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 100
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 101
+}, {
+  "fields": {
+    "category": 1,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 102
+}, {
+  "fields": {
+    "category": 2,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 103
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 104
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 105
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 106
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 107
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 108
+}, {
+  "fields": {
+    "category": 8,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 109
+}, {
+  "fields": {
+    "category": 9,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 110
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 111
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 112
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 113
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 114
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 115
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 116
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 117
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 118
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 119
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 120
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 121
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [12],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 122
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 123
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 124
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 125
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 126
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 127
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 128
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 129
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 130
+}, {
+  "fields": {
+    "category": 1,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 131
+}, {
+  "fields": {
+    "category": 2,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 132
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 133
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 134
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 135
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 136
+}, {
+  "fields": {
+    "category": 8,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 137
+}, {
+  "fields": {
+    "category": 9,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 138
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 139
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 140
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 141
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 142
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 143
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 2,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 144
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 145
+}, {
+  "fields": {
+    "category": 1,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 146
+}, {
+  "fields": {
+    "category": 2,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 147
+}, {
+  "fields": {
+    "category": 3,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 148
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 149
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 150
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 151
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 152
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 153
+}, {
+  "fields": {
+    "category": 8,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 154
+}, {
+  "fields": {
+    "category": 9,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 155
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 156
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 157
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 158
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 159
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 160
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 161
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 162
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 163
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 164
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 165
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 166
+}, {
+  "fields": {
+    "category": 6,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 167
+}, {
+  "fields": {
+    "category": 1,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 168
+}, {
+  "fields": {
+    "category": 2,
+    "workload": 0,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 169
+}, {
+  "fields": {
+    "category": 3,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 170
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 171
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 172
+}, {
+  "fields": {
+    "category": 5,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 173
+}, {
+  "fields": {
+    "category": 7,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 174
+}, {
+  "fields": {
+    "category": 8,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 175
+}, {
+  "fields": {
+    "category": 9,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 176
+}, {
+  "fields": {
+    "category": 11,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 177
+}, {
+  "fields": {
+    "category": 13,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 178
+}, {
+  "fields": {
+    "category": 14,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 179
+}, {
+  "fields": {
+    "category": 10,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 180
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 3,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 181
+}, {
+  "fields": {
+    "category": 4,
+    "workload": 1,
+    "end": "20:06:01.196",
+    "gender": "E",
+    "designated": false,
+    "period": [],
+    "start": "20:06:01.196",
+    "weekday": "5",
+    "active": true,
+    "workers_required": 1,
+    "permissions": []
+  },
+  "model": "services.service",
+  "pk": 182
+}]

@@ -1,4 +1,5 @@
 from django import forms
+from bootstrap3_datetime.widgets import DateTimePicker
 from .models import Discipline, Summary
 from accounts.models import Trainee, Statistics
 from houses.models import House
@@ -7,10 +8,10 @@ from books.models import Book
 
 
 class NewDisciplineForm(forms.ModelForm):
-
     class Meta:
         model = Discipline
         fields = '__all__'
+        widgets = { 'due': DateTimePicker(options={'format': 'MM/DD/YYYY'}) }
 
     def save(self, commit=True):
         discipline = super(NewDisciplineForm, self).save(commit=False)
@@ -23,8 +24,9 @@ class NewSummaryForm(forms.ModelForm):
 
     class Meta:
         model = Summary
-        exclude = ('approved', 'discipline',)
-
+        exclude = ('approved', 'discipline', 'deleted', 'fellowship', 'hard_copy')
+        widgets = {'minimum_words': forms.HiddenInput()}
+        
     def __init__(self, *args, **kwargs):
         t = kwargs.pop('trainee', None)
         super(NewSummaryForm, self).__init__(*args, **kwargs)
@@ -53,7 +55,8 @@ class EditSummaryForm(forms.ModelForm):
 
     class Meta:
         model = Summary
-        exclude = ('book', 'chapter', 'discipline', 'approved', )
+        exclude = ('book', 'chapter', 'discipline', 'approved', 'deleted', 'fellowship', 'hard_copy')
+        widgets = {'minimum_words': forms.HiddenInput()}
 
     def save(self, commit=True):
         summary = super(EditSummaryForm, self).save(commit=False)
@@ -67,5 +70,6 @@ class HouseDisciplineForm(forms.ModelForm):
     class Meta:
         model = Discipline
         exclude = ('trainee',)
+        widgets = { 'due': DateTimePicker(options={'format': 'MM/DD/YYYY'}) }
         
     House = forms.ModelChoiceField(House.objects)

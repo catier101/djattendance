@@ -1,6 +1,7 @@
 {% extends "lifestudies/base_lifestudies.html" %}
 
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 {% block title %}Life Study{% endblock %}
 
@@ -22,9 +23,13 @@
     </span>
   </h4>
   {% if summary.approved == False %}
-  <button type="submit" class="btn btn-success">Update</button>
+  <button id="summary_submit" disabled="true" type="submit" class="btn btn-success">Update</button>
   {% endif %}
 </form>
 
+{% endblock %}
 
+{% block scripts %}
+    <script src="{% static 'js/Countable.js' %}"></script>
+    <script src="{% static 'lifestudies/js/summary-wordcount.js' %}"></script>
 {% endblock %}

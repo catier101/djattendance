@@ -26,11 +26,8 @@ class AbsentTraineeForm(forms.ModelForm):
 		super(AbsentTraineeForm, self).__init__(*args, **kwargs)
 
 		if (self.user != None):
-			#Checks all the trainees in the same house as the user have an absentee profile and if not creates one
-			for trainee in Trainee.objects.filter(account__trainee__house=self.user.trainee.house):
-				obj, created = Absentee.objects.get_or_create(account=trainee.account)
-
-			self.fields['absentee'].queryset = Absentee.objects.filter(account__trainee__house=self.user.trainee.house)
+			self.fields['absentee'].queryset = Absentee.objects.filter(house=self.user.house)
+			
 		self.fields['absentee'].label = 'Name'
 		self.fields['absentee'].empty_label = '--Name--'
 		self.fields['absentee'].widget.attrs={'class': 'form-control'}

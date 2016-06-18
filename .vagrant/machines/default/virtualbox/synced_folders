@@ -1,0 +1,1 @@
+{"virtualbox":{"project":{"create":false,"owner":null,"group":null,"nfs":false,"transient":false,"extra":null,"id":"project","guestpath":"/home/vagrant/ap","hostpath":"/Users/lifedispenser/workspace/djattendance","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/lifedispenser/workspace/djattendance","disabled":false}}}

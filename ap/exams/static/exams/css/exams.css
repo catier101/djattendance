@@ -1,0 +1,43 @@
+/*custom css for exams*/
+#s2id_id_trainees.select2-container  {
+    width: 500px;
+}
+
+.exam-panel-title {
+    padding: 10px;
+}
+
+.exam-panel-heading {
+    padding: 0px;
+}
+
+.statistics {
+    width: 50%;
+}
+
+.exam-response {
+    display: inline;
+    width: 75%;
+}
+
+.score {
+    display: inline;
+    width: 100px;
+}
+
+.grader-comment {
+    display:inline;
+    width: 45%;
+}
+
+.grades-table {
+    border-collapse: collapse;
+}
+
+.grades-table, .grades-th, .grades-td {
+    border: 1px solid gray;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}

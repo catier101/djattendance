@@ -3,7 +3,7 @@ from datetime import datetime, time, date, timedelta
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from accounts.models import Trainee
+from accounts.models import User
 from attendance.utils import Period
 from books.models import Book
 from schedules.models import Schedule
@@ -28,7 +28,6 @@ SUMMARY
       a trainee.
 
 """
-
 
 class Discipline(models.Model):
 
@@ -68,13 +67,13 @@ class Discipline(models.Model):
     offense = models.CharField(choices=TYPE_OFFENSE_CHOICES, default='RO',
                                max_length=2)
 
-    trainee = models.ForeignKey(Trainee)
+    trainee = models.ForeignKey(User)
 
     note = models.TextField(blank=True)
 
     #sort disciplines by name
     class Meta:
-        ordering = ["trainee__account__lastname"]
+        ordering = ["trainee__lastname"]
 
     def approve_all_summary(self):
         for summary in self.summary_set.all():
@@ -157,7 +156,7 @@ class Discipline(models.Model):
         return "[{offense}] {name}. Infraction: {infraction}. Quantity: \
             {quantity}. Still need {num_summary_due} summaries. Completed: \
             {is_completed}".format(
-            name=self.trainee.account.get_full_name(),
+            name=self.trainee.full_name,
             infraction=self.infraction, offense=self.offense,
             quantity=self.quantity, num_summary_due=self.get_num_summary_due(),
             is_completed=self.is_completed())
@@ -177,11 +176,24 @@ class Summary(models.Model):
     # if the summary has been approved
     approved = models.BooleanField(default=False)
 
+    # if the summary is marked for fellowship
+    fellowship = models.BooleanField(default=False)
+
+    """ Decided to remove this field. We now auto hide approved submissions"""
+    # if the summary is marked for delete then we hide
+    #deleted = models.BooleanField(default=False)
+
     # which discipline this summary is associated with
     discipline = models.ForeignKey(Discipline)
 
     # automatically generated date when summary is submitted
     date_submitted = models.DateTimeField(auto_now_add=True)
+
+    # minWord Count
+    minimum_words = models.PositiveSmallIntegerField(default=250)
+
+    # hardCopy
+    hard_copy = models.BooleanField(default=False)
 
     #sort summaries by name
     class Meta:
@@ -189,10 +201,44 @@ class Summary(models.Model):
 
     def __unicode__(self):
         return "[{book} ch. {chapter}] {name}. Approved: {approved}".format(
-            name=self.discipline.trainee.account.get_full_name,
+            name=self.discipline.trainee.full_name,
             book=self.book.name, chapter=self.chapter, approved=self.approved)
 
+    # remove fellowship mark if approved
     def approve(self):
         self.approved = True
+        self.fellowship = False
         self.save()
         return self
+
+    def unapprove(self):
+        self.approved = False
+        self.save()
+        return self
+
+    def set_fellowship(self):
+        self.fellowship = True
+        self.save()
+        return self
+
+    def remove_fellowship(self):
+        self.fellowship = False
+        self.save()
+        return self
+
+    def clean(self, *args, **kwargs):
+        """Custom validator for word count"""
+        wc_list = self.content.split()
+        if len(wc_list) < self.minimum_words and self.hard_copy is False:
+            raise ValidationError("Your word count is less than {count}".format(count=self.minimum_words))
+        super(Summary, self).clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super(Summary, self).save(*args, **kwargs)
+
+    def next(self):
+        return Summary.objects.filter(date_submitted__gt=self.date_submitted, discipline=self.discipline).order_by('date_submitted').first()
+
+    def prev(self):
+        return Summary.objects.filter(date_submitted__lt=self.date_submitted, discipline=self.discipline).order_by('-date_submitted').first()

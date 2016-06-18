@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block references %}
+<!--     <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">  -->
+<link rel="stylesheet" href="{% static "jquery/themes/smoothness/jquery-ui.css" %}" />
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'apimport/js/dates-info.js' %}"></script>
+    <script src="{% static 'jquery/js/jquery-ui.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker(); 
+            $(document).on('change','#id_start_date',function(){
+                calculate_dates();
+       });
+        });
+        
+    </script>
+{% endblock %}
+
+{% block title %}Term Details{% endblock %}
+
+{% block content %}
+
+<form action="" id="surveyForm" method="post" class="form-horizontal" enctype="multipart/form-data">
+    <fieldset>
+    	<h1>Start A New Term</h1>
+        {% csrf_token %}
+        {% if full_input %}
+            <div class="form-group">
+                <label class="col-md-2" for="textinput">Term Name:</label>  
+                <div class="col-md-4">
+                	{% with stryear=year|stringformat:"s" %}
+                	{% with termname=season|add:"_"|add:stryear|safe %} 
+                    	<input id="termname" name="termname" type="text" placeholder="" class="form-control input-md" required="" value="{{ season }} {{ year }}" readonly>
+                    {% endwith %}
+                    {% endwith %}
+                </div>
+                <label class="col-md-2" for="textinput">Import File:</label>  
+                <div class="col-md-4">
+                	{% with stryear=year|stringformat:"s" %}
+                	{% with termname=season|add:"_"|add:stryear|safe %}
+                    	<input id="csvFile" name="csvFile" type="file" placeholder="Select Import File" class="form-control input-md" required="" value="">
+                    {% endwith %}
+                    {% endwith %}
+                </div>
+            </div>
+            <h3>New Term Dates</h3>
+
+            <form method="post">
+                {{ term_dates }}
+            </form>
+            
+            <h3>Creation of Periods</h3>
+            <div class="form-group">
+                <table class="table table-striped">
+    				<thead>
+    					<tr>
+    						<th class="col-md-3">ITEM</th>
+    						<th class="col-md-2">NUMBER</th>
+    						<th class="col-md-2">Start Date</th>
+    						<th class="col-md-2">End Date</th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    					<tr>
+    						<td>Number of "initial" weeks<br>(No attendance taken)</td>
+    						<td>
+                				{% with weeks=initial_weeks|stringformat:"s" %}
+    							<input id="initial_weeks" name="initial_weeks" type="text" placeholder="" class="form-control input-md" required="" value={{ weeks }} onchange="calculate_dates()">
+    							{% endwith %}
+    						</td>
+    						<td><input id="init_start" name="init_start" type="text" placeholder="" class="form-control input-md" required="" value="" readonly></td>
+    						<td><input id="init_end" name="init_end" type="text" placeholder="" class="form-control input-md" required="" value="" readonly></td>
+    					</tr>
+    					<tr>
+    						<td>Number of "grace" weeks<br>(Attendance taken only; NO discipline)</td>
+    						<td>
+                				{% with weeks=grace_weeks|stringformat:"s" %}
+    							<input id="grace_weeks" name="grace_weeks" type="text" placeholder="" class="form-control input-md" required="" value={{ weeks }} onchange="calculate_dates()">
+    							{% endwith %}
+    						</td>
+    						<td><input id="grace_start" name="grace_start" type="text" placeholder="" class="form-control input-md" required="" value="To be calculated" readonly></td>
+    						<td><input id="grace_end" name="grace_end" type="text" placeholder="" class="form-control input-md" required="" value="To be calculated" readonly></td>
+    					</tr>
+    					<tr>
+    						<td>Number of periods in the term<br>(Attendance taken; discipline)</td>
+    						<td><input id="periods" name="periods" type="text" placeholder="" class="form-control input-md" required="" value={{ periods }} onchange="calculate_dates()"></td>
+    						<td><input id="periods_start" name="periods_start" type="text" placeholder="" class="form-control input-md" required="" readonly></td>
+    						<td><input id="periods_end" name="periods_end" type="text" placeholder="" class="form-control input-md" required="" readonly></td>
+    					</tr>
+    				</tbody>
+    			</table>
+            </div>
+            	<label id='dt'></label>
+            	<label id='test'></label>
+        {% else %}
+            <label class="col-md-2" for="textinput">Import File:</label>  
+            <div class="col-md-4">
+                {% with stryear=year|stringformat:"s" %}
+                {% with termname=season|add:"_"|add:stryear|safe %}
+                    <input id="csvFile" name="csvFile" type="file" placeholder="Select Import File" class="form-control input-md" required="" value="">
+                {% endwith %}
+                {% endwith %}
+            </div>
+        {% endif %}
+        <button type="submit" class="col-md-offset-4 col-md-2 btn btn-default">Next</button>
+    </fieldset>
+</form>
+
+{% endblock %}

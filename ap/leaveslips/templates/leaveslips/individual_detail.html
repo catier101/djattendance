@@ -28,5 +28,28 @@
         <tr>
             <td>Informed a TA? </td>
             <td>{{ leaveslip.informed }}</td></tr>
-    </table>	
+    </table>
+
+    <script type="text/javascript">
+        var events = JSON.parse('{{events_bb}}'.replace(/&#39;/g, "'").replace(/&quot;/g,'"'));
+        
+        clndr.options.constraints = {
+            startDate: "{{ schedule.term.start | date:'Y-m-d' }}",
+            endDate: "{{ schedule.term.end | date:'Y-m-d' }}"
+        };
+
+        var events = [
+            {% for event in trainee.events %}
+                {
+                    id: "{{ event.id }}",
+                    start: "{{ event.start_datetime | date:'c' }}",
+                    end: "{{ event.end_datetime | date:'c' }}",
+                    name: "{{ event.name }}",
+                    code: "{{ event.code }}",
+                    type: "{{ event.type }}",
+                    slips: [],
+                    status: "",
+                },
+            {% endfor %}];
+    </script>   
 {% endblock %}
