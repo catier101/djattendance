@@ -67,5 +67,10 @@ class HouseDisciplineForm(forms.ModelForm):
     class Meta:
         model = Discipline
         exclude = ('trainee',)
-        
+
     House = forms.ModelChoiceField(House.objects)
+
+
+class CommentForm(forms.ModelForm):
+
+    ta_comment = forms.CharField(label='comment', max_length=500)

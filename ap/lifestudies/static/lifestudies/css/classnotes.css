@@ -76,6 +76,13 @@
   border-left:2px solid rgb(172, 172, 172);
 }
 
+.text{
+  border:1px solid black;
+  padding:10px;
+  min-height:90%;
+  background-color: white;
+}
+
 /* BUTTONS */
 .btn {
   width:250px;
@@ -93,7 +100,7 @@
 
 .appdeny {
   position:absolute;
-  left:5;
+  left:15;
   bottom:0;
 }
 
@@ -115,3 +122,14 @@
   min-width:300px;
   background-color:rgb(213, 213, 213);
 }
+
+/* MODAL */
+.comments-send {
+  width:100px;
+  background-color:rgba(50, 212, 217, 0.51);
+  color:white;
+}
+
+/*#commentbox{
+  max-width:200px;
+}*/

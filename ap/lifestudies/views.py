@@ -261,10 +261,10 @@ class AttendanceAssign(ListView):
         if request.method == 'POST':
             period = int(request.POST['select_period'])
             print period, 'period'
-            return HttpResponseRedirect(reverse_lazy('lifestudies:attendance_assign', 
+            return HttpResponseRedirect(reverse_lazy('lifestudies:attendance_assign',
                                                         kargs={'period' : period}))
         else:
-            return HttpResponseRedirect(reverse_lazy('lifestudies:attendance_assign', 
+            return HttpResponseRedirect(reverse_lazy('lifestudies:attendance_assign',
                                                         kargs={'period' : 1}))
 
 
@@ -278,6 +278,27 @@ class MondayReportView(TemplateView):
         context['date_today'] = datetime.date.today()
         return context
 
+class TaComment(TemplateView):
+
+    template+name = lifestudies/class_notes.html"
+
+    def get_ta_comment(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = CommentForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = CommentForm()
+
+    return render(request, 'comment_form.html', {'form': form})
 
 
 """ API Views """
@@ -286,5 +307,3 @@ class MondayReportView(TemplateView):
 class DisciplineSummariesViewSet(viewsets.ModelViewSet):
     queryset = Summary.objects.all()
     serializer_class = SummarySerializer
-
-
